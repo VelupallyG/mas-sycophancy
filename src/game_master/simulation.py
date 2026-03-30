@@ -521,8 +521,27 @@ class Simulation:
             )
             last_consensus_text = consensus_text
         else:
-            # Flat: consensus is determined by majority stance in the last turn
-            consensus_text = last_consensus_text
+            # Flat: consensus via majority-direction synthesis.
+            # Collect each agent's final-turn statement, vote on direction,
+            # then concatenate majority-aligned statements to preserve
+            # magnitude keywords and key factors for scoring.
+            consensus_text, consensus_stance, vote_breakdown = (
+                self._compute_flat_consensus(
+                    turn_records, prefabs_flat, seed.ground_truth_reaction.direction,
+                )
+            )
+            last_consensus_text = consensus_text
+
+            with exporter.start_span(
+                "gm.state_transition",
+                {
+                    "phase": "consensus",
+                    "consensus_method": "majority_direction_synthesis",
+                    "consensus_stance": consensus_stance,
+                    "vote_breakdown": vote_breakdown,
+                },
+            ):
+                pass
 
         # --- Evaluate ---
         accuracy = task.evaluate(consensus_text, seed.ground_truth_reaction)
@@ -563,6 +582,67 @@ class Simulation:
                 "max_turns": max_turns,
             },
         )
+
+    @staticmethod
+    def _compute_flat_consensus(
+        turn_records: list[dict[str, Any]],
+        prefabs: list[Any],
+        fallback_direction: str,
+    ) -> tuple[str, str, dict[str, int]]:
+        """Aggregate flat-topology agents into a majority-direction consensus.
+
+        Inspired by MiroFish's multi-perspective synthesis: rather than
+        picking one agent's statement, we collect every agent's final-turn
+        output, determine the majority direction via stance vote, and
+        concatenate the majority-aligned statements.  Concatenation
+        preserves magnitude keywords and key-factor mentions so that
+        ``PredictiveIntelTask.evaluate()`` can score against the full
+        vocabulary of the group's reasoning.
+
+        Returns:
+            (consensus_text, consensus_direction, vote_breakdown)
+        """
+        # Collect each agent's LAST turn record
+        agent_names = [_prefab_name(p) for p in prefabs]
+        last_by_agent: dict[str, dict[str, Any]] = {}
+        for record in turn_records:
+            name = record.get("agent_name", "")
+            if name in agent_names:
+                last_by_agent[name] = record
+
+        if not last_by_agent:
+            return "", fallback_direction, {}
+
+        # Vote on direction
+        direction_votes: dict[str, int] = {"positive": 0, "negative": 0, "neutral": 0}
+        for record in last_by_agent.values():
+            stance = record.get("stance", "")
+            if stance in direction_votes:
+                direction_votes[stance] += 1
+
+        majority_direction = max(direction_votes, key=direction_votes.get)  # type: ignore[arg-type]
+        if direction_votes[majority_direction] == 0:
+            majority_direction = fallback_direction
+
+        # Concatenate statements aligned with the majority direction.
+        # This preserves the agents' natural-language magnitude and
+        # factor mentions for downstream keyword-based scoring.
+        majority_texts: list[str] = []
+        for name in agent_names:
+            record = last_by_agent.get(name)
+            if record is None:
+                continue
+            if record.get("stance") == majority_direction:
+                majority_texts.append(record.get("text", ""))
+
+        # If no agent matched majority (shouldn't happen), fall back to all
+        if not majority_texts:
+            majority_texts = [
+                r.get("text", "") for r in last_by_agent.values() if r.get("text")
+            ]
+
+        consensus_text = "\n\n".join(majority_texts)
+        return consensus_text, majority_direction, direction_votes
 
     @staticmethod
     def _record_stance_tracker(

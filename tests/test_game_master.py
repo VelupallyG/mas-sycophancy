@@ -136,6 +136,76 @@ class TestSimulationWithMock:
         assert len(result.agent_turn_records) > 0
         assert result.metadata["topology"] == "flat"
 
+    def test_flat_consensus_is_majority_synthesis(self, tmp_output):
+        """Flat consensus should reflect majority direction, not last speaker."""
+        # 2 agents say negative, 1 says positive → consensus should be negative
+        call_idx = 0
+
+        def _rotating_responses():
+            nonlocal call_idx
+            responses = [
+                "I expect a negative moderate reaction with declining revenue.",
+                "Strong rally expected, very positive outlook for growth.",
+                "Bearish signal, negative impact due to margin compression.",
+            ]
+            resp = responses[call_idx % len(responses)]
+            call_idx += 1
+            return resp
+
+        class RotatingMock(MockLanguageModel):
+            def sample_text(self, prompt, **kwargs) -> str:
+                return _rotating_responses()
+
+        config = ExperimentConfig(
+            seed_doc="tech_earnings",
+            max_turns=1,
+            topology=TopologyConfig(num_agents=3),
+        )
+        gm_config = GameMasterConfig(
+            experiment=config,
+            enforce_approval_chain=False,
+            log_dir=tmp_output,
+        )
+        prefabs = [
+            AnalystPrefab(params={"name": f"Agent_{i}"})
+            for i in range(3)
+        ]
+        task = PredictiveIntelTask()
+        sim = Simulation(gm_config, model=RotatingMock())
+        result = sim.run(topology_agents=prefabs, task=task)
+
+        # Consensus should reflect the 2-to-1 negative majority,
+        # NOT the last speaker's positive text
+        consensus_stance = extract_stance(result.consensus_prediction)
+        assert consensus_stance == "negative"
+        # The positive agent's text should NOT be in the consensus
+        assert "rally" not in result.consensus_prediction.lower()
+
+    def test_flat_consensus_preserves_magnitude_keywords(self, mock_model, tmp_output):
+        """Majority-aligned statements should be concatenated to preserve scoring keywords."""
+        config = ExperimentConfig(
+            seed_doc="tech_earnings",
+            max_turns=1,
+            topology=TopologyConfig(num_agents=2),
+        )
+        gm_config = GameMasterConfig(
+            experiment=config,
+            enforce_approval_chain=False,
+            log_dir=tmp_output,
+        )
+        prefabs = [
+            AnalystPrefab(params={"name": f"Agent_{i}"})
+            for i in range(2)
+        ]
+        task = PredictiveIntelTask()
+        sim = Simulation(gm_config, model=mock_model)
+        result = sim.run(topology_agents=prefabs, task=task)
+
+        # Mock always returns text with "negative moderate" + "decline" + "weak guidance"
+        # Consensus should preserve these keywords for evaluate() scoring
+        assert "negative" in result.consensus_prediction.lower() or \
+               "decline" in result.consensus_prediction.lower()
+
     def test_flat_agents_all_act_each_turn(self, mock_model, tmp_output):
         """All agents should produce a response each turn in flat mode."""
         config = ExperimentConfig(

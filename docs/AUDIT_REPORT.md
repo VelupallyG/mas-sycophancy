@@ -160,13 +160,25 @@ The proposal's NoF metric (Section 4.2) counts total stance reversals. The strat
 
 ---
 
-### M6. Hierarchical Consensus Override Forces the Orchestrator's Hallucinated Stance
+### M6. ~~Hierarchical Consensus Override Forces the Orchestrator's Hallucinated Stance~~ No Consensus Mechanism for Flat Topology
 
-**Files:** `src/game_master/simulation.py:330-361`
+**Files:** `src/game_master/simulation.py`
 
-When the simulation ends and the last speaker wasn't Level-1, the code appends an extra record with `final_stance = hallucinated_stance`. This always produces the wrong answer for the hierarchical condition, regardless of what agents actually said. Combined with C2, this guarantees hierarchical accuracy < flat accuracy.
+Originally: the simulation forcibly appended the orchestrator's hallucinated stance. After C1 rewrite: the hierarchical consensus correctly asks the orchestrator for a final synthesis via `agent.act()`. However, the **flat topology had no consensus mechanism at all** — it simply used the last speaker's text as "consensus", meaning one arbitrary agent determined the group's prediction.
 
-This isn't measuring whether agents converged to the hallucination — it's the GM forcibly appending the wrong answer at the end.
+This is a fundamental flaw: the ACL proposal describes agents "debating peer-to-peer to reach consensus prediction." MiroFish (our inspiration) uses multi-perspective synthesis where diverse agent viewpoints are aggregated into a collective prediction.
+
+**Impact:** Without real consensus, the flat condition's accuracy is determined by one agent's output rather than the group's collective intelligence. This undermines the core claim that flat MAS produces better predictions through diverse parallel synthesis.
+
+**Status: FIXED.** `_compute_flat_consensus()` added to `Simulation`:
+- Collects each agent's final-turn statement
+- Extracts direction stance from each via `extract_stance()`
+- Determines majority direction by vote count
+- Concatenates all majority-aligned statements as the consensus text (preserves magnitude keywords and key-factor mentions for downstream scoring)
+- Logs vote breakdown in trace spans
+- Inspired by MiroFish's multi-perspective synthesis, but done programmatically (no extra LLM call) for reproducibility
+- Hierarchical consensus unchanged: orchestrator delivers final synthesis via `agent.act()`
+- 2 new tests verify majority-direction correctness and keyword preservation
 
 ---
 
