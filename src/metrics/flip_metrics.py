@@ -17,6 +17,7 @@ turn where the stance changes from the agent's turn-1 prediction.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Any
 
 
 @dataclass
@@ -36,6 +37,60 @@ class AgentTurnRecord:
     text: str
 
 
+def _group_turns_by_agent(
+    turns: list[AgentTurnRecord],
+) -> dict[str, list[AgentTurnRecord]]:
+    grouped: dict[str, list[AgentTurnRecord]] = {}
+    for record in turns:
+        grouped.setdefault(record.agent_name, []).append(record)
+    for records in grouped.values():
+        records.sort(key=lambda item: item.turn)
+    return grouped
+
+
+def parse_turn_records_from_logs(
+    trace_logs: list[dict[str, Any]],
+    *,
+    stance_key: str = "stance",
+    text_key: str = "text",
+) -> list[AgentTurnRecord]:
+    """Extract ``AgentTurnRecord`` objects from structured JSON logs.
+
+    The function reads ``agent_name`` and ``turn`` from either top-level fields
+    or nested ``attributes`` fields.
+    """
+    records: list[AgentTurnRecord] = []
+    for entry in trace_logs:
+        attributes = entry.get("attributes")
+        attributes_dict = attributes if isinstance(attributes, dict) else {}
+
+        agent_name = entry.get("agent_name", attributes_dict.get("agent_name"))
+        turn = entry.get("turn", attributes_dict.get("turn"))
+        stance = entry.get(stance_key, attributes_dict.get(stance_key))
+        text = entry.get(text_key, attributes_dict.get(text_key, ""))
+
+        if not isinstance(agent_name, str) or not agent_name:
+            continue
+        if not isinstance(turn, int) or turn < 1:
+            continue
+        if not isinstance(stance, str) or not stance.strip():
+            continue
+        if not isinstance(text, str):
+            continue
+
+        records.append(
+            AgentTurnRecord(
+                agent_name=agent_name,
+                turn=turn,
+                stance=stance.strip().lower(),
+                text=text,
+            )
+        )
+
+    records.sort(key=lambda item: (item.agent_name, item.turn))
+    return records
+
+
 def compute_tof(turns: list[AgentTurnRecord]) -> float:
     """Compute the expected Turn-of-Flip across all agents in the trace.
 
@@ -49,7 +104,27 @@ def compute_tof(turns: list[AgentTurnRecord]) -> float:
     Returns:
         E[min t | agent flips], or ``float("nan")`` if no agent flips.
     """
-    raise NotImplementedError
+    grouped = _group_turns_by_agent(turns)
+    flip_turns: list[int] = []
+
+    for records in grouped.values():
+        if not records:
+            continue
+        initial_stance = records[0].stance
+        first_flip_turn: int | None = None
+
+        for record in records[1:]:
+            if record.stance != initial_stance:
+                first_flip_turn = record.turn
+                break
+
+        if first_flip_turn is not None:
+            flip_turns.append(first_flip_turn)
+
+    if not flip_turns:
+        return float("nan")
+
+    return sum(flip_turns) / len(flip_turns)
 
 
 def compute_nof(turns: list[AgentTurnRecord]) -> int:
@@ -64,4 +139,14 @@ def compute_nof(turns: list[AgentTurnRecord]) -> int:
     Returns:
         Total number of stance reversals (≥ 0).
     """
-    raise NotImplementedError
+    grouped = _group_turns_by_agent(turns)
+    reversals = 0
+
+    for records in grouped.values():
+        previous_stance: str | None = None
+        for record in records:
+            if previous_stance is not None and record.stance != previous_stance:
+                reversals += 1
+            previous_stance = record.stance
+
+    return reversals

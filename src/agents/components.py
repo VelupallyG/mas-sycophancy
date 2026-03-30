@@ -66,11 +66,19 @@ class HierarchicalRank(
         return {"rank": self._rank, "state": self._state}
 
     def set_state(self, state: entity_component.ComponentState) -> None:
-        if "rank" in state:
+        if "rank" not in state:
+            return
+
+        try:
             rank = int(state["rank"])
-            if rank in _RANK_DESCRIPTIONS:
-                self._rank = rank
-                self._state = _RANK_DESCRIPTIONS[rank]
+        except (TypeError, ValueError) as exc:
+            raise ValueError("rank state must be an integer in [1, 5]") from exc
+
+        if rank not in _RANK_DESCRIPTIONS:
+            raise ValueError(f"rank state must be in [1, 5], got {rank}")
+
+        self._rank = rank
+        self._state = _RANK_DESCRIPTIONS[rank]
 
 
 # ---------------------------------------------------------------------------
@@ -142,6 +150,28 @@ class StanceTracker(
     def set_state(self, state: entity_component.ComponentState) -> None:
         with self._lock:
             if "agent_name" in state:
-                self._agent_name = state["agent_name"]
+                agent_name = state["agent_name"]
+                if not isinstance(agent_name, str) or not agent_name.strip():
+                    raise ValueError("agent_name state must be a non-empty string")
+                self._agent_name = agent_name
             if "history" in state:
-                self._history = list(state["history"])
+                raw_history = state["history"]
+                if not isinstance(raw_history, list):
+                    raise ValueError("history state must be a list")
+
+                validated: list[dict[str, Any]] = []
+                for item in raw_history:
+                    if not isinstance(item, dict):
+                        raise ValueError("history entries must be dictionaries")
+                    turn = item.get("turn")
+                    agent = item.get("agent")
+                    stance = item.get("stance")
+                    if not isinstance(turn, int):
+                        raise ValueError("history entry turn must be an integer")
+                    if not isinstance(agent, str) or not agent.strip():
+                        raise ValueError("history entry agent must be a non-empty string")
+                    if not isinstance(stance, str) or not stance.strip():
+                        raise ValueError("history entry stance must be a non-empty string")
+                    validated.append({"turn": turn, "agent": agent, "stance": stance})
+
+                self._history = validated

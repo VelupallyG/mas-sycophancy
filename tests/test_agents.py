@@ -16,6 +16,7 @@ Tests verify:
 from __future__ import annotations
 
 import hashlib
+from typing import Any
 
 import numpy as np
 import pytest
@@ -51,12 +52,12 @@ def _embedder(text: str) -> np.ndarray:
 
 
 @pytest.fixture()
-def model():
+def model() -> no_language_model.NoLanguageModel:
     return no_language_model.NoLanguageModel()
 
 
 @pytest.fixture()
-def memory_bank():
+def memory_bank() -> basic_associative_memory.AssociativeMemoryBank:
     return basic_associative_memory.AssociativeMemoryBank(
         sentence_embedder=_embedder
     )
@@ -66,7 +67,7 @@ def memory_bank():
 # Helpers
 # ---------------------------------------------------------------------------
 
-def _components(agent) -> dict:
+def _components(agent: Any) -> dict[str, Any]:
     return dict(agent.get_all_context_components())
 
 
@@ -85,14 +86,14 @@ class TestAnalystPrefab:
         agent = prefab.build(model, memory_bank)
         comp = _components(agent)[HIERARCHICAL_RANK_KEY]
         assert isinstance(comp, HierarchicalRank)
-        assert comp._rank == 5
+        assert comp.get_state()["rank"] == 5
 
     def test_stance_tracker_present(self, model, memory_bank):
         prefab = AnalystPrefab(params={"name": "Alex"})
         agent = prefab.build(model, memory_bank)
         comp = _components(agent)[STANCE_TRACKER_KEY]
         assert isinstance(comp, StanceTracker)
-        assert comp._agent_name == "Alex"
+        assert comp.get_state()["agent_name"] == "Alex"
 
     def test_persona_component_present(self, model, memory_bank):
         prefab = AnalystPrefab(params={"name": "Alex"})
@@ -127,7 +128,7 @@ class TestManagerPrefab:
         agent = prefab.build(model, memory_bank)
         assert agent.name == "Morgan"
         comp = _components(agent)[HIERARCHICAL_RANK_KEY]
-        assert comp._rank == rank
+        assert comp.get_state()["rank"] == rank
 
     def test_stance_tracker_present(self, model, memory_bank):
         prefab = ManagerPrefab(params={"name": "Morgan", "rank": 4})
@@ -156,7 +157,7 @@ class TestDirectorPrefab:
         agent = prefab.build(model, memory_bank)
         comp = _components(agent)[HIERARCHICAL_RANK_KEY]
         assert isinstance(comp, HierarchicalRank)
-        assert comp._rank == 2
+        assert comp.get_state()["rank"] == 2
 
     def test_stance_tracker_present(self, model, memory_bank):
         prefab = DirectorPrefab(params={"name": "Dana"})
@@ -179,7 +180,7 @@ class TestOrchestratorPrefab:
         agent = prefab.build(model, memory_bank)
         comp = _components(agent)[HIERARCHICAL_RANK_KEY]
         assert isinstance(comp, HierarchicalRank)
-        assert comp._rank == 1
+        assert comp.get_state()["rank"] == 1
 
     def test_no_briefing_in_control_condition(self, model, memory_bank):
         prefab = OrchestratorPrefab(
@@ -222,7 +223,7 @@ class TestWhistleblowerPrefab:
         agent = prefab.build(model, memory_bank)
         assert agent.name == "Quinn"
         comp = _components(agent)[HIERARCHICAL_RANK_KEY]
-        assert comp._rank == rank
+        assert comp.get_state()["rank"] == rank
 
     def test_stance_tracker_present(self, model, memory_bank):
         prefab = WhistleblowerPrefab(params={"name": "Quinn", "rank": 5})
@@ -256,8 +257,8 @@ class TestWhistleblowerPrefab:
         """Both variants should build; rank component is the only difference."""
         l5 = WhistleblowerPrefab(params={"name": "W5", "rank": 5}).build(model, memory_bank)
         l2 = WhistleblowerPrefab(params={"name": "W2", "rank": 2}).build(model, memory_bank)
-        assert _components(l5)[HIERARCHICAL_RANK_KEY]._rank == 5
-        assert _components(l2)[HIERARCHICAL_RANK_KEY]._rank == 2
+        assert _components(l5)[HIERARCHICAL_RANK_KEY].get_state()["rank"] == 5
+        assert _components(l2)[HIERARCHICAL_RANK_KEY].get_state()["rank"] == 2
         # Both have the same set of component keys
         assert set(_components(l5).keys()) == set(_components(l2).keys())
 
@@ -297,7 +298,7 @@ class TestHierarchicalRank:
     @pytest.mark.parametrize("rank", [1, 2, 3, 4, 5])
     def test_valid_ranks(self, rank):
         comp = HierarchicalRank(rank=rank)
-        assert comp._rank == rank
+        assert comp.get_state()["rank"] == rank
 
     @pytest.mark.parametrize("bad_rank", [0, 6, -1])
     def test_invalid_rank_raises(self, bad_rank):

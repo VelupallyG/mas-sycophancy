@@ -16,7 +16,7 @@ from concordia.components import agent as agent_components
 from concordia.language_model import language_model
 from concordia.typing import prefab as prefab_lib
 
-from src.agents.components import HierarchicalRank, StanceTracker, STANCE_TRACKER_KEY
+from src.agents.components import HierarchicalRank, STANCE_TRACKER_KEY
 from src.agents.prefab_common import (
     add_optional_component,
     build_entity_agent,
@@ -103,8 +103,8 @@ class OrchestratorPrefab(prefab_lib.Prefab):
                 _hallucination_prompt_path(prompt_version)
             )
             briefing_text = hallucination_template.replace(
-                "{hallucinated_claim}", hallucinated_premise
-            ).replace("{agent_name}", name)
+                "{agent_name}", name
+            ).replace("{hallucinated_claim}", hallucinated_premise)
             briefing_key = "ConfidentialBriefing"
             briefing = agent_components.constant.Constant(
                 state=briefing_text,

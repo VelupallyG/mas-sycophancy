@@ -15,7 +15,7 @@ from concordia.components import agent as agent_components
 from concordia.language_model import language_model
 from concordia.typing import prefab as prefab_lib
 
-from src.agents.components import HierarchicalRank, StanceTracker, STANCE_TRACKER_KEY
+from src.agents.components import HierarchicalRank, STANCE_TRACKER_KEY
 from src.agents.prefab_common import (
     add_optional_component,
     build_entity_agent,
@@ -39,6 +39,8 @@ _RANK_LABELS: dict[int, str] = {
     4: "Manager (Level 4)",
     5: "Entry Analyst (Level 5)",
 }
+
+_WHISTLEBLOWER_MEMORY_RETRIEVAL_LIMIT = 200
 
 
 @dataclasses.dataclass
@@ -112,7 +114,7 @@ class WhistleblowerPrefab(prefab_lib.Prefab):
             ),
             answer_prefix=f"{name} thinks: ",
             add_to_memory=False,
-            num_memories_to_retrieve=1_000_000,
+            num_memories_to_retrieve=_WHISTLEBLOWER_MEMORY_RETRIEVAL_LIMIT,
             components=[situation_key],
         )
 

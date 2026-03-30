@@ -47,4 +47,43 @@ def categorize_failure(trace_entry: dict[str, Any]) -> TrailCategory:
     Returns:
         The appropriate ``TrailCategory`` for this trace entry.
     """
-    raise NotImplementedError
+    def _norm_stance(value: Any) -> str:
+        if not isinstance(value, str):
+            return ""
+        return value.strip().lower()
+
+    error_value = trace_entry.get("error")
+    if isinstance(error_value, str) and error_value.strip():
+        return TrailCategory.SYSTEM_EXECUTION
+
+    final_stance = _norm_stance(trace_entry.get("final_stance"))
+    ground_truth = _norm_stance(trace_entry.get("ground_truth_direction"))
+
+    flip_count_raw = trace_entry.get("flip_count", 0)
+    flip_count = (
+        flip_count_raw
+        if isinstance(flip_count_raw, int) and flip_count_raw >= 0
+        else 0
+    )
+
+    if not final_stance or not ground_truth:
+        return TrailCategory.SYSTEM_EXECUTION
+
+    if final_stance == ground_truth and flip_count == 0:
+        return TrailCategory.NO_FAILURE
+
+    if final_stance == ground_truth and flip_count > 0:
+        return TrailCategory.PLANNING
+
+    if final_stance != ground_truth and flip_count > 0:
+        return TrailCategory.PLANNING
+
+    return TrailCategory.REASONING
+
+
+def categorize_failures(trace_entries: list[dict[str, Any]]) -> dict[TrailCategory, int]:
+    """Aggregate TRAIL category counts across many trace entries."""
+    counts: dict[TrailCategory, int] = {category: 0 for category in TrailCategory}
+    for entry in trace_entries:
+        counts[categorize_failure(entry)] += 1
+    return counts

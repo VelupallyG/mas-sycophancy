@@ -14,7 +14,7 @@ from concordia.components import agent as agent_components
 from concordia.language_model import language_model
 from concordia.typing import prefab as prefab_lib
 
-from src.agents.components import HierarchicalRank, StanceTracker, STANCE_TRACKER_KEY
+from src.agents.components import HierarchicalRank, STANCE_TRACKER_KEY
 from src.agents.prefab_common import (
     add_optional_component,
     build_entity_agent,
