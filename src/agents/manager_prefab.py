@@ -7,7 +7,6 @@ roles; the ``rank`` param controls which level is instantiated.
 from __future__ import annotations
 
 import dataclasses
-import pathlib
 
 from concordia.agents import entity_agent_with_logging
 from concordia.associative_memory import basic_associative_memory
@@ -16,8 +15,19 @@ from concordia.language_model import language_model
 from concordia.typing import prefab as prefab_lib
 
 from src.agents.components import HierarchicalRank, StanceTracker, STANCE_TRACKER_KEY
-
-_PROMPTS_DIR = pathlib.Path(__file__).parent / "prompts"
+from src.agents.prefab_common import (
+    add_optional_component,
+    build_entity_agent,
+    build_memory_component,
+    build_observation_components,
+    build_person_by_situation,
+    build_situation_perception,
+    build_stance_tracker,
+    build_standard_component_order,
+    build_standard_self_perception,
+    maybe_build_goal_component,
+    validate_agent_name,
+)
 
 _MANAGER_PERSONA_TEMPLATE = """You are {agent_name}, a {rank_label} at a financial intelligence firm.
 
@@ -61,7 +71,7 @@ class ManagerPrefab(prefab_lib.Prefab):
         model: language_model.LanguageModel,
         memory_bank: basic_associative_memory.AssociativeMemoryBank,
     ) -> entity_agent_with_logging.EntityAgentWithLogging:
-        name: str = self.params.get("name", "Manager")
+        name: str = validate_agent_name(self.params.get("name", "Manager"))
         rank: int = int(self.params.get("rank", 4))
         goal: str = self.params.get("goal", "")
 
@@ -85,57 +95,32 @@ class ManagerPrefab(prefab_lib.Prefab):
         rank_key = "HierarchicalRank"
         rank_component = HierarchicalRank(rank=rank)
 
-        if goal:
-            goal_key = "Goal"
-            overarching_goal = agent_components.constant.Constant(
-                state=goal, pre_act_label="\nGoal"
-            )
-        else:
-            goal_key = None
-            overarching_goal = None
+        goal_key, overarching_goal = maybe_build_goal_component(goal)
 
-        memory_key = agent_components.memory.DEFAULT_MEMORY_COMPONENT_KEY
-        memory = agent_components.memory.AssociativeMemory(memory_bank=memory_bank)
+        memory_key, memory = build_memory_component(memory_bank)
 
-        obs_to_mem_key = "ObservationToMemory"
-        obs_to_mem = agent_components.observation.ObservationToMemory()
+        obs_to_mem_key, obs_to_mem, obs_key, observation = build_observation_components()
 
-        obs_key = agent_components.observation.DEFAULT_OBSERVATION_COMPONENT_KEY
-        observation = agent_components.observation.LastNObservations(
-            history_length=1_000_000,
-            pre_act_label="\nEvents so far (oldest to newest)",
-        )
+        situation_key, situation = build_situation_perception(model=model, name=name)
 
-        situation_key = "SituationPerception"
-        situation = agent_components.question_of_recent_memories.SituationPerception(
+        self_key, self_perception = build_standard_self_perception(
             model=model,
-            num_memories_to_retrieve=25,
-            pre_act_label=f"\nQuestion: What situation is {name} in right now?\nAnswer",
+            name=name,
+            situation_key=situation_key,
+            role_label="manager",
         )
 
-        self_key = "SelfPerception"
-        self_perception = agent_components.question_of_recent_memories.SelfPerception(
+        person_by_situation_key, person_by_situation = build_person_by_situation(
             model=model,
-            num_memories_to_retrieve=1_000_000,
-            components=[situation_key],
-            pre_act_label=f"\nQuestion: What kind of manager is {name}?\nAnswer",
+            self_key=self_key,
+            situation_key=situation_key,
+            pre_act_label=(
+                f"\nQuestion: What would a manager like {name} "
+                "conclude and relay upward?\nAnswer"
+            ),
         )
 
-        person_by_situation_key = "PersonBySituation"
-        person_by_situation = (
-            agent_components.question_of_recent_memories.PersonBySituation(
-                model=model,
-                num_memories_to_retrieve=5,
-                components=[self_key, situation_key],
-                pre_act_label=(
-                    f"\nQuestion: What would a manager like {name} "
-                    "conclude and relay upward?\nAnswer"
-                ),
-            )
-        )
-
-        stance_key = STANCE_TRACKER_KEY
-        stance_tracker = StanceTracker(agent_name=name)
+        stance_key, stance_tracker = build_stance_tracker(agent_name=name)
 
         components: dict = {
             persona_key: persona,
@@ -149,28 +134,23 @@ class ManagerPrefab(prefab_lib.Prefab):
             stance_key: stance_tracker,
         }
 
-        component_order = [
-            persona_key,
-            rank_key,
-            obs_to_mem_key,
-            situation_key,
-            self_key,
-            person_by_situation_key,
-            obs_key,
-            memory_key,
-        ]
+        add_optional_component(components, goal_key, overarching_goal)
 
-        if overarching_goal is not None:
-            components[goal_key] = overarching_goal
-            component_order.insert(2, goal_key)
-
-        act_component = agent_components.concat_act_component.ConcatActComponent(
-            model=model,
-            component_order=component_order,
+        component_order = build_standard_component_order(
+            persona_key=persona_key,
+            rank_key=rank_key,
+            obs_to_mem_key=obs_to_mem_key,
+            situation_key=situation_key,
+            self_key=self_key,
+            person_by_situation_key=person_by_situation_key,
+            obs_key=obs_key,
+            memory_key=memory_key,
+            goal_key=goal_key,
         )
 
-        return entity_agent_with_logging.EntityAgentWithLogging(
+        return build_entity_agent(
             agent_name=name,
-            act_component=act_component,
-            context_components=components,
+            model=model,
+            components=components,
+            component_order=component_order,
         )

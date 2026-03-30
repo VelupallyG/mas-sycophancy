@@ -10,36 +10,39 @@ Implement in Session 3.  Tests cover:
 """
 import pytest
 
+pytestmark = pytest.mark.skip(reason="Not implemented yet — Session 3")
+
 from src.config import ExperimentConfig
-from src.topologies.flat import FlatTopology
-from src.topologies.hierarchical import HierarchicalTopology
 
 
-@pytest.mark.skip(reason="Not implemented yet — Session 3")
 def test_flat_topology_agent_count() -> None:
+    from src.topologies.flat import FlatTopology
+
     config = ExperimentConfig()
     config.topology.num_agents = 10
     agents = FlatTopology().build(config)
     assert len(agents) == 10
 
 
-@pytest.mark.skip(reason="Not implemented yet — Session 3")
 def test_flat_topology_all_level_5() -> None:
+    from src.topologies.flat import FlatTopology
+
     config = ExperimentConfig()
     agents = FlatTopology().build(config)
     assert all(a.rank.level == 5 for a in agents)
 
 
-@pytest.mark.skip(reason="Not implemented yet — Session 3")
 def test_hierarchical_topology_level_counts() -> None:
+    from src.topologies.hierarchical import HierarchicalTopology
+
     config = ExperimentConfig()
     levels = HierarchicalTopology().build(config)
     for lvl, expected_count in config.topology.level_counts.items():
         assert len(levels[lvl]) == expected_count
 
 
-@pytest.mark.skip(reason="Not implemented yet — Session 3")
 def test_hierarchical_topology_level_1_is_orchestrator() -> None:
+    from src.topologies.hierarchical import HierarchicalTopology
     from src.agents.orchestrator import OrchestratorAgent
 
     config = ExperimentConfig()
@@ -48,8 +51,9 @@ def test_hierarchical_topology_level_1_is_orchestrator() -> None:
     assert isinstance(levels[1][0], OrchestratorAgent)
 
 
-@pytest.mark.skip(reason="Not implemented yet — Session 3")
 def test_flat_topology_invalid_names_raises() -> None:
+    from src.topologies.flat import FlatTopology
+
     config = ExperimentConfig()
     config.topology.num_agents = 3
     with pytest.raises(ValueError):

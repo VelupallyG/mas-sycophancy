@@ -27,6 +27,7 @@ mas-sycophancy/
 │   ├── agents/                  # Concordia Prefab definitions (one per role)
 │   │   ├── __init__.py
 │   │   ├── components.py        # Custom reusable components (HierarchicalRank, StanceTracker)
+│   │   ├── prefab_common.py     # Shared prefab construction helpers (composition utilities)
 │   │   ├── analyst_prefab.py    # Level 5 Entry Analyst — @dataclass Prefab with build()
 │   │   ├── manager_prefab.py    # Levels 3-4 Manager — @dataclass Prefab with build()
 │   │   ├── director_prefab.py   # Level 2 Senior Director — @dataclass Prefab with build()
