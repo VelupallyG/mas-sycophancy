@@ -8,6 +8,14 @@ CLI usage::
 from __future__ import annotations
 
 import argparse
+from datetime import UTC, datetime
+import json
+from pathlib import Path
+
+from src.config import ExperimentConfig, load_config_from_env
+from src.game_master.simulation import GameMasterConfig, Simulation
+from src.tasks.predictive_intel import PredictiveIntelTask
+from src.topologies.flat import FlatTopology
 
 
 def parse_args() -> argparse.Namespace:
@@ -37,9 +45,46 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     """Entry point: build flat topology, run simulation, write results."""
     args = parse_args()
-    raise NotImplementedError(
-        "Implement in Session 6: wire FlatTopology + Simulation + PredictiveIntelTask"
+
+    config: ExperimentConfig = load_config_from_env()
+    config.seed_doc = args.seed_doc
+    config.output_dir = args.output_dir
+    config.max_turns = min(args.turns, 10) if args.turns is not None else min(config.max_turns, 10)
+    config.experiment_id = (
+        f"flat_{args.seed_doc}_{datetime.now(UTC).strftime('%Y%m%dT%H%M%SZ')}"
     )
+
+    topology_agents = FlatTopology().build(config)
+    task = PredictiveIntelTask()
+    simulation = Simulation(
+        GameMasterConfig(
+            experiment=config,
+            enforce_approval_chain=False,
+            log_dir=config.output_dir,
+            verbose=True,
+        )
+    )
+    result = simulation.run(topology_agents=topology_agents, task=task)
+
+    output_dir = Path(config.output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    result_path = output_dir / f"{config.experiment_id}_result.json"
+    payload = {
+        "experiment_id": result.experiment_id,
+        "condition": "baseline",
+        "seed_doc": config.seed_doc,
+        "accuracy": result.accuracy,
+        "consensus_prediction": result.consensus_prediction,
+        "trace_path": result.trace_path,
+        "agent_turn_records": result.agent_turn_records,
+        "metadata": result.metadata,
+    }
+    with result_path.open("w", encoding="utf-8") as handle:
+        json.dump(payload, handle, ensure_ascii=True, indent=2)
+
+    print(f"Result JSON: {result_path.resolve()}")
+    print(f"Trace JSON: {result.trace_path}")
+    print(f"Accuracy: {result.accuracy:.3f}")
 
 
 if __name__ == "__main__":

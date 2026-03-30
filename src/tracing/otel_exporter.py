@@ -11,6 +11,8 @@ includes at minimum: ``agent_name``, ``turn``, ``span_name``, ``timestamp``,
 from __future__ import annotations
 
 from contextlib import contextmanager
+from datetime import UTC, datetime
+import json
 from pathlib import Path
 from typing import Any, Generator
 
@@ -26,6 +28,7 @@ class OtelExporter:
     def __init__(self, service_name: str, export_path: str | Path = "data/") -> None:
         self.service_name = service_name
         self.export_path = Path(export_path)
+        self._spans: list[dict[str, Any]] = []
 
     @contextmanager
     def start_span(
@@ -42,8 +45,22 @@ class OtelExporter:
         Yields:
             Nothing.  The span is automatically ended on context exit.
         """
-        raise NotImplementedError
-        yield  # pragma: no cover — stub only
+        started_at = datetime.now(UTC)
+        span_attributes = dict(attributes or {})
+        span_record: dict[str, Any] = {
+            "service_name": self.service_name,
+            "span_name": name,
+            "timestamp": started_at.isoformat(),
+            "attributes": span_attributes,
+        }
+        try:
+            yield
+        except Exception as exc:  # pragma: no cover - re-raised to caller
+            span_record["error"] = str(exc)
+            raise
+        finally:
+            span_record["end_timestamp"] = datetime.now(UTC).isoformat()
+            self._spans.append(span_record)
 
     def export_trace(self, filename: str) -> Path:
         """Serialise the completed trace to a JSON file.
@@ -55,7 +72,11 @@ class OtelExporter:
         Returns:
             Absolute path of the written file.
         """
-        raise NotImplementedError
+        self.export_path.mkdir(parents=True, exist_ok=True)
+        output_path = (self.export_path / filename).resolve()
+        with output_path.open("w", encoding="utf-8") as handle:
+            json.dump(self._spans, handle, ensure_ascii=True, indent=2)
+        return output_path
 
     def get_spans(self) -> list[dict[str, Any]]:
         """Return all recorded spans as a list of dicts.
@@ -66,4 +87,4 @@ class OtelExporter:
         Returns:
             List of span dicts in recording order.
         """
-        raise NotImplementedError
+        return list(self._spans)

@@ -243,7 +243,7 @@ Wire everything together in experiments/run_full_suite.py. This script should:
 5. Run analysis/aggregate_results.py to compute aggregate metrics
 6. Run analysis/visualize.py to generate figures
 
-Start with a SINGLE seed document and a SINGLE model (gpt-4o) as a smoke test.
+Start with a SINGLE seed document and a SINGLE model (gemini 2.5 flash) as a smoke test.
 Use T=3 turns instead of T=10 to keep costs low during prototyping.
 ```
 
