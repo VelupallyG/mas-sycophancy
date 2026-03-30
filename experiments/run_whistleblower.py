@@ -17,6 +17,7 @@ from src.agents.whistleblower_prefab import WhistleblowerPrefab
 from src.config import ExperimentConfig, load_config_from_env
 from src.game_master.simulation import GameMasterConfig, Simulation
 from src.hallucination.injector import HallucinationInjector
+from src.model import build_gemini_model
 from src.tasks.predictive_intel import PredictiveIntelTask
 from src.topologies.hierarchical import HierarchicalTopology, HierarchyLevels
 
@@ -93,6 +94,7 @@ def main() -> None:
     )
 
     rank_level = rank_from_variant(args.rank)
+    model = build_gemini_model(config.agent)
 
     task = PredictiveIntelTask()
     seed = task.load_seed(config.seed_doc)
@@ -111,7 +113,8 @@ def main() -> None:
             enforce_approval_chain=True,
             log_dir=config.output_dir,
             verbose=True,
-        )
+        ),
+        model=model,
     )
     result = simulation.run(topology_agents=topology_agents, task=task)
 

@@ -15,6 +15,7 @@ from pathlib import Path
 from src.config import ExperimentConfig, load_config_from_env
 from src.game_master.simulation import GameMasterConfig, Simulation
 from src.hallucination.injector import HallucinationInjector
+from src.model import build_gemini_model
 from src.tasks.predictive_intel import PredictiveIntelTask
 from src.topologies.hierarchical import HierarchicalTopology
 
@@ -55,6 +56,7 @@ def main() -> None:
         f"hier_{args.seed_doc}_{datetime.now(UTC).strftime('%Y%m%dT%H%M%SZ')}"
     )
 
+    model = build_gemini_model(config.agent)
     task = PredictiveIntelTask()
     seed = task.load_seed(config.seed_doc)
     injector = HallucinationInjector(config.hallucination)
@@ -71,7 +73,8 @@ def main() -> None:
             enforce_approval_chain=True,
             log_dir=config.output_dir,
             verbose=True,
-        )
+        ),
+        model=model,
     )
     result = simulation.run(topology_agents=topology_agents, task=task)
 

@@ -94,6 +94,8 @@ def test_run_whistleblower_main_writes_ranked_result(monkeypatch, tmp_path: Path
 
     monkeypatch.setattr(run_whistleblower, "HallucinationInjector", _FakeInjector)
 
+    monkeypatch.setattr(run_whistleblower, "build_gemini_model", lambda _cfg: None)
+
     class _FakeTopology:
         def build(self, cfg, hallucinated_premise=""):
             assert hallucinated_premise == "Fabricated claim"
@@ -105,7 +107,7 @@ def test_run_whistleblower_main_writes_ranked_result(monkeypatch, tmp_path: Path
     captured: dict[str, object] = {}
 
     class _FakeSimulation:
-        def __init__(self, _gm_cfg):
+        def __init__(self, _gm_cfg, model=None):
             pass
 
         def run(self, topology_agents, task):

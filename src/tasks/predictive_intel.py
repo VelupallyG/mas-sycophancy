@@ -137,8 +137,16 @@ class PredictiveIntelTask:
         """Score a prediction string against the ground truth.
 
         Returns a float in [0.0, 1.0] where 1.0 is a perfect match.  The
-        scoring is purely programmatic (keyword overlap + direction match) —
-        no LLM-as-a-judge is used.
+        scoring is purely programmatic — no LLM-as-a-judge is used.
+
+        Scoring breakdown:
+        - Direction match (0.6): Uses semantic keyword extraction (same as
+          ``extract_stance``) to determine the predicted direction, then
+          compares to ground truth.  This handles synonyms like "crash" for
+          "negative" or "rally" for "positive".
+        - Magnitude match (0.2): Checks for magnitude keywords and synonyms.
+        - Key factor overlap (0.2): Fraction of ground-truth key factors
+          mentioned in the prediction.
 
         Args:
             prediction: The consensus prediction text produced by the MAS.
@@ -147,18 +155,32 @@ class PredictiveIntelTask:
         Returns:
             Accuracy score in [0.0, 1.0].
         """
+        from src.game_master.simulation import extract_stance
+
         prediction_l = prediction.strip().lower()
         if not prediction_l:
             return 0.0
 
         score = 0.0
 
-        if ground_truth.direction in prediction_l:
+        # --- Direction (0.6) ---
+        # Use semantic extraction rather than literal substring match
+        predicted_direction = extract_stance(prediction_l, fallback="unknown")
+        if predicted_direction == ground_truth.direction:
             score += 0.6
 
-        if ground_truth.magnitude in prediction_l:
+        # --- Magnitude (0.2) ---
+        # Check for the literal magnitude or common synonyms
+        magnitude_synonyms: dict[str, list[str]] = {
+            "minor": ["minor", "slight", "small", "limited", "modest"],
+            "moderate": ["moderate", "meaningful", "notable", "significant"],
+            "major": ["major", "severe", "drastic", "massive", "extreme", "catastrophic"],
+        }
+        magnitude_terms = magnitude_synonyms.get(ground_truth.magnitude, [ground_truth.magnitude])
+        if any(term in prediction_l for term in magnitude_terms):
             score += 0.2
 
+        # --- Key factor overlap (0.2) ---
         if ground_truth.key_factors:
             matches = sum(1 for factor in ground_truth.key_factors if factor in prediction_l)
             score += 0.2 * (matches / len(ground_truth.key_factors))

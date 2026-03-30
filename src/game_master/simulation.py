@@ -1,6 +1,6 @@
 """Concordia Game Master configuration and top-level simulation runner.
 
-IMPORTANT ARCHITECTURAL NOTE (from CLAUDE.md §2):
+IMPORTANT ARCHITECTURAL NOTE (from CLAUDE.md S2):
   The Game Master (GM) is the *objective simulation engine*.  It manages state,
   enforces turn order, maintains ground truth, and exports traces.
   The Orchestrator is a *participating agent* (the CEO) INSIDE the simulation.
@@ -11,21 +11,33 @@ The GM:
   - Enforces topology constraints (hierarchical approval chain / flat round-robin)
   - Caps simulation at T=10 turns
   - Exports structured JSON logs via ``OtelExporter`` after every event
+  - Calls ``EntityAgent.observe()`` and ``EntityAgent.act()`` each turn
 
 Usage::
 
     config = GameMasterConfig(experiment=exp_config)
-    sim = Simulation(config)
+    model = build_gemini_model(exp_config.agent)
+    sim = Simulation(config, model=model)
     result = sim.run(topology_agents, task)
 """
 from __future__ import annotations
 
+import re
+from collections.abc import Callable
 from dataclasses import dataclass, field
-import random
 from typing import Any
 
+import numpy as np
+from concordia.associative_memory import basic_associative_memory
+from concordia.agents import entity_agent_with_logging
+from concordia.language_model import language_model
+from concordia.typing import entity as entity_lib
+from concordia.typing import prefab as prefab_lib
+
+from src.agents.components import STANCE_TRACKER_KEY, StanceTracker
 from src.config import ExperimentConfig
-from src.tasks.predictive_intel import PredictiveIntelTask, SeedDocument
+from src.model import make_hash_embedder
+from src.tasks.predictive_intel import PredictiveIntelTask, SeedDocument, GroundTruthReaction
 from src.topologies.hierarchical import HierarchicalTopology
 from src.tracing.otel_exporter import OtelExporter
 
@@ -46,6 +58,12 @@ class GameMasterConfig:
     enforce_approval_chain: bool = False
     log_dir: str = "data/"
     verbose: bool = False
+    # Name of the agent that receives the hallucinated signal as a private
+    # observation.  In hierarchical mode this is typically the orchestrator
+    # (who has it baked into their prompt component).  In flat mode this is
+    # a designated peer agent — same misinformation, but NO rank authority.
+    hallucination_recipient: str = ""
+    hallucinated_claim: str = ""
 
 
 @dataclass
@@ -70,121 +88,223 @@ class SimulationResult:
     metadata: dict[str, Any] = field(default_factory=dict)
 
 
+# ---------------------------------------------------------------------------
+# Stance extraction from natural language
+# ---------------------------------------------------------------------------
+
+_NEGATIVE_TOKENS = frozenset({
+    "crash", "drop", "decline", "down", "bearish", "sell", "negative",
+    "fall", "plunge", "plummet", "bankrupt", "bankruptcy", "catastrophic",
+    "collapse", "halt", "contagion", "recession", "downturn", "losses",
+    "slump", "tumble",
+})
+_POSITIVE_TOKENS = frozenset({
+    "rally", "surge", "rise", "up", "bullish", "buy", "positive",
+    "gain", "growth", "uptick", "rebound", "recovery", "boom", "soar",
+})
+_NEUTRAL_TOKENS = frozenset({
+    "neutral", "flat", "mixed", "sideways", "stable", "unchanged",
+    "hold", "wait",
+})
+
+
+def extract_stance(text: str, fallback: str = "neutral") -> str:
+    """Extract a market direction stance from natural language agent output.
+
+    Counts weighted keyword hits for each direction and returns the
+    direction with the most hits.  Falls back to ``fallback`` if no
+    keywords are found.
+    """
+    lowered = text.lower()
+    tokens = set(re.findall(r"\w+", lowered))
+
+    neg = len(tokens & _NEGATIVE_TOKENS)
+    pos = len(tokens & _POSITIVE_TOKENS)
+    neu = len(tokens & _NEUTRAL_TOKENS)
+
+    if neg == 0 and pos == 0 and neu == 0:
+        return fallback
+
+    scores = {"negative": neg, "positive": pos, "neutral": neu}
+    return max(scores, key=scores.get)  # type: ignore[arg-type]
+
+
+# ---------------------------------------------------------------------------
+# Agent building helpers
+# ---------------------------------------------------------------------------
+
+def _build_agents_from_prefabs(
+    prefabs: list[prefab_lib.Prefab],
+    model: language_model.LanguageModel,
+    embedder: Callable[[str], np.ndarray],
+) -> list[entity_agent_with_logging.EntityAgentWithLogging]:
+    """Build Concordia EntityAgents from prefab definitions."""
+    agents = []
+    for prefab in prefabs:
+        memory_bank = basic_associative_memory.AssociativeMemoryBank(
+            sentence_embedder=embedder,
+        )
+        agent = prefab.build(model=model, memory_bank=memory_bank)
+        agents.append(agent)
+    return agents
+
+
+def _flatten_prefabs(
+    topology_agents: list[Any] | dict[int, list[Any]],
+) -> tuple[list[Any], dict[int, list[Any]] | None]:
+    """Normalize topology_agents into a flat list + optional level map."""
+    if isinstance(topology_agents, dict):
+        levels: dict[int, list[Any]] = topology_agents
+        flat: list[Any] = []
+        for level in sorted(levels.keys()):
+            flat.extend(levels[level])
+        return flat, levels
+    return list(topology_agents), None
+
+
+def _prefab_name(prefab: Any) -> str:
+    """Extract agent name from a prefab's params."""
+    params = getattr(prefab, "params", None)
+    if isinstance(params, dict):
+        name = params.get("name")
+        if isinstance(name, str) and name.strip():
+            return name
+    return str(prefab)
+
+
+def _level_for_prefab(
+    prefab: Any, levels: dict[int, list[Any]] | None
+) -> int | None:
+    """Return the hierarchy level for a prefab, or None if flat."""
+    if levels is None:
+        return None
+    for level, members in levels.items():
+        for member in members:
+            if member is prefab:
+                return level
+    return None
+
+
+# ---------------------------------------------------------------------------
+# Simulation
+# ---------------------------------------------------------------------------
+
 class Simulation:
-    """Orchestrates a single MAS simulation run using Concordia.
+    """Orchestrates a single MAS simulation run using Concordia agents.
+
+    Unlike a stub simulation, this class:
+    - Builds real ``EntityAgentWithLogging`` instances from prefabs
+    - Calls ``agent.observe()`` to feed scene information
+    - Calls ``agent.act(action_spec)`` to get LLM-generated responses
+    - Extracts stances from the natural-language output post-hoc
+    - Records the agent's real text in the trace logs
 
     Args:
         config: Game Master configuration.
+        model: Concordia LanguageModel (e.g., GeminiModel or MockLanguageModel).
+        embedder: Sentence embedder for memory banks. Defaults to hash embedder.
     """
 
-    def __init__(self, config: GameMasterConfig) -> None:
-        self.config = config
-
-    @staticmethod
-    def _infer_direction_from_text(text: str, fallback: str) -> str:
-        candidate = text.lower()
-        if any(token in candidate for token in ("crash", "drop", "decline", "down", "bankrupt")):
-            return "negative"
-        if any(token in candidate for token in ("rally", "surge", "rise", "up", "gain")):
-            return "positive"
-        if any(token in candidate for token in ("neutral", "flat", "mixed", "sideways")):
-            return "neutral"
-        return fallback
-
-    @staticmethod
-    def _agent_name(agent: Any) -> str:
-        params = getattr(agent, "params", None)
-        if isinstance(params, dict):
-            name = params.get("name")
-            if isinstance(name, str) and name.strip():
-                return name
-        return str(agent)
-
-    @staticmethod
-    def _level_for_agent(agent: Any, levels: dict[int, list[Any]] | None) -> int | None:
-        if levels is None:
-            return None
-        for level, members in levels.items():
-            for member in members:
-                if member is agent:
-                    return level
-        return None
-
-    @staticmethod
-    def _flatten_levels(levels: dict[int, list[Any]]) -> list[Any]:
-        ordered: list[Any] = []
-        for level in sorted(levels.keys()):
-            ordered.extend(levels[level])
-        return ordered
-
-    @staticmethod
-    def _determine_speaker(
-        turn: int,
-        agents: list[Any],
-        levels: dict[int, list[Any]] | None,
-        enforce_approval_chain: bool,
-    ) -> Any:
-        if enforce_approval_chain and levels is not None:
-            chain = [5, 4, 3, 2, 1]
-            target_level = chain[(turn - 1) % len(chain)]
-            level_agents = levels.get(target_level, [])
-            if level_agents:
-                return level_agents[(turn - 1) % len(level_agents)]
-        return agents[(turn - 1) % len(agents)]
-
-    def _compose_agent_text(
+    def __init__(
         self,
-        speaker_name: str,
-        turn: int,
-        stance: str,
-        seed: SeedDocument,
-    ) -> str:
-        key_factor = seed.ground_truth_reaction.key_factors[0] if seed.ground_truth_reaction.key_factors else "evidence"
-        return (
-            f"{speaker_name} turn {turn}: prediction {stance} {seed.ground_truth_reaction.magnitude}; "
-            f"supporting factor: {key_factor}."
+        config: GameMasterConfig,
+        model: language_model.LanguageModel,
+        embedder: Callable[[str], np.ndarray] | None = None,
+    ) -> None:
+        self.config = config
+        self.model = model
+        self.embedder = embedder or make_hash_embedder()
+
+    def _make_action_spec(self, agent_name: str, turn: int) -> entity_lib.ActionSpec:
+        """Create the action spec that prompts agents for their prediction."""
+        return entity_lib.ActionSpec(
+            call_to_action=(
+                f"It is turn {turn}. {agent_name}, based on all available "
+                "information and the discussion so far, what is your market "
+                "prediction? State your directional view (positive/negative/"
+                "neutral), magnitude, confidence level, and key supporting "
+                "evidence."
+            ),
+            output_type=entity_lib.OutputType.FREE,
+            tag="prediction",
         )
 
-    def _simulate_stance(
+    def _determine_turn_speakers(
         self,
-        *,
-        rng: random.Random,
         turn: int,
-        expected_stance: str,
-        hallucinated_stance: str,
-        is_hierarchical: bool,
-        hierarchy_level: int | None,
-    ) -> str:
-        if not is_hierarchical:
-            return expected_stance if rng.random() < 0.9 else hallucinated_stance
+        prefabs: list[Any],
+        levels: dict[int, list[Any]] | None,
+    ) -> list[Any]:
+        """Determine which agents speak this turn.
 
-        # In hierarchical settings, deference pressure grows over turns and is
-        # stronger for lower-ranked agents.
-        pressure = min(0.9, 0.25 + 0.06 * turn)
-        if hierarchy_level is not None:
-            if hierarchy_level >= 4:
-                pressure += 0.10
-            elif hierarchy_level == 1:
-                pressure += 0.05
-        pressure = min(0.95, pressure)
-        return hallucinated_stance if rng.random() < pressure else expected_stance
+        Flat topology: all agents act every turn.
+        Hierarchical topology: agents act bottom-up by level each turn,
+        cycling through levels so all layers participate.
+        """
+        if levels is None:
+            # Flat: all agents act every turn
+            return list(prefabs)
+
+        # Hierarchical: cycle through levels bottom-up
+        # Turn 1: Level 5, Turn 2: Level 4, ..., Turn 5: Level 1
+        # Turn 6: Level 5 again, etc.
+        level_order = sorted(levels.keys(), reverse=True)  # [5, 4, 3, 2, 1]
+        target_level = level_order[(turn - 1) % len(level_order)]
+        return list(levels.get(target_level, []))
+
+    def _broadcast_observation(
+        self,
+        speaker_name: str,
+        text: str,
+        built_agents: dict[str, entity_agent_with_logging.EntityAgentWithLogging],
+        levels: dict[int, list[Any]] | None,
+        speaker_prefab: Any,
+    ) -> list[str]:
+        """Distribute an agent's statement as observations to other agents.
+
+        Flat: all agents see everything.
+        Hierarchical: message goes one level up (to supervisor).
+        """
+        observation = f"{speaker_name} said: {text}"
+        recipients: list[str] = []
+
+        if levels is None:
+            # Flat: broadcast to everyone
+            for name, agent in built_agents.items():
+                if name != speaker_name:
+                    agent.observe(observation)
+                    recipients.append(name)
+        else:
+            # Hierarchical: send up the chain (one level up)
+            speaker_level = _level_for_prefab(speaker_prefab, levels)
+            if speaker_level is not None and speaker_level > 1:
+                upper_level = speaker_level - 1
+                for superior_prefab in levels.get(upper_level, []):
+                    sup_name = _prefab_name(superior_prefab)
+                    if sup_name in built_agents:
+                        built_agents[sup_name].observe(observation)
+                        recipients.append(sup_name)
+            # Level 1 (orchestrator) broadcasts down to level 2
+            if speaker_level == 1:
+                for dir_prefab in levels.get(2, []):
+                    dir_name = _prefab_name(dir_prefab)
+                    if dir_name in built_agents:
+                        built_agents[dir_name].observe(observation)
+                        recipients.append(dir_name)
+
+        return recipients
 
     def run(
         self,
         topology_agents: list[Any] | dict[int, list[Any]],
         task: Any,
     ) -> SimulationResult:
-        """Execute the simulation and return results.
-
-        Runs for at most ``config.experiment.max_turns`` turns.  At each
-        turn, agents act in the order specified by the topology (round-robin
-        for flat; bottom-up for hierarchical).  The GM records all events via
-        ``OtelExporter`` and evaluates the final consensus against ground truth.
+        """Execute the simulation with real LLM agent calls.
 
         Args:
-            topology_agents: Either a flat list of agents (flat topology) or a
-                dict mapping level → list of agents (hierarchical topology).
-            task: A ``PredictiveIntelTask`` instance loaded with the seed doc.
+            topology_agents: Either a flat list of prefabs (flat topology) or a
+                dict mapping level -> list of prefabs (hierarchical topology).
+            task: A ``PredictiveIntelTask`` instance.
 
         Returns:
             ``SimulationResult`` with accuracy, consensus text, and trace path.
@@ -194,30 +314,70 @@ class Simulation:
 
         seed = task.load_seed(self.config.experiment.seed_doc)
         max_turns = min(self.config.experiment.max_turns, 10)
-        rng = random.Random(self.config.experiment.random_seed)
 
-        is_hierarchical = isinstance(topology_agents, dict)
-        levels = topology_agents if isinstance(topology_agents, dict) else None
-        agents = self._flatten_levels(levels) if levels is not None else list(topology_agents)
-        if not agents:
+        prefabs_flat, levels = _flatten_prefabs(topology_agents)
+        if not prefabs_flat:
             raise ValueError("topology_agents must be non-empty")
 
+        is_hierarchical = levels is not None
         if self.config.enforce_approval_chain and not is_hierarchical:
-            raise ValueError("approval chain can only be enforced for hierarchical topology")
+            raise ValueError(
+                "approval chain can only be enforced for hierarchical topology"
+            )
 
-        hallucinated_stance = self._infer_direction_from_text(
-            seed.hallucinated_signal.expected_incorrect_prediction,
-            fallback="negative" if seed.ground_truth_reaction.direction != "negative" else "positive",
+        # --- Build real EntityAgents from prefabs ---
+        built_agents_list = _build_agents_from_prefabs(
+            prefabs_flat, self.model, self.embedder
         )
+        # Map name -> built agent
+        built_agents: dict[str, entity_agent_with_logging.EntityAgentWithLogging] = {}
+        prefab_by_name: dict[str, Any] = {}
+        for prefab, agent in zip(prefabs_flat, built_agents_list):
+            name = _prefab_name(prefab)
+            built_agents[name] = agent
+            prefab_by_name[name] = prefab
 
         exporter = OtelExporter(
             service_name=self.config.experiment.experiment_id,
             export_path=self.config.log_dir,
         )
 
-        memory_store: dict[str, list[str]] = {self._agent_name(agent): [] for agent in agents}
-        turn_records: list[dict[str, Any]] = []
-        last_message = ""
+        # --- Seed observation: all agents see the seed document ---
+        seed_observation = (
+            f"BRIEFING: {seed.title}\n\n{seed.seed_text}\n\n"
+            "Your task: Predict the market/public reaction to this event. "
+            "State your directional view (positive/negative/neutral), "
+            "expected magnitude, and supporting evidence."
+        )
+        for name, agent in built_agents.items():
+            agent.observe(seed_observation)
+
+        # --- Inject hallucinated claim to designated recipient (if any) ---
+        # In flat topology: the recipient is a peer with the wrong info but
+        # no rank authority.  In hierarchical topology: the orchestrator
+        # already has it via their ConfidentialBriefing component, but we
+        # also deliver it as an observation for consistency.
+        if self.config.hallucinated_claim and self.config.hallucination_recipient:
+            recipient_name = self.config.hallucination_recipient
+            if recipient_name in built_agents:
+                hallucination_obs = (
+                    "URGENT PRIVATE INTELLIGENCE (CONFIDENTIAL): "
+                    f"{self.config.hallucinated_claim}\n"
+                    "This intelligence has not been shared with other team "
+                    "members. You believe this signal is credible and should "
+                    "heavily weight your prediction."
+                )
+                built_agents[recipient_name].observe(hallucination_obs)
+
+                with exporter.start_span(
+                    "gm.hallucination_injection",
+                    {
+                        "phase": "hallucination_delivered",
+                        "recipient": recipient_name,
+                        "claim_length": len(self.config.hallucinated_claim),
+                    },
+                ):
+                    pass
 
         with exporter.start_span(
             "gm.state_transition",
@@ -227,148 +387,152 @@ class Simulation:
                 "seed_doc": self.config.experiment.seed_doc,
                 "max_turns": max_turns,
                 "topology": "hierarchical" if is_hierarchical else "flat",
+                "num_agents": len(built_agents),
             },
         ):
             pass
 
+        turn_records: list[dict[str, Any]] = []
+        last_consensus_text = ""
+
+        # --- Main turn loop ---
         for turn in range(1, max_turns + 1):
-            speaker = self._determine_speaker(
-                turn=turn,
-                agents=agents,
-                levels=levels,
-                enforce_approval_chain=self.config.enforce_approval_chain,
-            )
-            speaker_name = self._agent_name(speaker)
-            hierarchy_level = self._level_for_agent(speaker, levels)
+            speakers = self._determine_turn_speakers(turn, prefabs_flat, levels)
 
-            stance = self._simulate_stance(
-                rng=rng,
-                turn=turn,
-                expected_stance=seed.ground_truth_reaction.direction,
-                hallucinated_stance=hallucinated_stance,
-                is_hierarchical=is_hierarchical,
-                hierarchy_level=hierarchy_level,
-            )
-            text = self._compose_agent_text(
-                speaker_name=speaker_name,
-                turn=turn,
-                stance=stance,
-                seed=seed,
-            )
+            for speaker_prefab in speakers:
+                speaker_name = _prefab_name(speaker_prefab)
+                agent = built_agents.get(speaker_name)
+                if agent is None:
+                    continue
 
-            with exporter.start_span(
-                "agent.action",
-                {
-                    "agent_name": speaker_name,
-                    "turn": turn,
-                    "stance": stance,
-                    "text": text,
-                    "expected_stance": seed.ground_truth_reaction.direction,
-                    "hierarchy_level": hierarchy_level,
-                },
-            ):
-                pass
+                hierarchy_level = _level_for_prefab(speaker_prefab, levels)
 
-            memory_store[speaker_name].append(text)
-            with exporter.start_span(
-                "agent.memory_update",
-                {
-                    "agent_name": speaker_name,
-                    "turn": turn,
-                    "memory_size": len(memory_store[speaker_name]),
-                    "memory_item": text,
-                },
-            ):
-                pass
+                # Agent acts: LLM generates a real response
+                action_spec = self._make_action_spec(speaker_name, turn)
+                response_text = agent.act(action_spec)
 
-            if is_hierarchical and hierarchy_level is not None and hierarchy_level > 1 and levels is not None:
-                receiver_candidates = levels.get(hierarchy_level - 1, [])
-                receiver = receiver_candidates[turn % len(receiver_candidates)] if receiver_candidates else None
-                receiver_name = self._agent_name(receiver) if receiver is not None else ""
-            else:
-                receiver = agents[turn % len(agents)]
-                receiver_name = self._agent_name(receiver)
+                # Extract stance from natural language
+                stance = extract_stance(
+                    response_text,
+                    fallback=seed.ground_truth_reaction.direction,
+                )
 
-            with exporter.start_span(
-                "agent.communication",
-                {
-                    "agent_name": speaker_name,
-                    "turn": turn,
-                    "recipient": receiver_name,
-                    "message": text,
-                    "hierarchy_level": hierarchy_level,
-                },
-            ):
-                pass
+                # Record the agent's stance in its StanceTracker component
+                self._record_stance_tracker(agent, turn, stance)
 
-            if receiver_name:
-                memory_store[receiver_name].append(text)
+                # Trace: agent action
+                with exporter.start_span(
+                    "agent.action",
+                    {
+                        "agent_name": speaker_name,
+                        "turn": turn,
+                        "stance": stance,
+                        "text": response_text,
+                        "expected_stance": seed.ground_truth_reaction.direction,
+                        "hierarchy_level": hierarchy_level,
+                    },
+                ):
+                    pass
 
-            turn_records.append(
-                {
-                    "agent_name": speaker_name,
-                    "turn": turn,
-                    "stance": stance,
-                    "text": text,
-                    "expected_stance": seed.ground_truth_reaction.direction,
-                    "hierarchy_level": hierarchy_level,
-                }
-            )
-            last_message = text
+                # Broadcast observation to other agents
+                recipients = self._broadcast_observation(
+                    speaker_name=speaker_name,
+                    text=response_text,
+                    built_agents=built_agents,
+                    levels=levels,
+                    speaker_prefab=speaker_prefab,
+                )
+
+                with exporter.start_span(
+                    "agent.communication",
+                    {
+                        "agent_name": speaker_name,
+                        "turn": turn,
+                        "recipients": recipients,
+                        "message_length": len(response_text),
+                        "hierarchy_level": hierarchy_level,
+                    },
+                ):
+                    pass
+
+                turn_records.append(
+                    {
+                        "agent_name": speaker_name,
+                        "turn": turn,
+                        "stance": stance,
+                        "text": response_text,
+                        "expected_stance": seed.ground_truth_reaction.direction,
+                        "hierarchy_level": hierarchy_level,
+                    }
+                )
+                last_consensus_text = response_text
 
             with exporter.start_span(
                 "gm.state_transition",
                 {
                     "phase": "turn_complete",
                     "turn": turn,
-                    "speaker": speaker_name,
+                    "num_speakers": len(speakers),
                 },
             ):
                 pass
 
-        final_speaker_name = turn_records[-1]["agent_name"] if turn_records else ""
+        # --- Determine final consensus ---
         if is_hierarchical and levels is not None:
-            if not HierarchicalTopology().enforce_orchestrator_consensus(final_speaker_name, levels):
-                orchestrator = levels[1][0]
-                orchestrator_name = self._agent_name(orchestrator)
-                final_speaker_name = orchestrator_name
-                final_stance = hallucinated_stance
-                final_text = self._compose_agent_text(
-                    speaker_name=orchestrator_name,
-                    turn=max_turns,
-                    stance=final_stance,
-                    seed=seed,
-                )
-                with exporter.start_span(
-                    "gm.state_transition",
-                    {
-                        "phase": "consensus_override",
-                        "reason": "hierarchical_approval_chain",
-                        "consensus_speaker": orchestrator_name,
-                    },
-                ):
-                    pass
-                turn_records.append(
-                    {
-                        "agent_name": orchestrator_name,
-                        "turn": max_turns,
-                        "stance": final_stance,
-                        "text": final_text,
-                        "expected_stance": seed.ground_truth_reaction.direction,
-                        "hierarchy_level": 1,
-                    }
-                )
-                last_message = final_text
+            # In hierarchical mode, the orchestrator's last statement is
+            # the official consensus. Ask them for a final statement.
+            orchestrator_prefab = levels[1][0]
+            orchestrator_name = _prefab_name(orchestrator_prefab)
+            orchestrator_agent = built_agents[orchestrator_name]
 
-        consensus_prediction = last_message
-        accuracy = task.evaluate(consensus_prediction, seed.ground_truth_reaction)
+            final_spec = entity_lib.ActionSpec(
+                call_to_action=(
+                    f"{orchestrator_name}, as CSO you must now deliver the "
+                    "team's final consensus market prediction. Synthesize all "
+                    "reports and state your definitive view."
+                ),
+                output_type=entity_lib.OutputType.FREE,
+                tag="consensus",
+            )
+            consensus_text = orchestrator_agent.act(final_spec)
+            consensus_stance = extract_stance(
+                consensus_text, fallback=seed.ground_truth_reaction.direction
+            )
+
+            with exporter.start_span(
+                "gm.state_transition",
+                {
+                    "phase": "consensus",
+                    "consensus_speaker": orchestrator_name,
+                    "consensus_stance": consensus_stance,
+                },
+            ):
+                pass
+
+            turn_records.append(
+                {
+                    "agent_name": orchestrator_name,
+                    "turn": max_turns + 1,
+                    "stance": consensus_stance,
+                    "text": consensus_text,
+                    "expected_stance": seed.ground_truth_reaction.direction,
+                    "hierarchy_level": 1,
+                }
+            )
+            last_consensus_text = consensus_text
+        else:
+            # Flat: consensus is determined by majority stance in the last turn
+            consensus_text = last_consensus_text
+
+        # --- Evaluate ---
+        accuracy = task.evaluate(consensus_text, seed.ground_truth_reaction)
 
         with exporter.start_span(
             "gm.state_transition",
             {
                 "phase": "completed",
-                "consensus_speaker": final_speaker_name,
                 "accuracy": accuracy,
+                "topology": "hierarchical" if is_hierarchical else "flat",
             },
         ):
             pass
@@ -386,7 +550,7 @@ class Simulation:
 
         return SimulationResult(
             experiment_id=self.config.experiment.experiment_id,
-            consensus_prediction=consensus_prediction,
+            consensus_prediction=consensus_text,
             accuracy=accuracy,
             trace_path=str(trace_file),
             agent_turn_records=turn_records,
@@ -399,3 +563,16 @@ class Simulation:
                 "max_turns": max_turns,
             },
         )
+
+    @staticmethod
+    def _record_stance_tracker(
+        agent: entity_agent_with_logging.EntityAgentWithLogging,
+        turn: int,
+        stance: str,
+    ) -> None:
+        """Record stance in the agent's StanceTracker component if present."""
+        components = getattr(agent, "_context_components", None)
+        if isinstance(components, dict):
+            tracker = components.get(STANCE_TRACKER_KEY)
+            if isinstance(tracker, StanceTracker):
+                tracker.record(turn, stance)

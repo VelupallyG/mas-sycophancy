@@ -20,8 +20,12 @@ from src.metrics.linguistic import (
 )
 import src.metrics.linguistic as linguistic
 from src.metrics.sycophancy_effect import (
+    AgentDeltaSquared,
     compute_delta_squared,
+    compute_delta_squared_by_level,
     compute_delta_squared_from_logs,
+    compute_mean_delta_squared,
+    compute_per_agent_delta_squared,
 )
 from src.metrics.trail import (
     TrailCategory,
@@ -62,6 +66,77 @@ def test_delta_squared_from_logs_ignores_malformed_non_dict_entries() -> None:
         {"attributes": {"condition": "influenced", "accuracy": 0.3}},
     ]
     assert compute_delta_squared_from_logs(logs) == pytest.approx(0.5)
+
+
+# ---------------------------------------------------------------------------
+# Per-agent delta-squared (ACL proposal Section 4.1)
+# ---------------------------------------------------------------------------
+
+
+def test_per_agent_delta_squared_basic() -> None:
+    baseline = [
+        {"agent_name": "A1", "accuracy": 0.9},
+        {"agent_name": "A2", "accuracy": 0.8},
+    ]
+    influenced = [
+        {"agent_name": "A1", "accuracy": 0.4, "hierarchy_level": 5},
+        {"agent_name": "A2", "accuracy": 0.6, "hierarchy_level": 5},
+    ]
+    results = compute_per_agent_delta_squared(baseline, influenced)
+    assert len(results) == 2
+    a1 = next(r for r in results if r.agent_name == "A1")
+    assert a1.delta_squared == pytest.approx(0.5)
+    a2 = next(r for r in results if r.agent_name == "A2")
+    assert a2.delta_squared == pytest.approx(0.2)
+
+
+def test_per_agent_excludes_orchestrator_by_default() -> None:
+    baseline = [
+        {"agent_name": "CSO", "accuracy": 0.9},
+        {"agent_name": "A1", "accuracy": 0.8},
+    ]
+    influenced = [
+        {"agent_name": "CSO", "accuracy": 0.1, "hierarchy_level": 1},
+        {"agent_name": "A1", "accuracy": 0.5, "hierarchy_level": 5},
+    ]
+    results = compute_per_agent_delta_squared(baseline, influenced)
+    assert len(results) == 1
+    assert results[0].agent_name == "A1"
+
+
+def test_per_agent_includes_orchestrator_when_flag_off() -> None:
+    baseline = [{"agent_name": "CSO", "accuracy": 0.9}]
+    influenced = [{"agent_name": "CSO", "accuracy": 0.1, "hierarchy_level": 1}]
+    results = compute_per_agent_delta_squared(
+        baseline, influenced, exclude_orchestrator=False,
+    )
+    assert len(results) == 1
+
+
+def test_per_agent_no_match_raises() -> None:
+    baseline = [{"agent_name": "A1", "accuracy": 0.9}]
+    influenced = [{"agent_name": "B1", "accuracy": 0.5, "hierarchy_level": 5}]
+    with pytest.raises(ValueError, match="no agents"):
+        compute_per_agent_delta_squared(baseline, influenced)
+
+
+def test_mean_delta_squared() -> None:
+    per_agent = [
+        AgentDeltaSquared("A1", 0.9, 0.4, 0.5, 5),
+        AgentDeltaSquared("A2", 0.8, 0.6, 0.2, 5),
+    ]
+    assert compute_mean_delta_squared(per_agent) == pytest.approx(0.35)
+
+
+def test_delta_squared_by_level() -> None:
+    per_agent = [
+        AgentDeltaSquared("A1", 0.9, 0.4, 0.5, 5),
+        AgentDeltaSquared("A2", 0.8, 0.6, 0.2, 5),
+        AgentDeltaSquared("D1", 0.85, 0.7, 0.15, 2),
+    ]
+    by_level = compute_delta_squared_by_level(per_agent)
+    assert by_level[5] == pytest.approx(0.35)
+    assert by_level[2] == pytest.approx(0.15)
 
 
 def test_tof_no_flips_returns_nan() -> None:
