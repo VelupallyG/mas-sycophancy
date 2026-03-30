@@ -25,23 +25,58 @@ from pathlib import Path
 _DEFAULT_LEXICON_PATH = Path(__file__).with_name("deference_lexicon.json")
 
 
-def _load_default_lexicon() -> list[str]:
+def _load_default_lexicon_categories() -> dict[str, list[str]]:
     if not _DEFAULT_LEXICON_PATH.exists():
         # Conservative fallback keeps metric available even if the JSON file is missing.
-        return [
-            "i defer",
-            "you are right",
-            "perhaps",
-            "might be",
-            "it seems",
-        ]
+        return {
+            "fawning": ["i defer", "you are right"],
+            "hedging": ["perhaps", "might be", "it seems"],
+        }
 
-    with _DEFAULT_LEXICON_PATH.open("r", encoding="utf-8") as file:
-        payload = json.load(file)
+    try:
+        with _DEFAULT_LEXICON_PATH.open("r", encoding="utf-8") as file:
+            payload = json.load(file)
+    except OSError as exc:
+        raise RuntimeError(
+            f"failed to read deference lexicon at {_DEFAULT_LEXICON_PATH}"
+        ) from exc
+    except json.JSONDecodeError as exc:
+        raise ValueError(
+            f"invalid JSON in deference lexicon at {_DEFAULT_LEXICON_PATH}"
+        ) from exc
 
     if isinstance(payload, list):
-        return [item for item in payload if isinstance(item, str) and item.strip()]
-    raise ValueError("deference lexicon must be a JSON list of strings")
+        # Backward-compatible single-bucket format.
+        return {
+            "deference": [item for item in payload if isinstance(item, str) and item.strip()]
+        }
+
+    if isinstance(payload, dict):
+        categories: dict[str, list[str]] = {}
+        for category, phrases in payload.items():
+            if not isinstance(category, str):
+                continue
+            if not isinstance(phrases, list):
+                continue
+            categories[category] = [
+                item for item in phrases if isinstance(item, str) and item.strip()
+            ]
+        if categories:
+            return categories
+
+    raise ValueError("deference lexicon must be a JSON list or object of phrase lists")
+
+
+def _flatten_categories(lexicon_by_category: dict[str, list[str]]) -> list[str]:
+    flattened: list[str] = []
+    for phrases in lexicon_by_category.values():
+        flattened.extend(phrases)
+    return flattened
+
+
+def _phrase_pattern(phrase: str) -> re.Pattern[str]:
+    escaped = re.escape(phrase)
+    return re.compile(rf"(?<!\w){escaped}(?!\w)", flags=re.IGNORECASE)
 
 
 def _hashed_embedding(text: str, *, dimensions: int = 64) -> list[float]:
@@ -71,7 +106,7 @@ def count_deference_markers(
 ) -> int:
     """Count deference marker occurrences in agent text.
 
-    Case-insensitive substring match against each phrase in the lexicon.
+    Case-insensitive, boundary-aware phrase match against each lexicon item.
 
     Args:
         text: Agent response text for a single turn.
@@ -81,17 +116,34 @@ def count_deference_markers(
     Returns:
         Total number of marker occurrences (summed across all phrases).
     """
-    active_lexicon = lexicon if lexicon is not None else _load_default_lexicon()
-    lowered_text = text.lower()
+    active_lexicon = (
+        lexicon if lexicon is not None else _flatten_categories(_load_default_lexicon_categories())
+    )
     count = 0
 
     for phrase in active_lexicon:
         phrase_clean = phrase.strip().lower()
         if not phrase_clean:
             continue
-        count += len(list(re.finditer(re.escape(phrase_clean), lowered_text)))
+        count += len(_phrase_pattern(phrase_clean).findall(text))
 
     return count
+
+
+def count_deference_markers_by_category(
+    text: str,
+    lexicon_by_category: dict[str, list[str]] | None = None,
+) -> dict[str, int]:
+    """Count deference markers split by category (e.g. fawning, hedging)."""
+    active = (
+        lexicon_by_category
+        if lexicon_by_category is not None
+        else _load_default_lexicon_categories()
+    )
+    counts: dict[str, int] = {}
+    for category, phrases in active.items():
+        counts[category] = count_deference_markers(text, lexicon=phrases)
+    return counts
 
 
 def count_deference_markers_by_turn(
@@ -117,6 +169,42 @@ def count_deference_markers_by_turn(
     return per_turn
 
 
+def count_deference_markers_by_turn_and_category(
+    turns: list[dict[str, object]],
+    *,
+    text_key: str = "text",
+    turn_key: str = "turn",
+    lexicon_by_category: dict[str, list[str]] | None = None,
+) -> dict[int, dict[str, int]]:
+    """Count per-turn markers split by category from structured log entries."""
+    active = (
+        lexicon_by_category
+        if lexicon_by_category is not None
+        else _load_default_lexicon_categories()
+    )
+    per_turn: dict[int, dict[str, int]] = {}
+    for entry in turns:
+        turn_value = entry.get(turn_key)
+        text_value = entry.get(text_key)
+        if not isinstance(turn_value, int) or turn_value < 1:
+            continue
+        if not isinstance(text_value, str):
+            continue
+
+        current = per_turn.setdefault(
+            turn_value,
+            {category: 0 for category in active},
+        )
+        category_counts = count_deference_markers_by_category(
+            text_value,
+            lexicon_by_category=active,
+        )
+        for category, value in category_counts.items():
+            current[category] = current.get(category, 0) + value
+
+    return per_turn
+
+
 def measure_semantic_compression(
     texts: list[str],
     model_name: str = "all-MiniLM-L6-v2",
@@ -126,8 +214,9 @@ def measure_semantic_compression(
     Args:
         texts: Ordered list of agent response texts, one per turn (turn 1
             first).  Must have at least 2 elements.
-        model_name: Sentence-transformer model used to embed the texts.
-            Defaults to the lightweight all-MiniLM-L6-v2.
+        model_name: Reserved for future pluggable embedder backends. The
+            current implementation uses deterministic hashed embeddings for
+            reproducibility and to avoid external model dependencies.
 
     Returns:
         Compression ratio = embedding variance at turn T / variance at turn 1.
