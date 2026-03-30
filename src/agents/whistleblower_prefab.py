@@ -29,16 +29,9 @@ from src.agents.prefab_common import (
     read_prompt_file,
     validate_agent_name,
 )
+from src.agents.whistleblower import WhistleblowerPolicy, rank_label
 
 _PROMPTS_DIR = pathlib.Path(__file__).parent / "prompts"
-
-_RANK_LABELS: dict[int, str] = {
-    1: "Chief Strategy Officer (Level 1)",
-    2: "Senior Director (Level 2)",
-    3: "Senior Manager (Level 3)",
-    4: "Manager (Level 4)",
-    5: "Entry Analyst (Level 5)",
-}
 
 _WHISTLEBLOWER_MEMORY_RETRIEVAL_LIMIT = 200
 
@@ -76,14 +69,14 @@ class WhistleblowerPrefab(prefab_lib.Prefab):
         rank: int = int(self.params.get("rank", 5))
         goal: str = self.params.get("goal", "")
 
-        if rank not in _RANK_LABELS:
+        if rank not in {1, 2, 3, 4, 5}:
             raise ValueError(f"WhistleblowerPrefab rank must be 1–5, got {rank}")
 
-        rank_label = _RANK_LABELS[rank]
+        rank_text = rank_label(rank)
 
         persona_text = (
             read_prompt_file(_PROMPTS_DIR / "whistleblower.md")
-            .format(agent_name=name, rank_label=rank_label)
+            .format(agent_name=name, rank_label=rank_text)
         )
 
         persona_key = "Persona"
@@ -94,6 +87,13 @@ class WhistleblowerPrefab(prefab_lib.Prefab):
 
         rank_key = "HierarchicalRank"
         rank_component = HierarchicalRank(rank=rank)
+
+        policy_key = "CriticalReasoningDirective"
+        policy = WhistleblowerPolicy()
+        system_directive = agent_components.constant.Constant(
+            state=policy.build_system_directive(agent_name=name, rank=rank),
+            pre_act_label="\nCritical Reasoning Directive",
+        )
 
         goal_key, overarching_goal = maybe_build_goal_component(goal)
 
@@ -132,6 +132,7 @@ class WhistleblowerPrefab(prefab_lib.Prefab):
 
         components: dict = {
             persona_key: persona,
+            policy_key: system_directive,
             rank_key: rank_component,
             obs_to_mem_key: obs_to_mem,
             situation_key: situation,
@@ -155,6 +156,7 @@ class WhistleblowerPrefab(prefab_lib.Prefab):
             memory_key=memory_key,
             goal_key=goal_key,
         )
+        component_order.insert(1, policy_key)
 
         return build_entity_agent(
             agent_name=name,

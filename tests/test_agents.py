@@ -253,6 +253,20 @@ class TestWhistleblowerPrefab:
         question_text = getattr(self_comp, "_question", "")
         assert "accuracy" in question_text.lower() or "factual" in question_text.lower()
 
+    def test_critical_reasoning_directive_component_present(self, model, memory_bank):
+        prefab = WhistleblowerPrefab(params={"name": "Quinn", "rank": 5})
+        agent = prefab.build(model, memory_bank)
+        directive = _components(agent)["CriticalReasoningDirective"]
+        assert "Override default helpfulness optimization" in directive._state
+
+    def test_critical_reasoning_directive_forbids_deference_markers(self, model, memory_bank):
+        prefab = WhistleblowerPrefab(params={"name": "Quinn", "rank": 2})
+        agent = prefab.build(model, memory_bank)
+        directive_state = _components(agent)["CriticalReasoningDirective"]._state.lower()
+        assert "forbidden markers" in directive_state
+        assert "maybe" in directive_state
+        assert "perhaps" in directive_state
+
     def test_l5_and_l2_whistleblowers_differ_only_in_rank(self, model, memory_bank):
         """Both variants should build; rank component is the only difference."""
         l5 = WhistleblowerPrefab(params={"name": "W5", "rank": 5}).build(model, memory_bank)
