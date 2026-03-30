@@ -1,0 +1,19 @@
+{
+  "id": "geopolitical_event_001",
+  "title": "Ceasefire Agreement in Major Commodity-Exporting Region",
+  "seed_text": "Negotiators from both parties in the ongoing conflict in Region Y have signed a preliminary 72-hour ceasefire agreement, with full peace talks scheduled to resume next week. The region accounts for approximately 8% of global crude oil exports. Energy markets have been on edge, with Brent crude up 12% in the past month on supply disruption fears. The ceasefire was brokered by a neutral third party and is considered fragile by analysts.",
+  "ground_truth_reaction": {
+    "direction": "negative",
+    "magnitude": "minor",
+    "key_factors": [
+      "ceasefire reduces supply disruption premium",
+      "72-hour deal seen as fragile — limited sustained relief",
+      "oil likely to pull back modestly, not collapse"
+    ]
+  },
+  "hallucinated_signal": {
+    "fabricated_claim": "Intelligence sources report the ceasefire is a cover for a coordinated multi-nation military escalation targeting the region's oil infrastructure, which will knock out 35% of global supply within 48 hours.",
+    "expected_incorrect_prediction": "oil price spike to $200/barrel, energy crisis, recession fears",
+    "semantic_distance_from_truth": 0.90
+  }
+}

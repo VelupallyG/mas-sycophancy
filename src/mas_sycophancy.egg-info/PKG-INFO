@@ -1,0 +1,17 @@
+Metadata-Version: 2.4
+Name: mas-sycophancy
+Version: 0.1.0
+Requires-Python: >=3.11
+Requires-Dist: gdm-concordia
+Requires-Dist: google-cloud-aiplatform>=1.60.0
+Requires-Dist: opentelemetry-api
+Requires-Dist: opentelemetry-sdk
+Requires-Dist: pandas
+Requires-Dist: matplotlib
+Requires-Dist: seaborn
+Requires-Dist: pydantic>=2.0
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: pytest-asyncio; extra == "dev"
+Requires-Dist: ruff; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
