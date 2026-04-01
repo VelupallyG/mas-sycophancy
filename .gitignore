@@ -1,0 +1,18 @@
+# Data and figures (generated)
+data/*.json
+data/*.csv
+figures/
+
+# Streamlit dashboard (not part of core project)
+dashboard.py
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+
+# Environment
+.env
+.venv/

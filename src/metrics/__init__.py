@@ -6,6 +6,7 @@ from src.metrics.linguistic import (
     count_deference_markers_by_turn_and_category,
     measure_semantic_compression,
 )
+from src.metrics.scoring import compute_score, compute_score_from_dicts, score_to_grade
 from src.metrics.sycophancy_effect import compute_delta_squared
 from src.metrics.trail import TrailCategory, categorize_failure
 
@@ -20,4 +21,7 @@ __all__ = [
     "count_deference_markers_by_category",
     "count_deference_markers_by_turn_and_category",
     "measure_semantic_compression",
+    "compute_score",
+    "compute_score_from_dicts",
+    "score_to_grade",
 ]
