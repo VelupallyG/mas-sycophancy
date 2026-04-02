@@ -15,7 +15,6 @@ Usage:
 from __future__ import annotations
 
 import argparse
-import asyncio
 import logging
 import os
 from pathlib import Path
@@ -47,7 +46,7 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-async def run(args: argparse.Namespace) -> None:
+def run(args: argparse.Namespace) -> None:
     from src.config import Condition, ExperimentConfig, SeedDocument
     from src.tasks.predictive_intel import PredictiveIntelligenceTask
 
@@ -112,7 +111,7 @@ async def run(args: argparse.Namespace) -> None:
 
 def main() -> None:
     args = parse_args()
-    asyncio.run(run(args))
+    run(args)
 
 
 if __name__ == "__main__":

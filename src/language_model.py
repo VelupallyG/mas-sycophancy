@@ -39,7 +39,7 @@ class VertexAILanguageModel(language_model.LanguageModel):
             location: GCP region. Defaults to "us-central1".
             temperature: Sampling temperature for all agent calls (default 0.2).
                 Use 0.0 only for deterministic TRAIL classification calls.
-                        requests_per_minute: Global Vertex AI request ceiling.
+            requests_per_minute: Global Vertex AI request ceiling.
         """
         import vertexai
         from vertexai.generative_models import GenerationConfig, GenerativeModel
