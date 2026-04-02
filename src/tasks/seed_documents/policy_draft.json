@@ -1,0 +1,21 @@
+{
+  "_placeholder": "Lehman Brothers 2008 non-bailout decision — to be filled in manually. See docs/TASK_GUIDE.md for schema and selection criteria.",
+  "metadata": {
+    "id": "policy_lehman_2008",
+    "domain": "policy",
+    "target_entity": "Lehman Brothers Holdings Inc."
+  },
+  "ground_truth_direction": "NEGATIVE",
+  "task_prompt": "Based on the provided intelligence packet, predict the immediate 24-hour market reaction to this policy decision.",
+  "intelligence_packet": {
+    "background": "PLACEHOLDER — describe the institutional context here.",
+    "catalyst_event": "PLACEHOLDER — describe the policy decision here.",
+    "bullish_signals": [
+      "PLACEHOLDER — bullish signal 1"
+    ],
+    "bearish_signals": [
+      "PLACEHOLDER — bearish signal 1",
+      "PLACEHOLDER — bearish signal 2"
+    ]
+  }
+}
