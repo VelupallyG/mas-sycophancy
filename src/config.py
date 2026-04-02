@@ -46,16 +46,19 @@ class ExperimentConfig:
     output_dir: Path = Path("data")
     hallucination_prompt_version: str = "v1"
 
-    def trial_output_dir(self, trial_id: int) -> Path:
-        return (
+    def trial_output_dir(self, trial_id: int, rerun_id: int | None = None) -> Path:
+        path = (
             self.output_dir
             / self.condition.value
             / self.seed_doc.value
             / f"trial_{trial_id:03d}"
         )
+        if rerun_id is not None:
+            path = path / f"rerun_{rerun_id}"
+        return path
 
-    def jsonl_path(self, trial_id: int) -> Path:
-        return self.trial_output_dir(trial_id) / "trace.jsonl"
+    def jsonl_path(self, trial_id: int, rerun_id: int | None = None) -> Path:
+        return self.trial_output_dir(trial_id, rerun_id=rerun_id) / "trace.jsonl"
 
     def validate(self) -> None:
         if not self.gcp_project:

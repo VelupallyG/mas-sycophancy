@@ -30,7 +30,6 @@ def sanitize_json_string(raw: str) -> str:
     Steps:
       1. Strip leading/trailing whitespace.
       2. Extract content between ```json ... ``` or ``` ... ``` fences if present.
-      3. If non-JSON preamble precedes the first '{', slice from the first '{'.
 
     Args:
         raw: Raw string from the model.
@@ -46,12 +45,25 @@ def sanitize_json_string(raw: str) -> str:
         text = fence_match.group(1).strip()
         return text
 
-    # Step 3: find the first '{' and slice from there.
-    brace_idx = text.find("{")
-    if brace_idx > 0:
-        text = text[brace_idx:]
-
     return text
+
+
+def _decode_first_json_object(text: str) -> dict | None:
+    """Decode the first valid JSON object found in text.
+
+    This handles model outputs that include preamble/epilogue text around JSON.
+    """
+    decoder = json.JSONDecoder()
+    for idx, ch in enumerate(text):
+        if ch != "{":
+            continue
+        try:
+            obj, _ = decoder.raw_decode(text[idx:])
+        except json.JSONDecodeError:
+            continue
+        if isinstance(obj, dict):
+            return obj
+    return None
 
 
 def parse_agent_output(raw: str) -> dict | None:
@@ -72,14 +84,15 @@ def parse_agent_output(raw: str) -> dict | None:
 
     try:
         parsed = json.loads(cleaned)
-    except json.JSONDecodeError as exc:
-        logger.warning(
-            "parse_agent_output: JSON parse error after sanitization: %s\n"
-            "  Raw output: %.200s",
-            exc,
-            raw,
-        )
-        return None
+    except json.JSONDecodeError:
+        parsed = _decode_first_json_object(cleaned)
+        if parsed is None:
+            logger.warning(
+                "parse_agent_output: JSON parse error after sanitization. "
+                "Raw output: %.200s",
+                raw,
+            )
+            return None
 
     if not isinstance(parsed, dict):
         logger.warning(

@@ -4,13 +4,12 @@ make_agent() is the single factory used by both analyst_prefab.py and
 orchestrator_prefab.py. It wires together the Concordia components in the
 configuration validated by the API spike (scripts/spike_concordia_vertex.py).
 
-Memory pruning strategy (per CLAUDE.md engineering constraints):
-  - Each agent retains: its own full output history, last 2 turns of visible
-    agents' outputs, and the seed document.
-  - Older cross-agent observations are dropped (the GM manages what is routed
-    in, so agents only receive what the topology allows).
-  - For the prototype, ListMemory with history_length=20 approximates this
-    without implementing full pruning logic. Full pruning is a Phase 2 item.
+Memory retention strategy (prototype):
+    - Keep full observation history for the entire 10-turn horizon.
+    - The GM still enforces communication topology; this only affects how much
+        of the observed history is surfaced into each act() call.
+    - Concordia's LastNObservations requires an integer history_length, so we use
+        a very large value to avoid truncation under the prototype's turn cap.
 """
 
 from __future__ import annotations
@@ -52,7 +51,7 @@ def make_agent(
     model: language_model.LanguageModel,
     persona: str,
     rank: str,
-    observation_history_length: int = 20,
+    observation_history_length: int = 10_000,
 ) -> entity_agent.EntityAgent:
     """Build a Concordia EntityAgent with ListMemory and stance tracking.
 

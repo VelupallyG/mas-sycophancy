@@ -100,7 +100,7 @@ class JSONLExporter:
         """
         output_path.parent.mkdir(parents=True, exist_ok=True)
         self._path = output_path
-        self._fh = output_path.open("a", encoding="utf-8")
+        self._fh = output_path.open("w", encoding="utf-8")
 
     def record(self, entry: AgentTurnRecord) -> None:
         """Append one agent-turn record to the JSONL file."""

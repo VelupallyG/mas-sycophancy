@@ -9,7 +9,6 @@ Uses MockModel to avoid API calls. These tests verify:
 from __future__ import annotations
 
 import json
-import tempfile
 from pathlib import Path
 
 import pytest
@@ -106,6 +105,35 @@ class TestFlatTrial:
         valid = {"POSITIVE", "NEGATIVE", "NEUTRAL"}
         for record in records:
             assert record["prediction_direction"] in valid
+
+    def test_trial_id_is_deterministic(self, mock_model, task, tmp_output_dir):
+        config = _make_config(Condition.FLAT_BASELINE, tmp_output_dir)
+        runner = SimulationRunner(model=mock_model, config=config)
+        path = runner.run_flat_trial(task=task, trial_id=0)
+        records = _read_jsonl(path)
+        assert records[0]["trial_id"] == "flat_baseline_tech_earnings_trial_000"
+
+    def test_rerun_output_is_grouped_under_trial_dir(self, mock_model, task, tmp_output_dir):
+        config = _make_config(Condition.FLAT_HALLUCINATION, tmp_output_dir)
+        runner = SimulationRunner(model=mock_model, config=config)
+        path = runner.run_flat_trial(
+            task=task,
+            trial_id=0,
+            inject_hallucination=True,
+            rerun_id=1,
+        )
+        assert "trial_000" in str(path)
+        assert "rerun_1" in str(path)
+
+    def test_rerun_overwrites_existing_trace(self, mock_model, task, tmp_output_dir):
+        n_turns = 2
+        n_agents = 21
+        config = _make_config(Condition.FLAT_BASELINE, tmp_output_dir, n_turns=n_turns)
+        runner = SimulationRunner(model=mock_model, config=config)
+        path = runner.run_flat_trial(task=task, trial_id=0)
+        _ = runner.run_flat_trial(task=task, trial_id=0)
+        records = _read_jsonl(path)
+        assert len(records) == n_agents * n_turns
 
 
 class TestHierarchicalTrial:

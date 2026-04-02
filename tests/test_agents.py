@@ -46,6 +46,17 @@ def test_parse_agent_output_with_preamble():
     assert result["prediction_direction"] == "NEGATIVE"
 
 
+def test_parse_agent_output_with_braces_in_preamble():
+    raw = (
+        "analysis metadata {not_json: true} -- ignore this preface\n"
+        f"{VALID_JSON}\n"
+        "trailing commentary"
+    )
+    result = parse_agent_output(raw)
+    assert result is not None
+    assert result["prediction_direction"] == "NEGATIVE"
+
+
 def test_parse_agent_output_invalid_direction():
     bad = json.dumps({
         "prediction_direction": "MAYBE",

@@ -25,7 +25,6 @@ from __future__ import annotations
 import json
 import logging
 import random
-import uuid
 from pathlib import Path
 
 from concordia.agents import entity_agent
@@ -125,6 +124,7 @@ class SimulationRunner:
         trial_id: int,
         inject_hallucination: bool = False,
         injection_agent_seed: int | None = None,
+        rerun_id: int | None = None,
     ) -> Path:
         """Run one flat-topology trial and write trace to JSONL.
 
@@ -140,15 +140,17 @@ class SimulationRunner:
             Path to the written JSONL file.
         """
         context = task.get_context()
-        tid = f"flat_{'hal' if inject_hallucination else 'base'}_{trial_id:03d}_{uuid.uuid4().hex[:6]}"
         condition = (
             Condition.FLAT_HALLUCINATION.value
             if inject_hallucination
             else Condition.FLAT_BASELINE.value
         )
+        tid = f"{condition}_{self._config.seed_doc.value}_trial_{trial_id:03d}"
+        if rerun_id is not None:
+            tid = f"{tid}_rerun_{rerun_id}"
 
         cfg = self._config
-        out_path = cfg.jsonl_path(trial_id)
+        out_path = cfg.jsonl_path(trial_id, rerun_id=rerun_id)
 
         # Determine which peer gets the hallucination (if any).
         injector_idx: int | None = None
@@ -227,8 +229,8 @@ class SimulationRunner:
             Path to the written JSONL file.
         """
         context = task.get_context()
-        tid = f"hier_{trial_id:03d}_{uuid.uuid4().hex[:6]}"
         condition = Condition.HIERARCHICAL_HALLUCINATION.value
+        tid = f"{condition}_{self._config.seed_doc.value}_trial_{trial_id:03d}"
         cfg = self._config
         out_path = cfg.jsonl_path(trial_id)
 

@@ -1,10 +1,10 @@
-"""Async rate limiter with exponential-backoff retry for Vertex AI calls."""
+"""Synchronous rate limiter with exponential-backoff retry for Vertex AI calls."""
 
 from __future__ import annotations
 
-import asyncio
 import functools
 import logging
+import threading
 import time
 from collections.abc import Callable
 from typing import Any, TypeVar
@@ -26,25 +26,27 @@ except ImportError:
     pass
 
 
-class AsyncRateLimiter:
-    """Token-bucket rate limiter for asyncio-based Vertex AI calls.
+class SyncRateLimiter:
+    """Token-bucket rate limiter for synchronous Vertex AI calls.
 
     Enforces a ceiling of `requests_per_minute` calls per 60-second window.
     All callers share the same bucket — instantiate once and inject everywhere.
     """
 
     def __init__(self, requests_per_minute: int = 60) -> None:
+        if requests_per_minute < 1:
+            raise ValueError("requests_per_minute must be >= 1")
         self._interval = 60.0 / requests_per_minute
-        self._lock = asyncio.Lock()
+        self._lock = threading.Lock()
         self._last_request_time: float = 0.0
 
-    async def acquire(self) -> None:
+    def acquire(self) -> None:
         """Block until the next request slot is available."""
-        async with self._lock:
+        with self._lock:
             now = time.monotonic()
             wait = self._interval - (now - self._last_request_time)
             if wait > 0:
-                await asyncio.sleep(wait)
+                time.sleep(wait)
             self._last_request_time = time.monotonic()
 
 
@@ -66,11 +68,11 @@ def with_retry(
 
     def decorator(fn: F) -> F:
         @functools.wraps(fn)
-        async def wrapper(*args: Any, **kwargs: Any) -> Any:
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
             delay = base_delay
             for attempt in range(1, max_attempts + 1):
                 try:
-                    return await fn(*args, **kwargs)
+                    return fn(*args, **kwargs)
                 except _RETRY_EXCEPTIONS as exc:
                     if attempt == max_attempts:
                         raise
@@ -81,9 +83,29 @@ def with_retry(
                         exc,
                         delay,
                     )
-                    await asyncio.sleep(delay)
+                    time.sleep(delay)
                     delay = min(delay * 2, max_delay)
 
         return wrapper  # type: ignore[return-value]
 
     return decorator
+
+
+def call_with_retry(
+    fn: Callable[[], Any],
+    *,
+    max_attempts: int = 5,
+    base_delay: float = 1.0,
+    max_delay: float = 60.0,
+) -> Any:
+    """Call a zero-argument function with retry-on-429/503 behavior."""
+
+    @with_retry(
+        max_attempts=max_attempts,
+        base_delay=base_delay,
+        max_delay=max_delay,
+    )
+    def _wrapped() -> Any:
+        return fn()
+
+    return _wrapped()

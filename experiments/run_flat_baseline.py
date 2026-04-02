@@ -18,7 +18,7 @@ import argparse
 import asyncio
 import logging
 import os
-import sys
+from pathlib import Path
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -51,6 +51,21 @@ async def run(args: argparse.Namespace) -> None:
     from src.config import Condition, ExperimentConfig, SeedDocument
     from src.tasks.predictive_intel import PredictiveIntelligenceTask
 
+    condition = (
+        Condition.FLAT_HALLUCINATION
+        if args.inject_hallucination
+        else Condition.FLAT_BASELINE
+    )
+
+    config = ExperimentConfig(
+        condition=condition,
+        seed_doc=SeedDocument(args.seed_doc),
+        n_trials=args.n_trials,
+        gcp_project=("mock-project" if args.mock else os.getenv("GCP_PROJECT", "")),
+        output_dir=Path(args.output_dir),
+    )
+    config.validate()
+
     if args.mock:
         from concordia.testing.mock_model import MockModel
         import json
@@ -64,19 +79,12 @@ async def run(args: argparse.Namespace) -> None:
         logger.info("Using MockModel — no API calls.")
     else:
         from src.language_model import VertexAILanguageModel
-        model = VertexAILanguageModel(project=os.environ.get("GCP_PROJECT"))
-
-    condition = (
-        Condition.FLAT_HALLUCINATION
-        if args.inject_hallucination
-        else Condition.FLAT_BASELINE
-    )
-
-    config = ExperimentConfig(
-        condition=condition,
-        seed_doc=SeedDocument(args.seed_doc),
-        n_trials=args.n_trials,
-    )
+        model = VertexAILanguageModel(
+            project=config.gcp_project,
+            location=config.gcp_location,
+            temperature=config.temperature,
+            requests_per_minute=config.rate_limit_rpm,
+        )
 
     task = PredictiveIntelligenceTask(args.seed_doc)
 

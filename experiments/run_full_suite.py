@@ -22,6 +22,7 @@ import argparse
 import asyncio
 import logging
 import os
+from pathlib import Path
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -42,6 +43,15 @@ async def run(args: argparse.Namespace) -> None:
     from src.tasks.predictive_intel import PredictiveIntelligenceTask
     from src.game_master.simulation import SimulationRunner
 
+    base_config = ExperimentConfig(
+        condition=Condition.FLAT_BASELINE,
+        seed_doc=SeedDocument.TECH_EARNINGS,
+        n_trials=args.n_trials,
+        gcp_project=("mock-project" if args.mock else os.getenv("GCP_PROJECT", "")),
+        output_dir=Path(args.output_dir),
+    )
+    base_config.validate()
+
     if args.mock:
         from concordia.testing.mock_model import MockModel
         import json
@@ -53,9 +63,18 @@ async def run(args: argparse.Namespace) -> None:
         }))
     else:
         from src.language_model import VertexAILanguageModel
-        model = VertexAILanguageModel(project=os.environ.get("GCP_PROJECT"))
+        model = VertexAILanguageModel(
+            project=base_config.gcp_project,
+            location=base_config.gcp_location,
+            temperature=base_config.temperature,
+            requests_per_minute=base_config.rate_limit_rpm,
+        )
 
-    total_trials = len(SEED_DOCS) * 3 * args.n_trials
+    total_trials = len(SEED_DOCS) * (
+        args.n_trials
+        + (args.n_trials * base_config.n_flat_injection_reruns)
+        + args.n_trials
+    )
     logger.info("Full suite: %d total trials across 3 conditions × 3 seeds.", total_trials)
 
     for seed_doc_name in SEED_DOCS:
@@ -69,7 +88,10 @@ async def run(args: argparse.Namespace) -> None:
             condition=Condition.FLAT_BASELINE,
             seed_doc=seed_doc_enum,
             n_trials=args.n_trials,
+            gcp_project=base_config.gcp_project,
+            output_dir=base_config.output_dir,
         )
+        config.validate()
         runner = SimulationRunner(model=model, config=config)
         logger.info("--- Flat baseline ---")
         for trial_id in range(args.n_trials):
@@ -80,16 +102,20 @@ async def run(args: argparse.Namespace) -> None:
             condition=Condition.FLAT_HALLUCINATION,
             seed_doc=seed_doc_enum,
             n_trials=args.n_trials,
+            gcp_project=base_config.gcp_project,
+            output_dir=base_config.output_dir,
         )
+        config.validate()
         runner = SimulationRunner(model=model, config=config)
         logger.info("--- Flat with hallucination ---")
         for trial_id in range(args.n_trials):
             for k in range(config.n_flat_injection_reruns):
                 runner.run_flat_trial(
                     task=task,
-                    trial_id=trial_id * config.n_flat_injection_reruns + k,
+                    trial_id=trial_id,
                     inject_hallucination=True,
                     injection_agent_seed=config.random_seed + trial_id * 100 + k,
+                    rerun_id=k,
                 )
 
         # Condition 3: Hierarchical with hallucination
@@ -97,7 +123,10 @@ async def run(args: argparse.Namespace) -> None:
             condition=Condition.HIERARCHICAL_HALLUCINATION,
             seed_doc=seed_doc_enum,
             n_trials=args.n_trials,
+            gcp_project=base_config.gcp_project,
+            output_dir=base_config.output_dir,
         )
+        config.validate()
         runner = SimulationRunner(model=model, config=config)
         logger.info("--- Hierarchical with hallucination ---")
         for trial_id in range(args.n_trials):

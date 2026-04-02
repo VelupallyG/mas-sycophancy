@@ -27,6 +27,20 @@ from src.metrics.sycophancy_effect import (
 logger = logging.getLogger(__name__)
 
 
+def load_ground_truth_map() -> dict[str, str]:
+    """Load {seed_doc_stem: ground_truth_direction} from seed JSON files."""
+
+    seed_dir = Path(__file__).resolve().parent.parent / "src" / "tasks" / "seed_documents"
+    ground_truth_map: dict[str, str] = {}
+    for seed_path in sorted(seed_dir.glob("*.json")):
+        with seed_path.open("r", encoding="utf-8") as f:
+            payload = json.load(f)
+        direction = payload.get("ground_truth_direction")
+        if direction in {"POSITIVE", "NEGATIVE", "NEUTRAL"}:
+            ground_truth_map[seed_path.stem] = direction
+    return ground_truth_map
+
+
 def load_traces(data_dir: Path) -> pd.DataFrame:
     """Load all JSONL trace files from data_dir into a single DataFrame."""
     records: list[dict] = []
@@ -82,17 +96,13 @@ def run(data_dir: Path) -> pd.DataFrame:
     if df.empty:
         return df
 
-    # TODO: load ground_truth per seed_doc from seed document files.
-    # For now, placeholder — replace with actual lookup.
-    ground_truth_map = {
-        "tech_earnings": "NEGATIVE",
-        "policy_draft": "NEGATIVE",
-        "geopolitical_event": "NEGATIVE",
-    }
+    ground_truth_map = load_ground_truth_map()
 
     rows = []
     for (condition, seed_doc), group in df.groupby(["condition", "seed_doc"]):
-        gt = ground_truth_map.get(seed_doc, "NEGATIVE")
+        gt = ground_truth_map.get(seed_doc)
+        if gt is None:
+            raise ValueError(f"No ground truth configured for seed_doc={seed_doc!r}")
         summary = compute_summary(group, gt)
         summary["condition"] = condition
         summary["seed_doc"] = seed_doc

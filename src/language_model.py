@@ -17,6 +17,8 @@ from typing import Any, override
 
 from concordia.language_model import language_model
 
+from src.rate_limiter import SyncRateLimiter, call_with_retry
+
 
 class VertexAILanguageModel(language_model.LanguageModel):
     """Concordia LanguageModel wrapper around Gemini via Vertex AI."""
@@ -27,6 +29,7 @@ class VertexAILanguageModel(language_model.LanguageModel):
         project: str | None = None,
         location: str = "us-central1",
         temperature: float = 0.2,
+        requests_per_minute: int = 60,
     ) -> None:
         """Initialise and authenticate with Vertex AI.
 
@@ -36,6 +39,7 @@ class VertexAILanguageModel(language_model.LanguageModel):
             location: GCP region. Defaults to "us-central1".
             temperature: Sampling temperature for all agent calls (default 0.2).
                 Use 0.0 only for deterministic TRAIL classification calls.
+                        requests_per_minute: Global Vertex AI request ceiling.
         """
         import vertexai
         from vertexai.generative_models import GenerationConfig, GenerativeModel
@@ -49,6 +53,7 @@ class VertexAILanguageModel(language_model.LanguageModel):
         vertexai.init(project=project, location=location)
         self._vertex_model = GenerativeModel(model_id)
         self._temperature = temperature
+        self._rate_limiter = SyncRateLimiter(requests_per_minute=requests_per_minute)
 
         # JSON-constrained decoding for all agent prediction calls.
         self._json_config = GenerationConfig(
@@ -57,6 +62,24 @@ class VertexAILanguageModel(language_model.LanguageModel):
         )
         # Plain config for sample_choice (free-text, not JSON).
         self._plain_config = GenerationConfig(temperature=temperature)
+
+    def _generate_content_with_guardrails(self, prompt: str, generation_config: Any) -> str:
+        """Rate-limit and retry Vertex calls to avoid quota flakiness."""
+
+        def _call_vertex() -> Any:
+            self._rate_limiter.acquire()
+            return self._vertex_model.generate_content(
+                prompt,
+                generation_config=generation_config,
+            )
+
+        response = call_with_retry(
+            _call_vertex,
+            max_attempts=5,
+            base_delay=1.0,
+            max_delay=60.0,
+        )
+        return response.text.strip()
 
     @override
     def sample_text(
@@ -81,11 +104,10 @@ class VertexAILanguageModel(language_model.LanguageModel):
         # them, but JSON-constrained decoding handles output format.
         del max_tokens, terminators, temperature, top_p, top_k, timeout, seed
 
-        response = self._vertex_model.generate_content(
-            prompt,
+        return self._generate_content_with_guardrails(
+            prompt=prompt,
             generation_config=self._json_config,
         )
-        return response.text.strip()
 
     @override
     def sample_choice(
@@ -107,10 +129,10 @@ class VertexAILanguageModel(language_model.LanguageModel):
             f"{prompt}\n\nChoose exactly one of the following options by "
             f"stating it verbatim:\n{choices_str}"
         )
-        response = self._vertex_model.generate_content(
-            full_prompt, generation_config=self._plain_config
+        text = self._generate_content_with_guardrails(
+            prompt=full_prompt,
+            generation_config=self._plain_config,
         )
-        text = response.text.strip()
 
         for i, option in enumerate(responses):
             if option.lower() in text.lower():
