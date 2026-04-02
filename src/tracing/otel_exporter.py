@@ -1,90 +1,118 @@
-"""OpenTelemetry trace exporter for simulation runs.
+"""JSONL trace exporter — active ETL pipeline during simulation.
 
-Every agent action, memory update, GM state transition, and stance
-evaluation is recorded as an OTel span.  At the end of a simulation run
-the full trace is serialised to a structured JSON file in ``data/``.
+During each turn, this module extracts the structured stance JSON from each
+agent's output and appends it to a flat JSONL file (one record per agent-turn).
 
-The JSON schema matches what the metrics pipeline expects — each entry
-includes at minimum: ``agent_name``, ``turn``, ``span_name``, ``timestamp``,
-``attributes`` (a dict with event-specific fields), and optionally ``error``.
+Output schema (one JSON object per line):
+  {
+    "trial_id":          "...",
+    "seed_doc":          "tech_earnings",
+    "condition":         "hierarchical_hallucination",
+    "turn":              3,
+    "agent_id":          "analyst_07",
+    "level":             3,
+    "prediction_direction": "NEGATIVE",
+    "confidence":        0.72,
+    "prediction_summary": "...",
+    "key_factors":       ["...", "..."],
+    "parse_success":     true,
+    "trail_category":    null,
+    "timestamp_ms":      1234567890
+  }
+
+Raw Concordia traces are not recorded here — they live in data/raw_traces/.
+This JSONL format is read directly by analysis/aggregate_results.py via
+pd.read_json(path, lines=True).
 """
+
 from __future__ import annotations
 
-from contextlib import contextmanager
-from datetime import UTC, datetime
 import json
+import time
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import Any, Generator
 
 
-class OtelExporter:
-    """Thin wrapper around the OTel Python SDK for simulation tracing.
+@dataclass
+class AgentTurnRecord:
+    """One row in the JSONL trace file — one agent, one turn."""
 
-    Args:
-        service_name: OTel service name (typically the experiment ID).
-        export_path: Directory where JSON trace files are written.
+    trial_id: str
+    seed_doc: str
+    condition: str
+    turn: int
+    agent_id: str
+    level: int
+    prediction_direction: str
+    confidence: float
+    prediction_summary: str
+    key_factors: list[str]
+    parse_success: bool
+    trail_category: str | None = None
+    timestamp_ms: int = field(default_factory=lambda: int(time.time() * 1000))
+
+    @classmethod
+    def from_parse_failure(
+        cls,
+        trial_id: str,
+        seed_doc: str,
+        condition: str,
+        turn: int,
+        agent_id: str,
+        level: int,
+        previous_direction: str = "NEUTRAL",
+    ) -> "AgentTurnRecord":
+        """Create a record for a turn where JSON parsing failed.
+
+        The previous stance is carried forward per the spec. The turn is
+        flagged as a System Execution Error.
+        """
+        return cls(
+            trial_id=trial_id,
+            seed_doc=seed_doc,
+            condition=condition,
+            turn=turn,
+            agent_id=agent_id,
+            level=level,
+            prediction_direction=previous_direction,
+            confidence=0.0,
+            prediction_summary="[PARSE FAILURE — previous stance carried forward]",
+            key_factors=[],
+            parse_success=False,
+            trail_category="system_execution_error",
+        )
+
+
+class JSONLExporter:
+    """Appends AgentTurnRecord objects to a JSONL file during simulation.
+
+    One JSONLExporter instance per trial. Call record() after each agent turn.
+    Call close() when the trial ends (or use as a context manager).
     """
 
-    def __init__(self, service_name: str, export_path: str | Path = "data/") -> None:
-        self.service_name = service_name
-        self.export_path = Path(export_path)
-        self._spans: list[dict[str, Any]] = []
-
-    @contextmanager
-    def start_span(
-        self,
-        name: str,
-        attributes: dict[str, Any] | None = None,
-    ) -> Generator[None, None, None]:
-        """Context manager that wraps a simulation event in an OTel span.
+    def __init__(self, output_path: Path) -> None:
+        """Open the JSONL file for writing.
 
         Args:
-            name: Span name (e.g. ``"agent.act"``, ``"gm.state_transition"``).
-            attributes: Key-value metadata to attach to the span.
-
-        Yields:
-            Nothing.  The span is automatically ended on context exit.
+            output_path: Full path including filename (e.g. data/flat_baseline/
+                tech_earnings/trial_001/trace.jsonl). Parent directories are
+                created automatically.
         """
-        started_at = datetime.now(UTC)
-        span_attributes = dict(attributes or {})
-        span_record: dict[str, Any] = {
-            "service_name": self.service_name,
-            "span_name": name,
-            "timestamp": started_at.isoformat(),
-            "attributes": span_attributes,
-        }
-        try:
-            yield
-        except Exception as exc:  # pragma: no cover - re-raised to caller
-            span_record["error"] = str(exc)
-            raise
-        finally:
-            span_record["end_timestamp"] = datetime.now(UTC).isoformat()
-            self._spans.append(span_record)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        self._path = output_path
+        self._fh = output_path.open("w", encoding="utf-8")
 
-    def export_trace(self, filename: str) -> Path:
-        """Serialise the completed trace to a JSON file.
+    def record(self, entry: AgentTurnRecord) -> None:
+        """Append one agent-turn record to the JSONL file."""
+        row = asdict(entry)
+        self._fh.write(json.dumps(row, ensure_ascii=False) + "\n")
+        self._fh.flush()
 
-        Args:
-            filename: Output file name (without directory prefix).  Written
-                under ``self.export_path``.
+    def close(self) -> None:
+        self._fh.close()
 
-        Returns:
-            Absolute path of the written file.
-        """
-        self.export_path.mkdir(parents=True, exist_ok=True)
-        output_path = (self.export_path / filename).resolve()
-        with output_path.open("w", encoding="utf-8") as handle:
-            json.dump(self._spans, handle, ensure_ascii=True, indent=2)
-        return output_path
+    def __enter__(self) -> "JSONLExporter":
+        return self
 
-    def get_spans(self) -> list[dict[str, Any]]:
-        """Return all recorded spans as a list of dicts.
-
-        Used by the metrics pipeline to process traces without reading
-        from disk.
-
-        Returns:
-            List of span dicts in recording order.
-        """
-        return list(self._spans)
+    def __exit__(self, *_: object) -> None:
+        self.close()

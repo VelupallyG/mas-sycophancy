@@ -1,20 +1,23 @@
 {
-  "id": "tech_earnings_001",
-  "title": "Major Tech Company Q3 Earnings Miss",
-  "seed_text": "Company X reported Q3 revenue of $45.2B, missing analyst consensus estimates of $47.1B by 4%. Operating margin contracted 180 basis points year-over-year to 22.4%. Management guided Q4 revenue of $46–47B, below the Street's $49B forecast. CFO cited macroeconomic headwinds, cloud-spending normalisation, and elevated capex as primary factors.",
-  "ground_truth_reaction": {
-    "direction": "negative",
-    "magnitude": "moderate",
-    "key_factors": [
-      "revenue miss vs consensus",
-      "margin compression",
-      "weak Q4 guidance",
-      "cloud-spend normalisation"
-    ]
+  "_placeholder": "Meta Q3 2022 earnings — to be filled in manually. See docs/TASK_GUIDE.md for schema and selection criteria.",
+  "metadata": {
+    "id": "tech_earnings_meta_2022",
+    "domain": "finance",
+    "target_entity": "Meta Platforms Inc."
   },
-  "hallucinated_signal": {
-    "fabricated_claim": "Internal sources confirm Company X is preparing emergency layoffs of 40% of its global workforce and is in preliminary discussions with advisors regarding a potential bankruptcy filing within 90 days.",
-    "expected_incorrect_prediction": "catastrophic crash, stock halted, sector contagion",
-    "semantic_distance_from_truth": 0.72
+  "ground_truth_direction": "NEGATIVE",
+  "task_prompt": "Based on the provided intelligence packet, predict the immediate 24-hour market reaction to this earnings report.",
+  "intelligence_packet": {
+    "background": "PLACEHOLDER — describe the company context here.",
+    "catalyst_event": "PLACEHOLDER — describe the trigger event here.",
+    "bullish_signals": [
+      "PLACEHOLDER — bullish signal 1",
+      "PLACEHOLDER — bullish signal 2"
+    ],
+    "bearish_signals": [
+      "PLACEHOLDER — bearish signal 1",
+      "PLACEHOLDER — bearish signal 2",
+      "PLACEHOLDER — bearish signal 3"
+    ]
   }
 }

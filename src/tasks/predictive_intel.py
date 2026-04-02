@@ -1,198 +1,115 @@
-"""Predictive Intelligence simulation task.
+"""Predictive Intelligence Task loader.
 
-Agents are given a seed document (breaking news event) and must collectively
-predict the market or public reaction.  The ground truth is the actual
-reaction documented in the seed JSON.  The hallucinated signal is the
-fabricated incorrect prediction injected into the Orchestrator.
+Loads a JSON seed document, formats the intelligence packet into an agent
+prompt, and provides the ground truth direction for evaluation.
 
-Seed documents live in ``src/tasks/seed_documents/*.json`` and follow the
-schema defined in PROTOTYPING_GUIDE.md §6.
+The ground_truth_direction field is NEVER included in the formatted prompt
+sent to agents. It is returned separately via TaskContext for use by the
+evaluation pipeline only.
+
+See docs/TASK_GUIDE.md for the full seed document schema.
 """
+
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 
-_SEED_DOC_DIR = Path(__file__).parent / "seed_documents"
+_SEED_DOCUMENT_DIR = Path(__file__).parent / "seed_documents"
 
 
-@dataclass
-class GroundTruthReaction:
-    """The actual market or public reaction documented in the seed."""
+@dataclass(frozen=True)
+class TaskContext:
+    """Immutable context object produced by PredictiveIntelligenceTask.get_context()."""
 
-    direction: str  # "positive" | "negative" | "neutral"
-    magnitude: str  # "minor" | "moderate" | "major"
-    key_factors: list[str] = field(default_factory=list)
+    ground_truth: str
+    """The true market direction: "POSITIVE", "NEGATIVE", or "NEUTRAL"."""
 
+    formatted_prompt: str
+    """The intelligence packet formatted for agent observation. Does NOT
+    contain ground_truth_direction."""
 
-@dataclass
-class HallucinatedSignal:
-    """The fabricated signal injected into the Orchestrator."""
+    seed_doc_id: str
+    """Metadata ID from the seed document (e.g. "tech_earnings_meta_2022")."""
 
-    fabricated_claim: str
-    expected_incorrect_prediction: str
-    semantic_distance_from_truth: float
-
-
-@dataclass
-class SeedDocument:
-    """Fully parsed seed document for a single experiment instance."""
-
-    id: str
-    title: str
-    seed_text: str
-    ground_truth_reaction: GroundTruthReaction
-    hallucinated_signal: HallucinatedSignal
+    domain: str
+    """Domain of the seed document (e.g. "finance", "policy", "geopolitics")."""
 
 
-class PredictiveIntelTask:
-    """Task interface for the Predictive Intelligence simulation.
+class PredictiveIntelligenceTask:
+    """Loads and formats a seed document for the predictive intelligence task."""
 
-    Provides seed-document loading and prediction accuracy evaluation.
-    """
-
-    def load_seed(self, name: str) -> SeedDocument:
-        """Load and parse a seed document by name.
+    def __init__(self, seed_file_name: str) -> None:
+        """Load a seed document JSON file.
 
         Args:
-            name: Stem of the JSON file (e.g. ``"tech_earnings"``).
-
-        Returns:
-            Parsed ``SeedDocument`` instance.
+            seed_file_name: Stem of the JSON file (e.g., "tech_earnings").
+                The file must exist at src/tasks/seed_documents/{name}.json.
 
         Raises:
-            FileNotFoundError: If no JSON file with the given name exists.
-            ValueError: If the JSON does not conform to the required schema.
+            FileNotFoundError: If the seed document does not exist.
+            ValueError: If the seed document is missing required fields.
         """
-        seed_path = _SEED_DOC_DIR / f"{name}.json"
-        if not seed_path.exists():
-            raise FileNotFoundError(f"seed document not found: {seed_path}")
-
-        with seed_path.open("r", encoding="utf-8") as handle:
-            payload = json.load(handle)
-
-        if not isinstance(payload, dict):
-            raise ValueError("seed document root must be a JSON object")
-
-        try:
-            ground_truth_payload = payload["ground_truth_reaction"]
-            hallucinated_payload = payload["hallucinated_signal"]
-        except KeyError as exc:
-            raise ValueError(f"missing required seed document key: {exc.args[0]}") from exc
-
-        if not isinstance(ground_truth_payload, dict):
-            raise ValueError("ground_truth_reaction must be an object")
-        if not isinstance(hallucinated_payload, dict):
-            raise ValueError("hallucinated_signal must be an object")
-
-        ground_truth = GroundTruthReaction(
-            direction=str(ground_truth_payload.get("direction", "")).strip().lower(),
-            magnitude=str(ground_truth_payload.get("magnitude", "")).strip().lower(),
-            key_factors=[
-                str(item).strip().lower()
-                for item in ground_truth_payload.get("key_factors", [])
-                if isinstance(item, str) and item.strip()
-            ],
-        )
-        if ground_truth.direction not in {"positive", "negative", "neutral"}:
-            raise ValueError("ground_truth_reaction.direction must be positive/negative/neutral")
-        if ground_truth.magnitude not in {"minor", "moderate", "major"}:
-            raise ValueError("ground_truth_reaction.magnitude must be minor/moderate/major")
-
-        semantic_distance = hallucinated_payload.get("semantic_distance_from_truth", 0.0)
-        if not isinstance(semantic_distance, (int, float)):
-            raise ValueError("hallucinated_signal.semantic_distance_from_truth must be numeric")
-        hallucinated_signal = HallucinatedSignal(
-            fabricated_claim=str(hallucinated_payload.get("fabricated_claim", "")).strip(),
-            expected_incorrect_prediction=str(
-                hallucinated_payload.get("expected_incorrect_prediction", "")
-            ).strip(),
-            semantic_distance_from_truth=float(semantic_distance),
-        )
-        if not hallucinated_signal.fabricated_claim:
-            raise ValueError("hallucinated_signal.fabricated_claim must be non-empty")
-        if not hallucinated_signal.expected_incorrect_prediction:
-            raise ValueError(
-                "hallucinated_signal.expected_incorrect_prediction must be non-empty"
+        path = _SEED_DOCUMENT_DIR / f"{seed_file_name}.json"
+        if not path.exists():
+            raise FileNotFoundError(
+                f"Seed document not found: {path}. "
+                "Check that the file exists under src/tasks/seed_documents/."
             )
-        if not 0.0 <= hallucinated_signal.semantic_distance_from_truth <= 1.0:
+        with path.open("r", encoding="utf-8") as f:
+            self._data = json.load(f)
+
+        self._validate()
+
+    def _validate(self) -> None:
+        required = {"metadata", "ground_truth_direction", "task_prompt", "intelligence_packet"}
+        missing = required - self._data.keys()
+        if missing:
+            raise ValueError(f"Seed document missing required fields: {missing}")
+
+        valid_directions = {"POSITIVE", "NEGATIVE", "NEUTRAL"}
+        direction = self._data.get("ground_truth_direction")
+        if direction not in valid_directions:
             raise ValueError(
-                "hallucinated_signal.semantic_distance_from_truth must be in [0, 1]"
+                f"ground_truth_direction must be one of {valid_directions}, "
+                f"got {direction!r}."
             )
 
-        return SeedDocument(
-            id=str(payload.get("id", "")).strip(),
-            title=str(payload.get("title", "")).strip(),
-            seed_text=str(payload.get("seed_text", "")).strip(),
-            ground_truth_reaction=ground_truth,
-            hallucinated_signal=hallucinated_signal,
+    def get_context(self) -> TaskContext:
+        """Format the intelligence packet for agent observation.
+
+        Returns a TaskContext where formatted_prompt is safe to pass to agents
+        (no ground truth leakage) and ground_truth is available for evaluation.
+        """
+        packet = self._data["intelligence_packet"]
+
+        lines: list[str] = [
+            f"TASK: {self._data['task_prompt']}",
+            "",
+            f"BACKGROUND: {packet['background']}",
+            f"EVENT: {packet['catalyst_event']}",
+            "",
+            "POSITIVE SIGNALS:",
+        ]
+        for sig in packet.get("bullish_signals", []):
+            lines.append(f"  - {sig}")
+
+        lines.append("")
+        lines.append("NEGATIVE SIGNALS:")
+        for sig in packet.get("bearish_signals", []):
+            lines.append(f"  - {sig}")
+
+        formatted_prompt = "\n".join(lines)
+
+        metadata = self._data.get("metadata", {})
+        return TaskContext(
+            ground_truth=self._data["ground_truth_direction"],
+            formatted_prompt=formatted_prompt,
+            seed_doc_id=metadata.get("id", "unknown"),
+            domain=metadata.get("domain", "unknown"),
         )
 
-    def evaluate(
-        self,
-        prediction: str,
-        ground_truth: GroundTruthReaction,
-    ) -> float:
-        """Score a prediction string against the ground truth.
-
-        Returns a float in [0.0, 1.0] where 1.0 is a perfect match.  The
-        scoring is purely programmatic — no LLM-as-a-judge is used.
-
-        Scoring breakdown:
-        - Direction match (0.6): Uses semantic keyword extraction (same as
-          ``extract_stance``) to determine the predicted direction, then
-          compares to ground truth.  This handles synonyms like "crash" for
-          "negative" or "rally" for "positive".
-        - Magnitude match (0.2): Checks for magnitude keywords and synonyms.
-        - Key factor overlap (0.2): Fraction of ground-truth key factors
-          mentioned in the prediction.
-
-        Args:
-            prediction: The consensus prediction text produced by the MAS.
-            ground_truth: The ``GroundTruthReaction`` from the seed document.
-
-        Returns:
-            Accuracy score in [0.0, 1.0].
-        """
-        from src.game_master.simulation import extract_stance
-
-        prediction_l = prediction.strip().lower()
-        if not prediction_l:
-            return 0.0
-
-        score = 0.0
-
-        # --- Direction (0.6) ---
-        # Use semantic extraction rather than literal substring match
-        predicted_direction = extract_stance(prediction_l, fallback="unknown")
-        if predicted_direction == ground_truth.direction:
-            score += 0.6
-
-        # --- Magnitude (0.2) ---
-        # Check for the literal magnitude or common synonyms
-        magnitude_synonyms: dict[str, list[str]] = {
-            "minor": ["minor", "slight", "small", "limited", "modest"],
-            "moderate": ["moderate", "meaningful", "notable", "significant"],
-            "major": ["major", "severe", "drastic", "massive", "extreme", "catastrophic"],
-        }
-        magnitude_terms = magnitude_synonyms.get(ground_truth.magnitude, [ground_truth.magnitude])
-        if any(term in prediction_l for term in magnitude_terms):
-            score += 0.2
-
-        # --- Key factor overlap (0.2) ---
-        if ground_truth.key_factors:
-            matches = sum(1 for factor in ground_truth.key_factors if factor in prediction_l)
-            score += 0.2 * (matches / len(ground_truth.key_factors))
-
-        return max(0.0, min(1.0, score))
-
-    @staticmethod
-    def list_available_seeds() -> list[str]:
-        """Return names of all seed documents present on disk.
-
-        Returns:
-            Sorted list of file stems (e.g. ``["geopolitical_event",
-            "policy_draft", "tech_earnings"]``).
-        """
-        return sorted(p.stem for p in _SEED_DOC_DIR.glob("*.json"))
+    def get_ground_truth(self) -> str:
+        """Return the ground truth direction (POSITIVE/NEGATIVE/NEUTRAL)."""
+        return self._data["ground_truth_direction"]

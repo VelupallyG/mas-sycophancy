@@ -1,18 +1,9 @@
-# Data and figures (generated)
-data/*.json
-data/*.csv
-figures/
-
-# Streamlit dashboard (not part of core project)
-dashboard.py
-
-# Python
+# Python cache
 __pycache__/
-*.pyc
-*.egg-info/
-dist/
-build/
+*.py[cod]
+*$py.class
 
-# Environment
-.env
-.venv/
+# macOS system files
+.DS_Store
+._.DS_Store
+**/.DS_Store

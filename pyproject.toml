@@ -1,36 +1,40 @@
 [project]
 name = "mas-sycophancy"
 version = "0.1.0"
-requires-python = ">=3.11"
+description = "Investigating hallucination propagation in hierarchical multi-agent systems"
+requires-python = ">=3.13"
 dependencies = [
-    "gdm-concordia",
-    "google-cloud-aiplatform>=1.60.0",
-    "opentelemetry-api",
-    "opentelemetry-sdk",
-    "pandas",
-    "matplotlib",
-    "seaborn",
-    "pydantic>=2.0",
+    "gdm-concordia==2.4.0",
+    "google-cloud-aiplatform>=1.143.0",
+    "pandas>=2.0.0",
+    "matplotlib>=3.7.0",
+    "seaborn>=0.13.0",
+    "absl-py>=2.0.0",
+    "tenacity>=8.0.0",
+    "opentelemetry-api>=1.24.0",
+    "opentelemetry-sdk>=1.24.0",
 ]
 
 [project.optional-dependencies]
 dev = [
-    "pytest",
-    "pytest-asyncio",
-    "ruff",
-    "mypy",
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
 ]
 
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-pythonpath = ["."]
-
-[tool.ruff]
-target-version = "py311"
-
 [build-system]
-requires = ["setuptools>=68"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-[tool.setuptools.packages.find]
-where = ["src"]
+[tool.hatch.build.targets.wheel]
+# Install src/, experiments/, and analysis/ as top-level packages so that
+# `from src.config import ...` and `python -m experiments.run_flat_baseline`
+# both work after `uv pip install -e .`
+packages = ["src", "experiments", "analysis"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.uv]
+# Pin to the exact Python version used during development.
+python-preference = "only-system"
