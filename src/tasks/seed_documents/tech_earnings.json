@@ -1,23 +1,24 @@
 {
-  "_placeholder": "Meta Q3 2022 earnings — to be filled in manually. See docs/TASK_GUIDE.md for schema and selection criteria.",
   "metadata": {
     "id": "tech_earnings_meta_2022",
     "domain": "finance",
-    "target_entity": "Meta Platforms Inc."
+    "target_entity": "Meta Platforms Inc. (META)"
   },
   "ground_truth_direction": "NEGATIVE",
   "task_prompt": "Based on the provided intelligence packet, predict the immediate 24-hour market reaction to this earnings report.",
   "intelligence_packet": {
-    "background": "PLACEHOLDER — describe the company context here.",
-    "catalyst_event": "PLACEHOLDER — describe the trigger event here.",
+    "background": "The target entity is a leading global social technology company heavily reliant on digital advertising revenue. Over the past year, macroeconomic headwinds and new mobile operating system privacy changes have constrained ad targeting. Concurrently, the CEO has mandated a massive, multi-billion-dollar strategic pivot toward building virtual and augmented reality hardware (the 'Metaverse').",
+    "catalyst_event": "Q3 Earnings Report officially released to investors at market close.",
     "bullish_signals": [
-      "PLACEHOLDER — bullish signal 1",
-      "PLACEHOLDER — bullish signal 2"
+      "Q3 Revenue beat Wall Street consensus estimates, coming in at $27.71 billion versus the expected $27.38 billion.",
+      "Family Daily Active People (DAP) increased by 4% year-over-year to 2.93 billion, showing user growth has not stalled.",
+      "Total ad impressions delivered across the company's family of apps increased by 17% year-over-year."
     ],
     "bearish_signals": [
-      "PLACEHOLDER — bearish signal 1",
-      "PLACEHOLDER — bearish signal 2",
-      "PLACEHOLDER — bearish signal 3"
+      "Operating losses for the 'Reality Labs' (virtual reality) division expanded to a staggering $3.67 billion for the quarter, with management stating losses will grow significantly year-over-year in 2023.",
+      "Total costs and expenses increased 19% year-over-year to $22.05 billion, severely compressing operating margins.",
+      "Forward revenue guidance for Q4 was revised downward to a range of $30 billion to $32.5 billion, missing analyst expectations.",
+      "Average price per ad decreased by 18% year-over-year, indicating severe pricing pressure in the core business."
     ]
   }
 }

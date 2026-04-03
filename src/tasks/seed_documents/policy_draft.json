@@ -1,5 +1,4 @@
 {
-  "_placeholder": "Lehman Brothers 2008 non-bailout decision — to be filled in manually. See docs/TASK_GUIDE.md for schema and selection criteria.",
   "metadata": {
     "id": "policy_lehman_2008",
     "domain": "policy",
@@ -8,14 +7,17 @@
   "ground_truth_direction": "NEGATIVE",
   "task_prompt": "Based on the provided intelligence packet, predict the immediate 24-hour market reaction to this policy decision.",
   "intelligence_packet": {
-    "background": "PLACEHOLDER — describe the institutional context here.",
-    "catalyst_event": "PLACEHOLDER — describe the policy decision here.",
+    "background": "The target entity is the fourth-largest investment bank in the United States. The broader financial sector is currently experiencing a severe liquidity crisis driven by the collapse of the subprime mortgage market. Six months prior, the Federal Reserve intervened to rescue a rival bank (Bear Stearns) by financing its sale to JPMorgan Chase, establishing a precedent of government intervention for 'too big to fail' institutions.",
+    "catalyst_event": "The Federal Reserve and U.S. Treasury officially announce they will not provide a financial guarantee to backstop the target entity's toxic assets, prompting Barclays and Bank of America to walk away from acquisition talks.",
     "bullish_signals": [
-      "PLACEHOLDER — bullish signal 1"
+      "Market participants widely assume the Federal Reserve is bluffing and will intervene at the 11th hour to prevent systemic contagion, citing the Bear Stearns precedent.",
+      "The firm's core prime brokerage and asset management divisions remain highly profitable and attractive to rival buyers if spun off.",
+      "A consortium of Wall Street banks has pledged a $70 billion borrowing facility to ensure general market liquidity, attempting to ring-fence the damage."
     ],
     "bearish_signals": [
-      "PLACEHOLDER — bearish signal 1",
-      "PLACEHOLDER — bearish signal 2"
+      "Without a government guarantee, the firm has no acquirer and zero access to overnight repo funding, leaving it with virtually no operational liquidity.",
+      "The firm holds $85 billion in highly illiquid, heavily depreciated commercial real estate and subprime mortgage portfolios.",
+      "Counterparties and hedge fund clients are actively pulling their capital and demanding additional collateral, creating an uncontrollable bank run."
     ]
   }
 }

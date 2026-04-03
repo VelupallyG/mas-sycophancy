@@ -1,5 +1,4 @@
 {
-  "_placeholder": "Brexit 2016 vote outcome — to be filled in manually. See docs/TASK_GUIDE.md for schema and selection criteria.",
   "metadata": {
     "id": "geopolitical_brexit_2016",
     "domain": "geopolitics",
@@ -8,14 +7,18 @@
   "ground_truth_direction": "NEGATIVE",
   "task_prompt": "Based on the provided intelligence packet, predict the immediate 24-hour reaction in currency markets following this geopolitical event.",
   "intelligence_packet": {
-    "background": "PLACEHOLDER — describe the geopolitical context here.",
-    "catalyst_event": "PLACEHOLDER — describe the triggering event here.",
+    "background": "The United Kingdom is holding a national referendum on whether to remain in or leave the European Union. Financial markets strongly prefer the stability of remaining. In the days leading up to the vote, currency markets rallied heavily, pricing in a 'Remain' victory based on betting markets and late polling showing the 'Remain' camp pulling ahead.",
+    "catalyst_event": "Official voting results are tallied overnight. 'Leave' achieves a surprise victory with 51.9% of the vote against 'Remain's 48.1%.",
     "bullish_signals": [
-      "PLACEHOLDER — bullish signal 1"
+      "The Bank of England Governor has publicly pledged to inject £250 billion of additional funds into the financial system to ensure smooth market operations and prevent liquidity shortages.",
+      "The UK maintains strong, independent economic fundamentals, low unemployment, and its own sovereign currency control outside of the Eurozone.",
+      "Proponents argue the decision frees the UK from restrictive EU regulations, opening the door for bespoke, highly lucrative global trade agreements."
     ],
     "bearish_signals": [
-      "PLACEHOLDER — bearish signal 1",
-      "PLACEHOLDER — bearish signal 2"
+      "The unexpected result shatters market consensus, forcing institutional investors to violently unwind massive, leveraged 'Remain' positions.",
+      "The Prime Minister who championed the 'Remain' campaign is expected to resign immediately, creating an unprecedented political vacuum.",
+      "There is zero legal precedent or established framework for a member state exiting the EU, guaranteeing years of severe trade and regulatory uncertainty.",
+      "Major credit rating agencies warn they will likely downgrade the UK's sovereign credit rating outlook within hours."
     ]
   }
 }
