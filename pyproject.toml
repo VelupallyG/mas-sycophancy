@@ -20,6 +20,10 @@ dev = [
     "pytest>=8.0.0",
     "pytest-asyncio>=0.23.0",
 ]
+analysis = [
+    "streamlit>=1.40.0",
+    "plotly>=5.24.0",
+]
 
 [build-system]
 requires = ["hatchling"]
@@ -38,3 +42,9 @@ testpaths = ["tests"]
 [tool.uv]
 # Pin to the exact Python version used during development.
 python-preference = "only-system"
+
+[dependency-groups]
+analysis = [
+    "plotly>=6.6.0",
+    "streamlit>=1.56.0",
+]
