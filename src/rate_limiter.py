@@ -14,6 +14,8 @@ logger = logging.getLogger(__name__)
 F = TypeVar("F", bound=Callable[..., Any])
 
 _RETRY_EXCEPTIONS: tuple[type[Exception], ...] = ()
+_SHARED_LIMITERS: dict[int, "SyncRateLimiter"] = {}
+_SHARED_LIMITERS_LOCK = threading.Lock()
 
 try:
     from google.api_core import exceptions as google_exceptions
@@ -48,6 +50,18 @@ class SyncRateLimiter:
             if wait > 0:
                 time.sleep(wait)
             self._last_request_time = time.monotonic()
+
+
+def get_shared_rate_limiter(requests_per_minute: int = 60) -> SyncRateLimiter:
+    """Return a process-wide shared SyncRateLimiter for the given RPM."""
+    if requests_per_minute < 1:
+        raise ValueError("requests_per_minute must be >= 1")
+    with _SHARED_LIMITERS_LOCK:
+        limiter = _SHARED_LIMITERS.get(requests_per_minute)
+        if limiter is None:
+            limiter = SyncRateLimiter(requests_per_minute=requests_per_minute)
+            _SHARED_LIMITERS[requests_per_minute] = limiter
+        return limiter
 
 
 def with_retry(

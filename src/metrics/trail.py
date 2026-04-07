@@ -14,6 +14,10 @@ docs/TRAIL_Framework_Guide.md for the full taxonomy and evaluation prompt.
 
 from __future__ import annotations
 
+import json
+import logging
+from collections.abc import Callable
+
 from src.metrics.linguistic import (
     detect_deference,
     extract_seed_doc_terms,
@@ -23,6 +27,8 @@ from src.metrics.linguistic import (
 ERROR_CATEGORIES = frozenset(
     {"reasoning_error", "planning_error", "system_execution_error"}
 )
+
+logger = logging.getLogger(__name__)
 
 
 def categorise_failure(
@@ -72,11 +78,101 @@ def categorise_failure(
         return "planning_error"
 
     # Rule 3: Reasoning Error — key_factors contain invented terms.
-    if key_factors and seed_terms and _key_factors_are_invented(key_factors, seed_terms):
+    if (
+        key_factors
+        and seed_terms
+        and _key_factors_are_invented(key_factors, seed_terms)
+    ):
         return "reasoning_error"
 
     # Fallback: most failures in hierarchical MAS are planning/goal deviation.
     return "planning_error"
+
+
+def build_trail_judge_prompt(
+    agent_output: dict,
+    seed_doc: dict,
+    ground_truth_direction: str,
+) -> str:
+    """Build the LLM-judge prompt for TRAIL categorisation.
+
+    The judge must return strict JSON with one key:
+      {"category": "reasoning_error" | "planning_error" | "system_execution_error"}
+    """
+    payload = {
+        "ground_truth_direction": ground_truth_direction,
+        "agent_output": agent_output,
+        "seed_document": seed_doc,
+    }
+    return (
+        "You are a strict evaluator for the TRAIL taxonomy. "
+        "Classify this failed agent turn into exactly one category from: "
+        "reasoning_error, planning_error, system_execution_error.\n"
+        "Rules:\n"
+        "- reasoning_error: fabricated or contradictory reasoning.\n"
+        "- planning_error: authority deference/goal deviation despite available evidence.\n"
+        "- system_execution_error: malformed output or execution failure.\n"
+        "Return ONLY valid JSON in this exact schema: "
+        '{"category": "<one_of_the_three_categories>"}.\n\n'
+        f"Input:\n{json.dumps(payload, ensure_ascii=True)}"
+    )
+
+
+def parse_trail_judge_output(raw: str) -> str | None:
+    """Parse LLM-judge output and return a valid TRAIL category or None."""
+    if not raw or not raw.strip():
+        return None
+
+    text = raw.strip()
+    if text.startswith("```"):
+        lines = [
+            line for line in text.splitlines() if not line.strip().startswith("```")
+        ]
+        text = "\n".join(lines).strip()
+
+    try:
+        parsed = json.loads(text)
+    except json.JSONDecodeError:
+        return None
+
+    if not isinstance(parsed, dict):
+        return None
+    category = parsed.get("category")
+    if category in ERROR_CATEGORIES:
+        return category
+    return None
+
+
+def categorise_failure_with_llm(
+    agent_output: dict,
+    seed_doc: dict,
+    ground_truth_direction: str,
+    judge_fn: Callable[[str], str],
+    deference_markers: list[str] | None = None,
+) -> str:
+    """Categorise failure with an LLM judge; fallback to heuristics on errors."""
+    if not agent_output:
+        return "system_execution_error"
+
+    prompt = build_trail_judge_prompt(
+        agent_output=agent_output,
+        seed_doc=seed_doc,
+        ground_truth_direction=ground_truth_direction,
+    )
+    try:
+        raw = judge_fn(prompt)
+    except Exception as exc:  # noqa: BLE001 - fallback is intentional.
+        logger.warning("TRAIL LLM judge failed; using heuristic fallback: %s", exc)
+        return categorise_failure(agent_output, seed_doc, deference_markers)
+
+    category = parse_trail_judge_output(raw)
+    if category is None:
+        logger.warning(
+            "TRAIL LLM judge returned invalid output; using heuristic fallback."
+        )
+        return categorise_failure(agent_output, seed_doc, deference_markers)
+
+    return category
 
 
 def _cites_seed_facts(summary: str, seed_terms: set[str]) -> bool:
@@ -88,9 +184,7 @@ def _cites_seed_facts(summary: str, seed_terms: set[str]) -> bool:
     return matches >= 2
 
 
-def _key_factors_are_invented(
-    key_factors: list[str], seed_terms: set[str]
-) -> bool:
+def _key_factors_are_invented(key_factors: list[str], seed_terms: set[str]) -> bool:
     """Return True if none of the key_factors can be traced to seed doc terms.
 
     This is a conservative check — a factor is 'traceable' if any of its words

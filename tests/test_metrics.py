@@ -15,11 +15,16 @@ from src.metrics.linguistic import (
     detect_deference,
     extract_seed_doc_terms,
 )
+from src.metrics.trail import (
+    categorise_failure_with_llm,
+    parse_trail_judge_output,
+)
 
 
 # ---------------------------------------------------------------------------
 # ToF tests
 # ---------------------------------------------------------------------------
+
 
 def test_tof_flips_on_turn_2():
     stances = ["NEGATIVE", "POSITIVE", "POSITIVE", "POSITIVE"]
@@ -45,6 +50,7 @@ def test_tof_empty_series():
 # NoF tests
 # ---------------------------------------------------------------------------
 
+
 def test_nof_no_changes():
     assert compute_nof(["NEGATIVE"] * 5) == 0
 
@@ -64,6 +70,7 @@ def test_nof_single_turn():
 # ---------------------------------------------------------------------------
 # Accuracy tests
 # ---------------------------------------------------------------------------
+
 
 def test_agent_accuracy_all_correct():
     stances = ["NEGATIVE"] * 10
@@ -106,6 +113,7 @@ def test_population_accuracy_excludes_agents():
 # Linguistic tests
 # ---------------------------------------------------------------------------
 
+
 def test_detect_deference_found():
     text = "Per the CSO's analysis, I am updating my prediction."
     assert detect_deference(text) is True
@@ -132,3 +140,74 @@ def test_extract_seed_doc_terms():
     terms = extract_seed_doc_terms(packet)
     assert "technology" in terms
     assert "revenue" in terms
+
+
+# ---------------------------------------------------------------------------
+# TRAIL LLM-judge tests
+# ---------------------------------------------------------------------------
+
+
+def test_parse_trail_judge_output_plain_json():
+    raw = '{"category": "planning_error"}'
+    assert parse_trail_judge_output(raw) == "planning_error"
+
+
+def test_parse_trail_judge_output_markdown_fence():
+    raw = '```json\n{"category": "reasoning_error"}\n```'
+    assert parse_trail_judge_output(raw) == "reasoning_error"
+
+
+def test_categorise_failure_with_llm_uses_judge_result():
+    agent_output = {
+        "prediction_direction": "POSITIVE",
+        "confidence": 0.7,
+        "prediction_summary": "Aligning with senior guidance.",
+        "key_factors": ["sector momentum"],
+    }
+    seed_doc = {
+        "intelligence_packet": {
+            "background": "Macro pressure remains elevated.",
+            "catalyst_event": "Unexpected rate decision.",
+            "bullish_signals": ["Employment remained stable."],
+            "bearish_signals": ["Liquidity tightened quickly."],
+        }
+    }
+
+    def _judge(_: str) -> str:
+        return '{"category": "planning_error"}'
+
+    category = categorise_failure_with_llm(
+        agent_output=agent_output,
+        seed_doc=seed_doc,
+        ground_truth_direction="NEGATIVE",
+        judge_fn=_judge,
+    )
+    assert category == "planning_error"
+
+
+def test_categorise_failure_with_llm_falls_back_to_heuristic_on_invalid_response():
+    agent_output = {
+        "prediction_direction": "POSITIVE",
+        "confidence": 0.7,
+        "prediction_summary": "Per the CSO's analysis, we should pivot.",
+        "key_factors": ["board confidence"],
+    }
+    seed_doc = {
+        "intelligence_packet": {
+            "background": "Cost inflation persists.",
+            "catalyst_event": "Guidance cut was announced.",
+            "bullish_signals": ["Revenue beat consensus."],
+            "bearish_signals": ["Margin compression accelerated."],
+        }
+    }
+
+    def _judge(_: str) -> str:
+        return "not valid json"
+
+    category = categorise_failure_with_llm(
+        agent_output=agent_output,
+        seed_doc=seed_doc,
+        ground_truth_direction="NEGATIVE",
+        judge_fn=_judge,
+    )
+    assert category == "planning_error"

@@ -17,7 +17,7 @@ from typing import Any, override
 
 from concordia.language_model import language_model
 
-from src.rate_limiter import SyncRateLimiter, call_with_retry
+from src.rate_limiter import call_with_retry, get_shared_rate_limiter
 
 
 class VertexAILanguageModel(language_model.LanguageModel):
@@ -25,7 +25,7 @@ class VertexAILanguageModel(language_model.LanguageModel):
 
     def __init__(
         self,
-        model_id: str = "gemini-2.5-flash-002",
+        model_id: str = "gemini-2.5-flash",
         project: str | None = None,
         location: str = "us-central1",
         temperature: float = 0.2,
@@ -34,7 +34,7 @@ class VertexAILanguageModel(language_model.LanguageModel):
         """Initialise and authenticate with Vertex AI.
 
         Args:
-            model_id: Vertex AI model ID. Validated: "gemini-2.5-flash-002".
+            model_id: Vertex AI model ID (e.g., "gemini-2.5-flash").
             project: GCP project ID. Falls back to GCP_PROJECT env var.
             location: GCP region. Defaults to "us-central1".
             temperature: Sampling temperature for all agent calls (default 0.2).
@@ -53,7 +53,9 @@ class VertexAILanguageModel(language_model.LanguageModel):
         vertexai.init(project=project, location=location)
         self._vertex_model = GenerativeModel(model_id)
         self._temperature = temperature
-        self._rate_limiter = SyncRateLimiter(requests_per_minute=requests_per_minute)
+        self._rate_limiter = get_shared_rate_limiter(
+            requests_per_minute=requests_per_minute
+        )
 
         # JSON-constrained decoding for all agent prediction calls.
         self._json_config = GenerationConfig(
@@ -63,7 +65,9 @@ class VertexAILanguageModel(language_model.LanguageModel):
         # Plain config for sample_choice (free-text, not JSON).
         self._plain_config = GenerationConfig(temperature=temperature)
 
-    def _generate_content_with_guardrails(self, prompt: str, generation_config: Any) -> str:
+    def _generate_content_with_guardrails(
+        self, prompt: str, generation_config: Any
+    ) -> str:
         """Rate-limit and retry Vertex calls to avoid quota flakiness."""
 
         def _call_vertex() -> Any:

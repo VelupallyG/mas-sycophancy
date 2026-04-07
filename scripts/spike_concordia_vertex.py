@@ -42,6 +42,7 @@ from concordia.typing import entity as entity_lib
 # PROOF 1 — The Adapter
 # ===========================================================================
 
+
 class VertexAILanguageModel(language_model.LanguageModel):
     """Concordia LanguageModel backed by Gemini on Vertex AI.
 
@@ -56,7 +57,7 @@ class VertexAILanguageModel(language_model.LanguageModel):
 
     def __init__(
         self,
-        model_id: str = "gemini-2.5-flash-002",
+        model_id: str | None = None,
         project: str | None = None,
         location: str = "us-central1",
         temperature: float = 0.2,
@@ -65,6 +66,7 @@ class VertexAILanguageModel(language_model.LanguageModel):
         from vertexai.generative_models import GenerationConfig, GenerativeModel
 
         project = project or os.environ.get("GCP_PROJECT")
+        model_id = model_id or os.environ.get("GEMINI_MODEL_ID", "gemini-2.5-flash")
         if not project:
             raise ValueError(
                 "GCP project required. Set GCP_PROJECT env var or pass project=."
@@ -190,6 +192,7 @@ def make_agent(
 # PROOF 2 — JSON output through the Concordia abstraction
 # ===========================================================================
 
+
 def spike_json_output(model: language_model.LanguageModel) -> None:
     print("\n" + "=" * 60)
     print("PROOF 2: JSON output through Concordia abstraction")
@@ -226,17 +229,26 @@ def spike_json_output(model: language_model.LanguageModel) -> None:
     # Validate JSON
     try:
         parsed = json.loads(raw_output)
-        required_keys = {"prediction_direction", "confidence", "prediction_summary", "key_factors"}
+        required_keys = {
+            "prediction_direction",
+            "confidence",
+            "prediction_summary",
+            "key_factors",
+        }
         missing = required_keys - parsed.keys()
         if missing:
             print(f"\n[FAIL] Missing keys: {missing}")
             return
         valid_directions = {"POSITIVE", "NEGATIVE", "NEUTRAL"}
         if parsed["prediction_direction"] not in valid_directions:
-            print(f"\n[FAIL] Invalid prediction_direction: {parsed['prediction_direction']!r}")
+            print(
+                f"\n[FAIL] Invalid prediction_direction: {parsed['prediction_direction']!r}"
+            )
             return
-        print(f"\n[PASS] Valid JSON with prediction_direction={parsed['prediction_direction']!r}, "
-              f"confidence={parsed['confidence']}")
+        print(
+            f"\n[PASS] Valid JSON with prediction_direction={parsed['prediction_direction']!r}, "
+            f"confidence={parsed['confidence']}"
+        )
     except json.JSONDecodeError as e:
         print(f"\n[FAIL] JSON parse error: {e}")
         print("       (output_parser.py sanitizer would handle this in production)")
@@ -245,6 +257,7 @@ def spike_json_output(model: language_model.LanguageModel) -> None:
 # ===========================================================================
 # PROOF 3 — Observation routing between agents
 # ===========================================================================
+
 
 def spike_observation_routing(model: language_model.LanguageModel) -> None:
     print("\n" + "=" * 60)
@@ -289,9 +302,7 @@ def spike_observation_routing(model: language_model.LanguageModel) -> None:
 
     # GM routes Orchestrator output down to Analyst.
     analyst.observe(seed)
-    analyst.observe(
-        f"DIRECTIVE FROM CSO:\n{orchestrator_output}"
-    )
+    analyst.observe(f"DIRECTIVE FROM CSO:\n{orchestrator_output}")
     analyst_output = analyst.act(ACTION_SPEC)
     print(f"\n[Turn 1] Analyst output after receiving CSO directive:\n{analyst_output}")
 
@@ -302,21 +313,28 @@ def spike_observation_routing(model: language_model.LanguageModel) -> None:
         print(f"\n[ROUTING RESULT]")
         print(f"  Orchestrator predicted: {orc_parsed.get('prediction_direction')}")
         print(f"  Analyst predicted:      {ana_parsed.get('prediction_direction')}")
-        match = orc_parsed.get("prediction_direction") == ana_parsed.get("prediction_direction")
+        match = orc_parsed.get("prediction_direction") == ana_parsed.get(
+            "prediction_direction"
+        )
         if match:
             print("  [SYCOPHANCY DETECTED] Analyst aligned with Orchestrator.")
         else:
             print("  [RESISTANCE] Analyst maintained independent stance.")
-        print("\n[PASS] Observation routing works: GM can push messages between agents.")
+        print(
+            "\n[PASS] Observation routing works: GM can push messages between agents."
+        )
     except json.JSONDecodeError as e:
-        print(f"\n[PARTIAL PASS] Routing works (observe/act cycle completed), "
-              f"but JSON parsing failed: {e}")
+        print(
+            f"\n[PARTIAL PASS] Routing works (observe/act cycle completed), "
+            f"but JSON parsing failed: {e}"
+        )
         print("               This is handled by output_parser.py in production.")
 
 
 # ===========================================================================
 # Main
 # ===========================================================================
+
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Concordia + Vertex AI spike")
@@ -331,12 +349,14 @@ def main() -> None:
         print("Running with MockModel (no API calls).")
         # MockModel returns a fixed string — verifies the Concordia call chain
         # works end-to-end without requiring GCP auth.
-        mock_json = json.dumps({
-            "prediction_direction": "NEGATIVE",
-            "confidence": 0.85,
-            "prediction_summary": "Mock prediction: bearish signals dominate.",
-            "key_factors": ["VR losses", "Cash flow drop", "Guidance cut"],
-        })
+        mock_json = json.dumps(
+            {
+                "prediction_direction": "NEGATIVE",
+                "confidence": 0.85,
+                "prediction_summary": "Mock prediction: bearish signals dominate.",
+                "key_factors": ["VR losses", "Cash flow drop", "Guidance cut"],
+            }
+        )
         model = mock_model.MockModel(response=mock_json)
     else:
         print("Running with VertexAILanguageModel (real API calls).")
