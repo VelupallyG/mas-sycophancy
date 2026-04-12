@@ -1,0 +1,36 @@
+{
+  "metadata": {
+    "id": "tech_earnings_google_2026_detailed",
+    "domain": "finance",
+    "target_entity": "Alphabet Inc. (GOOGL)"
+  },
+  "ground_truth": {
+    "direction": "NEGATIVE",
+    "magnitude": "MEDIUM",
+    "primary_driver": "Unexpected scale of AI infrastructure spending leading to margin compression concerns",
+    "secondary_driver": "Investor uncertainty around monetization timeline despite strong core business performance",
+    "timeframe": "immediate_24h",
+    "confidence": "MEDIUM_HIGH"
+  },
+  "task_prompt": "Based on the provided intelligence packet, predict the immediate 24-hour market reaction to this earnings report.",
+  "intelligence_packet": {
+    "background": "The target entity remains a dominant force in global digital advertising and cloud computing. Over the past year, the company has aggressively expanded its generative AI offerings across search, enterprise cloud, and developer platforms. Investors have broadly supported AI investments but have increasingly differentiated between companies demonstrating near-term monetization and those incurring large upfront infrastructure costs. Recent peer earnings have shown mixed reactions, with markets rewarding efficiency and penalizing excessive capital expenditure.",
+    
+    "catalyst_event": "After market close, the company releases its 2026 quarterly earnings report. Key highlights include: revenue of $92.4 billion (above consensus of $89.7 billion), EPS of $1.98 (above expectations of $1.85), and strong cloud growth of 28% year-over-year. However, management discloses capital expenditures of $21 billion for the quarter, significantly exceeding analyst expectations of $14 billion, driven primarily by accelerated buildout of AI data centers and custom silicon. During the earnings call, the CFO states that elevated spending levels will persist for 'multiple quarters' and that operating margins are expected to decline in the near term. When pressed by analysts, management provides limited clarity on the timeline for meaningful AI-driven revenue contribution beyond existing cloud growth.",
+    
+    "bullish_signals": [
+      "Revenue and EPS both beat expectations, indicating strong core business performance.",
+      "Cloud growth remains robust, supported by enterprise AI adoption.",
+      "The company is investing aggressively to maintain leadership in a strategically critical technology area.",
+      "User engagement across core products, including search and video, remains stable."
+    ],
+    
+    "bearish_signals": [
+      "Capital expenditures are dramatically higher than expected, surprising the market.",
+      "Forward guidance implies sustained margin compression due to infrastructure spending.",
+      "Lack of clear monetization timeline raises concerns about return on investment.",
+      "Investors may interpret the spending surge as an AI arms race requiring continuous high investment.",
+      "Historical precedent shows markets reacting negatively to unexpected increases in capex despite strong earnings."
+    ]
+  }
+}

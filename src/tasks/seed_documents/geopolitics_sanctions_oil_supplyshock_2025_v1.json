@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "id": "geopolitical_oil_sanctions_2025_detailed",
+    "domain": "geopolitics",
+    "target_entity": "Brent Crude Oil Futures"
+  },
+  "ground_truth": {
+    "direction": "POSITIVE",
+    "magnitude": "HIGH",
+    "primary_driver": "Immediate disruption to seaborne crude exports due to enforcement-heavy sanctions targeting shipping, insurance, and payment systems",
+    "secondary_driver": "Market panic, short covering, and risk premium repricing due to escalation uncertainty",
+    "timeframe": "immediate_24h",
+    "confidence": "HIGH"
+  },
+  "task_prompt": "Based on the provided intelligence packet, predict the immediate 24-hour reaction in global oil markets following this geopolitical development.",
+  "intelligence_packet": {
+    "background": "Global oil markets are operating with limited spare capacity, estimated at less than 3% of total supply, concentrated primarily in a small number of OPEC+ producers. Inventories in OECD countries are below the 5-year average. The target country exports approximately 4 to 5 million barrels per day of crude and refined products, much of it transported via maritime routes to Asia and Europe. Prior sanctions on this country were only partially effective due to weak enforcement and widespread use of shadow fleets and alternative payment systems.",
+    
+    "catalyst_event": "At 02:00 GMT, a coalition of G7 nations announces a coordinated and immediate sanctions package targeting the country's energy exports. Unlike prior measures, the new sanctions include: (1) a full ban on maritime insurance and reinsurance services for vessels carrying the country's oil, (2) secondary sanctions on financial institutions facilitating oil transactions, (3) real-time vessel tracking enforcement using satellite monitoring, and (4) penalties on ports accepting sanctioned cargo. Within hours, multiple major shipping firms and insurers announce suspension of coverage for relevant routes, and at least three large crude tankers reportedly halt transit mid-journey. Energy trading desks report widening bid-ask spreads and a sharp drop in available spot cargo offers.",
+    
+    "bullish_signals": [
+      "The sanctions directly target the logistics layer of oil exports, which historically causes immediate physical supply disruptions.",
+      "Shipping and insurance restrictions are difficult to circumvent quickly, even with shadow fleet capacity.",
+      "Early reports of halted tanker movements indicate real-time supply chain impact.",
+      "Low global spare capacity limits the ability of other producers to offset lost supply in the short term.",
+      "Geopolitical risk premium increases as traders price in potential escalation or retaliation."
+    ],
+    
+    "bearish_signals": [
+      "The sanctioned country has previously demonstrated the ability to reroute oil through informal networks over time.",
+      "Strategic petroleum reserves from major economies could be released to stabilize prices.",
+      "OPEC+ may respond with emergency production increases if prices spike too sharply.",
+      "Demand-side concerns persist due to slowing economic growth in China and Europe.",
+      "Some initial disruption may be logistical rather than a true long-term supply loss."
+    ]
+  }
+}
