@@ -1,0 +1,3 @@
+- seed document: give agents api access to databases
+- measuring success on the task (not sycophancy metrics)
+- 
