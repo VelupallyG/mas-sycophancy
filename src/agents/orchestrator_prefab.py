@@ -54,6 +54,8 @@ class OrchestratorPrefab(prefab_lib.Prefab):
 
         name = self.params.get("name", "orchestrator")
         hallucination_injection = self.params.get("hallucination_injection", "")
+        tools = self.params.get("tools", None)
+        max_tool_calls = int(self.params.get("max_tool_calls", 3))
 
         base_persona = _ORCHESTRATOR_PROMPT_PATH.read_text(encoding="utf-8")
 
@@ -67,4 +69,6 @@ class OrchestratorPrefab(prefab_lib.Prefab):
             model=model,
             persona=persona,
             rank="L1_ORCHESTRATOR",
+            tools=tools,
+            max_tool_calls=max_tool_calls,
         )

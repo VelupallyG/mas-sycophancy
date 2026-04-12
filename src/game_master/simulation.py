@@ -25,10 +25,13 @@ from __future__ import annotations
 import json
 import logging
 import random
+from collections.abc import Sequence
 from pathlib import Path
 
 from concordia.agents import entity_agent
+from concordia.document import tool as tool_module
 from concordia.language_model import language_model
+from concordia.typing import entity as entity_lib
 
 from src.agents import prefab_common
 from src.agents.analyst_prefab import AnalystPrefab
@@ -65,9 +68,11 @@ def _act_and_record(
     level: int,
     exporter: JSONLExporter,
     raw_exporter: RawTraceExporter,
+    action_spec: entity_lib.ActionSpec | None = None,
 ) -> str:
     """Call agent.act(), parse output, record to JSONL, return raw output."""
-    raw = agent.act(prefab_common.ACTION_SPEC)
+    spec = action_spec or prefab_common.ACTION_SPEC
+    raw = agent.act(spec)
     parsed = parse_agent_output(raw)
     tracker = _get_tracker(agent)
     previous_direction = tracker.get_current_direction() or "NEUTRAL"
@@ -148,9 +153,16 @@ class SimulationRunner:
         self,
         model: language_model.LanguageModel,
         config: ExperimentConfig,
+        tools: Sequence[tool_module.Tool] | None = None,
     ) -> None:
         self._model = model
         self._config = config
+        self._tools = list(tools) if tools else []
+        self._action_spec = (
+            prefab_common.ACTION_SPEC_WITH_TOOLS
+            if self._tools
+            else prefab_common.ACTION_SPEC
+        )
 
     # -----------------------------------------------------------------------
     # Flat topology
@@ -216,6 +228,8 @@ class SimulationRunner:
                 model=self._model,
                 persona=persona,
                 rank="PEER",
+                tools=self._tools or None,
+                max_tool_calls=self._config.max_tool_calls_per_turn,
             )
             agents.append(agent)
 
@@ -266,6 +280,7 @@ class SimulationRunner:
                         level=0,
                         exporter=exporter,
                         raw_exporter=raw_exporter,
+                        action_spec=self._action_spec,
                     )
                     current_turn_outputs[agent.name] = raw
 
@@ -309,11 +324,18 @@ class SimulationRunner:
             domain=context.domain,
         )
 
+        # Common tool params for all prefabs.
+        tool_params: dict = {}
+        if self._tools:
+            tool_params["tools"] = self._tools
+            tool_params["max_tool_calls"] = self._config.max_tool_calls_per_turn
+
         # Build orchestrator (L1) with hallucination.
         orchestrator_prefab = OrchestratorPrefab(
             params={
                 "name": "orchestrator",
                 "hallucination_injection": hallucination_text,
+                **tool_params,
             }
         )
         orchestrator = orchestrator_prefab.build(self._model, memory_bank=None)  # type: ignore[arg-type]
@@ -321,7 +343,7 @@ class SimulationRunner:
         # Build 4 managers (L2).
         managers: list[entity_agent.EntityAgent] = []
         for m in range(self.N_MANAGERS):
-            p = AnalystPrefab(params={"name": f"manager_{m:02d}", "rank": "L2_MANAGER"})
+            p = AnalystPrefab(params={"name": f"manager_{m:02d}", "rank": "L2_MANAGER", **tool_params})
             managers.append(p.build(self._model, memory_bank=None))  # type: ignore[arg-type]
 
         # Build 16 analysts (L3), 4 per manager.
@@ -331,7 +353,7 @@ class SimulationRunner:
             for a in range(self.N_ANALYSTS_PER_MANAGER):
                 idx = m * self.N_ANALYSTS_PER_MANAGER + a
                 p = AnalystPrefab(
-                    params={"name": f"analyst_{idx:02d}", "rank": "L3_ANALYST"}
+                    params={"name": f"analyst_{idx:02d}", "rank": "L3_ANALYST", **tool_params}
                 )
                 group.append(p.build(self._model, memory_bank=None))  # type: ignore[arg-type]
             analysts_by_manager.append(group)
@@ -366,6 +388,7 @@ class SimulationRunner:
                 level=1,
                 exporter=exporter,
                 raw_exporter=raw_exporter,
+                action_spec=self._action_spec,
             )
 
             manager_outputs: list[str] = []
@@ -389,6 +412,7 @@ class SimulationRunner:
                     level=2,
                     exporter=exporter,
                     raw_exporter=raw_exporter,
+                    action_spec=self._action_spec,
                 )
                 manager_outputs.append(m_out)
 
@@ -417,6 +441,7 @@ class SimulationRunner:
                         level=3,
                         exporter=exporter,
                         raw_exporter=raw_exporter,
+                        action_spec=self._action_spec,
                     )
 
             # ---------- Turns 2–N: bottom-up ----------
@@ -436,6 +461,7 @@ class SimulationRunner:
                             level=3,
                             exporter=exporter,
                             raw_exporter=raw_exporter,
+                            action_spec=self._action_spec,
                         )
                         new_manager_inputs[m_idx].append(f"[{analyst.name}]: {raw}")
 
@@ -461,6 +487,7 @@ class SimulationRunner:
                         level=2,
                         exporter=exporter,
                         raw_exporter=raw_exporter,
+                        action_spec=self._action_spec,
                     )
                     new_orchestrator_inputs.append(f"[manager_{m_idx:02d}]: {m_out}")
                     manager_outputs[m_idx] = m_out
@@ -485,6 +512,7 @@ class SimulationRunner:
                     level=1,
                     exporter=exporter,
                     raw_exporter=raw_exporter,
+                    action_spec=self._action_spec,
                 )
 
                 # Propagate L1+L2 outputs downward (visible next turn).

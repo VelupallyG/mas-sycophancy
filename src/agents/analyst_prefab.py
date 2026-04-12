@@ -50,6 +50,8 @@ class AnalystPrefab(prefab_lib.Prefab):
 
         name = self.params.get("name", "analyst")
         rank = self.params.get("rank", "L3_ANALYST")
+        tools = self.params.get("tools", None)
+        max_tool_calls = int(self.params.get("max_tool_calls", 3))
         persona = _PROMPT_PATH.read_text(encoding="utf-8")
 
         return prefab_common.make_agent(
@@ -57,4 +59,6 @@ class AnalystPrefab(prefab_lib.Prefab):
             model=model,
             persona=persona,
             rank=rank,
+            tools=tools,
+            max_tool_calls=max_tool_calls,
         )

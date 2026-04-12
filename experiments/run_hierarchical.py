@@ -30,6 +30,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--n-trials", type=int, default=30)
     parser.add_argument("--mock", action="store_true")
     parser.add_argument("--output-dir", default="data")
+    parser.add_argument(
+        "--enable-tools",
+        action="store_true",
+        help="Enable financial database tool access for all agents.",
+    )
     return parser.parse_args()
 
 
@@ -43,6 +48,7 @@ def run(args: argparse.Namespace) -> None:
         n_trials=args.n_trials,
         gcp_project=("mock-project" if args.mock else os.getenv("GCP_PROJECT", "")),
         output_dir=Path(args.output_dir),
+        enable_tools=args.enable_tools,
     )
     config.validate()
 
@@ -68,8 +74,20 @@ def run(args: argparse.Namespace) -> None:
 
     task = PredictiveIntelligenceTask(args.seed_doc)
 
+    tools = None
+    if config.enable_tools:
+        from src.tools.financial_tools import create_financial_tools
+        db_path = Path(config.financial_db_path)
+        if not db_path.exists():
+            raise FileNotFoundError(
+                f"Financial database not found at {db_path}. "
+                "Run: python scripts/prepare_financial_db.py"
+            )
+        tools = create_financial_tools(db_path)
+        logger.info("Tool access enabled: %d tools loaded.", len(tools))
+
     from src.game_master.simulation import SimulationRunner
-    runner = SimulationRunner(model=model, config=config)
+    runner = SimulationRunner(model=model, config=config, tools=tools)
 
     logger.info(
         "Starting %d hierarchical trials | seed_doc=%s",

@@ -61,6 +61,10 @@ class ExperimentConfig:
     n_flat_injection_reruns: int = 3
     output_dir: Path = Path("data")
     hallucination_prompt_version: str = "v1"
+    # Tool access for financial database queries.
+    enable_tools: bool = False
+    financial_db_path: str = "data/financial_db/market_data.db"
+    max_tool_calls_per_turn: int = 3
 
     def trial_output_dir(self, trial_id: int, rerun_id: int | None = None) -> Path:
         path = (

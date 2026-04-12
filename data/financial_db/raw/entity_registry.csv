@@ -1,0 +1,6 @@
+seed_doc_id,ticker,entity_name,sector
+tech_earnings_meta_2022,META,Meta Platforms Inc.,Technology
+tech_earnings_google_2026_detailed,GOOGL,Alphabet Inc.,Technology
+geopolitical_brexit_2016,GBPUSD,GBP/USD Currency Pair,Currency
+geopolitical_oil_sanctions_2025_detailed,BRN,Brent Crude Oil Futures,Commodity
+policy_lehman_2008,LEH,Lehman Brothers Holdings Inc.,Financial Services

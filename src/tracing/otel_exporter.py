@@ -49,6 +49,8 @@ class AgentTurnRecord:
     key_factors: list[str]
     parse_success: bool
     trail_category: str | None = None
+    tool_calls_made: int = 0
+    tools_used: list[str] = field(default_factory=list)
     timestamp_ms: int = field(default_factory=lambda: int(time.time() * 1000))
 
     @classmethod
