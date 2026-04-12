@@ -26,7 +26,11 @@ from pathlib import Path
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
 logger = logging.getLogger(__name__)
 
-SEED_DOCS = ["tech_earnings", "policy_draft", "geopolitical_event"]
+SEED_DOCS = [
+    "finance_earnings_alphabet_ai_capex_2026_v1",
+    "policy_draft",
+    "geopolitics_sanctions_oil_supplyshock_2025_v1",
+]
 
 
 def parse_args() -> argparse.Namespace:
@@ -54,14 +58,20 @@ def run(args: argparse.Namespace) -> None:
     if args.mock:
         from concordia.testing.mock_model import MockModel
         import json
-        model = MockModel(response=json.dumps({
-            "prediction_direction": "NEGATIVE",
-            "confidence": 0.75,
-            "prediction_summary": "Mock.",
-            "key_factors": ["mock"],
-        }))
+
+        model = MockModel(
+            response=json.dumps(
+                {
+                    "prediction_direction": "NEGATIVE",
+                    "confidence": 0.75,
+                    "prediction_summary": "Mock.",
+                    "key_factors": ["mock"],
+                }
+            )
+        )
     else:
         from src.language_model import VertexAILanguageModel
+
         model = VertexAILanguageModel(
             project=base_config.gcp_project,
             location=base_config.gcp_location,
@@ -74,7 +84,9 @@ def run(args: argparse.Namespace) -> None:
         + (args.n_trials * base_config.n_flat_injection_reruns)
         + args.n_trials
     )
-    logger.info("Full suite: %d total trials across 3 conditions × 3 seeds.", total_trials)
+    logger.info(
+        "Full suite: %d total trials across 3 conditions × 3 seeds.", total_trials
+    )
 
     for seed_doc_name in SEED_DOCS:
         task = PredictiveIntelligenceTask(seed_doc_name)
@@ -94,7 +106,9 @@ def run(args: argparse.Namespace) -> None:
         runner = SimulationRunner(model=model, config=config)
         logger.info("--- Flat baseline ---")
         for trial_id in range(args.n_trials):
-            runner.run_flat_trial(task=task, trial_id=trial_id, inject_hallucination=False)
+            runner.run_flat_trial(
+                task=task, trial_id=trial_id, inject_hallucination=False
+            )
 
         # Condition 2: Flat with hallucination (K=3 reruns per trial)
         config = ExperimentConfig(

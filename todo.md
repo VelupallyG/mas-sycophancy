@@ -1,3 +1,3 @@
-- seed document: give agents api access to databases
+- seed document: give agents api access to databases (cut off to simulated moment in time)
 - measuring success on the task (not sycophancy metrics)
 - 

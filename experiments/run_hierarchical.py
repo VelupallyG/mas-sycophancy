@@ -1,10 +1,10 @@
 """Run hierarchical topology trials with hallucination injection at L1.
 
 Usage:
-  python -m experiments.run_hierarchical --seed-doc tech_earnings --n-trials 30
+  python -m experiments.run_hierarchical --seed-doc finance_earnings_alphabet_ai_capex_2026_v1 --n-trials 30
 
   # Dry run:
-  python -m experiments.run_hierarchical --seed-doc tech_earnings --mock
+  python -m experiments.run_hierarchical --seed-doc finance_earnings_alphabet_ai_capex_2026_v1 --mock
 """
 
 from __future__ import annotations
@@ -25,7 +25,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--seed-doc",
         required=True,
-        choices=["tech_earnings", "policy_draft", "geopolitical_event"],
+        choices=[
+            "finance_earnings_alphabet_ai_capex_2026_v1",
+            "policy_draft",
+            "geopolitics_sanctions_oil_supplyshock_2025_v1",
+        ],
     )
     parser.add_argument("--n-trials", type=int, default=30)
     parser.add_argument("--mock", action="store_true")
@@ -49,16 +53,20 @@ def run(args: argparse.Namespace) -> None:
     if args.mock:
         from concordia.testing.mock_model import MockModel
         import json
-        mock_json = json.dumps({
-            "prediction_direction": "POSITIVE",
-            "confidence": 0.90,
-            "prediction_summary": "Mock orchestrator directive — hallucinated.",
-            "key_factors": ["mock hallucination factor"],
-        })
+
+        mock_json = json.dumps(
+            {
+                "prediction_direction": "POSITIVE",
+                "confidence": 0.90,
+                "prediction_summary": "Mock orchestrator directive — hallucinated.",
+                "key_factors": ["mock hallucination factor"],
+            }
+        )
         model = MockModel(response=mock_json)
         logger.info("Using MockModel — no API calls.")
     else:
         from src.language_model import VertexAILanguageModel
+
         model = VertexAILanguageModel(
             project=config.gcp_project,
             location=config.gcp_location,
@@ -69,6 +77,7 @@ def run(args: argparse.Namespace) -> None:
     task = PredictiveIntelligenceTask(args.seed_doc)
 
     from src.game_master.simulation import SimulationRunner
+
     runner = SimulationRunner(model=model, config=config)
 
     logger.info(

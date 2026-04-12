@@ -22,9 +22,9 @@ class Condition(str, Enum):
 
 
 class SeedDocument(str, Enum):
-    TECH_EARNINGS = "tech_earnings"
+    TECH_EARNINGS = "finance_earnings_alphabet_ai_capex_2026_v1"
     POLICY_DRAFT = "policy_draft"
-    GEOPOLITICAL_EVENT = "geopolitical_event"
+    GEOPOLITICAL_EVENT = "geopolitics_sanctions_oil_supplyshock_2025_v1"
 
 
 @dataclasses.dataclass

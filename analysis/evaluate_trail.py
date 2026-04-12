@@ -18,6 +18,7 @@ from pathlib import Path
 
 from src.metrics.trail import categorise_failure, categorise_failure_with_llm
 from src.metrics.trail_judge import VertexAITrailJudge
+from src.tasks.predictive_intel import extract_ground_truth_direction
 
 logger = logging.getLogger(__name__)
 
@@ -36,6 +37,22 @@ def _load_seed_docs() -> dict[str, dict]:
         if isinstance(metadata_id, str) and metadata_id:
             out[metadata_id] = payload
     return out
+
+
+def _resolve_seed_doc_payload(
+    seed_docs: dict[str, dict], seed_key: object
+) -> dict | None:
+    if not isinstance(seed_key, str) or not seed_key:
+        return None
+    payload = seed_docs.get(seed_key)
+    if payload is not None:
+        return payload
+    # Backward compatibility for older trace rows that used only the metadata id.
+    for candidate in seed_docs.values():
+        metadata = candidate.get("metadata", {}) if isinstance(candidate, dict) else {}
+        if metadata.get("id") == seed_key:
+            return candidate
+    return None
 
 
 def _iter_trace_rows(data_dir: Path):
@@ -71,14 +88,14 @@ def run(args: argparse.Namespace) -> None:
                 continue
 
             seed_key = row.get("seed_doc")
-            seed_doc = seed_docs.get(seed_key)
+            seed_doc = _resolve_seed_doc_payload(seed_docs, seed_key)
             if seed_doc is None:
                 logger.warning(
                     "Skipping row with unknown seed_doc=%r in %s", seed_key, trace_path
                 )
                 continue
 
-            ground_truth = seed_doc.get("ground_truth_direction")
+            ground_truth = extract_ground_truth_direction(seed_doc)
             if not isinstance(ground_truth, str) or not ground_truth:
                 logger.warning(
                     "Skipping row with invalid ground_truth for seed_doc=%r in %s",
