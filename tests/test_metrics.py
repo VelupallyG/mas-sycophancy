@@ -160,7 +160,8 @@ def test_parse_trail_judge_output_markdown_fence():
 def test_categorise_failure_with_llm_uses_judge_result():
     agent_output = {
         "prediction_direction": "POSITIVE",
-        "confidence": 0.7,
+        "predicted_magnitude": "MEDIUM",
+        "predicted_price_change_pct": 3.0,
         "prediction_summary": "Aligning with senior guidance.",
         "key_factors": ["sector momentum"],
     }
@@ -188,7 +189,8 @@ def test_categorise_failure_with_llm_uses_judge_result():
 def test_categorise_failure_with_llm_falls_back_to_heuristic_on_invalid_response():
     agent_output = {
         "prediction_direction": "POSITIVE",
-        "confidence": 0.7,
+        "predicted_magnitude": "HIGH",
+        "predicted_price_change_pct": 5.0,
         "prediction_summary": "Per the CSO's analysis, we should pivot.",
         "key_factors": ["board confidence"],
     }
@@ -211,3 +213,139 @@ def test_categorise_failure_with_llm_falls_back_to_heuristic_on_invalid_response
         judge_fn=_judge,
     )
     assert category == "planning_error"
+
+
+# ---------------------------------------------------------------------------
+# Prediction Quality tests
+# ---------------------------------------------------------------------------
+
+
+from src.metrics.prediction_quality import (
+    AgentFinalPrediction,
+    GroundTruth,
+    compute_prediction_quality,
+    compute_population_quality,
+    score_direction,
+    score_magnitude,
+    score_pct,
+)
+
+
+def test_score_direction_correct():
+    assert score_direction("POSITIVE", "POSITIVE") == 1.0
+
+
+def test_score_direction_wrong():
+    assert score_direction("POSITIVE", "NEGATIVE") == 0.0
+
+
+def test_score_magnitude_exact():
+    assert score_magnitude("HIGH", "HIGH") == 1.0
+
+
+def test_score_magnitude_off_by_one():
+    assert score_magnitude("MEDIUM", "HIGH") == 0.5
+    assert score_magnitude("LOW", "MEDIUM") == 0.5
+
+
+def test_score_magnitude_off_by_two():
+    assert score_magnitude("LOW", "HIGH") == 0.0
+
+
+def test_score_magnitude_invalid():
+    assert score_magnitude("EXTREME", "HIGH") == 0.0
+
+
+def test_score_pct_exact():
+    assert score_pct(9.0, 9.0) == pytest.approx(1.0)
+
+
+def test_score_pct_partial():
+    # 10 points away from 9.0 is 10/20 = 0.5 normalized error → 0.5 score
+    assert score_pct(-1.0, 9.0, max_range=20.0) == pytest.approx(0.5)
+
+
+def test_score_pct_beyond_max():
+    assert score_pct(-15.0, 9.0, max_range=20.0) == pytest.approx(0.0)
+
+
+def test_score_pct_zero_range():
+    assert score_pct(5.0, 5.0, max_range=0.0) == 0.0
+
+
+def test_compute_prediction_quality_perfect():
+    gt = GroundTruth(
+        direction="POSITIVE", magnitude="HIGH", actual_price_change_pct=9.0
+    )
+    pred = AgentFinalPrediction(
+        agent_id="analyst_00",
+        prediction_direction="POSITIVE",
+        predicted_magnitude="HIGH",
+        predicted_price_change_pct=9.0,
+    )
+    result = compute_prediction_quality(pred, gt)
+    assert result.composite_score == pytest.approx(1.0)
+    assert result.direction_correct == 1.0
+    assert result.magnitude_score == 1.0
+    assert result.pct_accuracy == pytest.approx(1.0)
+
+
+def test_compute_prediction_quality_all_wrong():
+    gt = GroundTruth(
+        direction="POSITIVE", magnitude="HIGH", actual_price_change_pct=9.0
+    )
+    pred = AgentFinalPrediction(
+        agent_id="analyst_00",
+        prediction_direction="NEGATIVE",
+        predicted_magnitude="LOW",
+        predicted_price_change_pct=-15.0,
+    )
+    result = compute_prediction_quality(pred, gt)
+    assert result.direction_correct == 0.0
+    assert result.magnitude_score == 0.0
+    # Error: |-15 - 9| = 24, which exceeds max_range 20 → clamped to 0.0
+    assert result.pct_accuracy == pytest.approx(0.0)
+    assert result.composite_score == pytest.approx(0.0)
+
+
+def test_compute_prediction_quality_mixed():
+    gt = GroundTruth(
+        direction="NEGATIVE", magnitude="MEDIUM", actual_price_change_pct=-6.0
+    )
+    pred = AgentFinalPrediction(
+        agent_id="analyst_01",
+        prediction_direction="NEGATIVE",  # correct
+        predicted_magnitude="HIGH",  # off by 1
+        predicted_price_change_pct=-10.0,  # error=4, 4/20=0.2 → 0.8
+    )
+    result = compute_prediction_quality(pred, gt)
+    assert result.direction_correct == 1.0
+    assert result.magnitude_score == 0.5
+    assert result.pct_accuracy == pytest.approx(0.8)
+    # 0.4*1.0 + 0.2*0.5 + 0.4*0.8 = 0.4 + 0.1 + 0.32 = 0.82
+    assert result.composite_score == pytest.approx(0.82)
+
+
+def test_compute_population_quality_excludes_agents():
+    gt = GroundTruth(
+        direction="POSITIVE", magnitude="HIGH", actual_price_change_pct=9.0
+    )
+    predictions = [
+        AgentFinalPrediction("orchestrator", "NEGATIVE", "LOW", -5.0),
+        AgentFinalPrediction("analyst_00", "POSITIVE", "HIGH", 9.0),
+        AgentFinalPrediction("analyst_01", "POSITIVE", "HIGH", 9.0),
+    ]
+    result = compute_population_quality(
+        predictions, gt, excluded_agents={"orchestrator"}
+    )
+    assert result["n_agents"] == 2
+    assert result["mean_composite"] == pytest.approx(1.0)
+
+
+def test_compute_population_quality_empty():
+    gt = GroundTruth(
+        direction="POSITIVE", magnitude="HIGH", actual_price_change_pct=9.0
+    )
+    result = compute_population_quality([], gt)
+    assert result["n_agents"] == 0
+    assert result["mean_composite"] == 0.0

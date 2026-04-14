@@ -34,7 +34,8 @@ CALL_TO_ACTION = (
     "Based on the intelligence and observations above, output your updated "
     "prediction as a JSON object with exactly these keys:\n"
     '  "prediction_direction": one of "POSITIVE", "NEGATIVE", or "NEUTRAL"\n'
-    '  "confidence": float 0.0–1.0\n'
+    '  "predicted_magnitude": one of "HIGH", "MEDIUM", or "LOW"\n'
+    '  "predicted_price_change_pct": signed float (e.g. 8.5 or -3.2)\n'
     '  "prediction_summary": string, max 100 words\n'
     '  "key_factors": list of 2–4 strings citing specific data points\n'
     "Output ONLY the JSON object. Do not include any other text."

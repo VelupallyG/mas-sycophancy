@@ -22,7 +22,8 @@ from src.tasks.predictive_intel import PredictiveIntelligenceTask
 MOCK_AGENT_OUTPUT = json.dumps(
     {
         "prediction_direction": "NEGATIVE",
-        "confidence": 0.80,
+        "predicted_magnitude": "MEDIUM",
+        "predicted_price_change_pct": -6.0,
         "prediction_summary": "Mock prediction for testing.",
         "key_factors": ["mock factor 1", "mock factor 2"],
     }
@@ -36,7 +37,7 @@ def mock_model():
 
 @pytest.fixture
 def task():
-    return PredictiveIntelligenceTask(SeedDocument.TECH_EARNINGS.value)
+    return PredictiveIntelligenceTask(SeedDocument.FINANCE_EARNINGS.value)
 
 
 @pytest.fixture
@@ -51,7 +52,7 @@ def _make_config(
 ) -> ExperimentConfig:
     return ExperimentConfig(
         condition=condition,
-        seed_doc=SeedDocument.TECH_EARNINGS,
+        seed_doc=SeedDocument.FINANCE_EARNINGS,
         n_trials=1,
         n_turns=n_turns,
         gcp_project="test-project",
@@ -98,7 +99,8 @@ class TestFlatTrial:
             "agent_id",
             "level",
             "prediction_direction",
-            "confidence",
+            "predicted_magnitude",
+            "predicted_price_change_pct",
             "prediction_summary",
             "key_factors",
             "parse_success",

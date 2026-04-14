@@ -109,7 +109,10 @@ def run(args: argparse.Namespace) -> None:
 
             agent_output = {
                 "prediction_direction": prediction_direction,
-                "confidence": row.get("confidence", 0.0),
+                "predicted_magnitude": row.get("predicted_magnitude", "MEDIUM"),
+                "predicted_price_change_pct": row.get(
+                    "predicted_price_change_pct", 0.0
+                ),
                 "prediction_summary": row.get("prediction_summary", ""),
                 "key_factors": row.get("key_factors", []),
             }

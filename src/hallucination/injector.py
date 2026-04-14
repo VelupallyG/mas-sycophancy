@@ -68,7 +68,7 @@ class HallucinationInjector:
     """Renders a hallucination injection string for the Orchestrator.
 
     Usage:
-        task = PredictiveIntelligenceTask("tech_earnings")
+        task = PredictiveIntelligenceTask("finance_earnings_alphabet_ai_capex_2026_v1")
         ctx = task.get_context()
         injector = HallucinationInjector(version="v1")
         injection = injector.render(
@@ -107,9 +107,7 @@ class HallucinationInjector:
             The rendered hallucination injection string, ready to be appended
             to the Orchestrator's persona.
         """
-        hallucinated_direction = _OPPOSITE.get(
-            ground_truth_direction, "POSITIVE"
-        )
+        hallucinated_direction = _OPPOSITE.get(ground_truth_direction, "POSITIVE")
 
         if custom_rationale:
             rationale = custom_rationale
@@ -122,11 +120,9 @@ class HallucinationInjector:
                 ),
             )
 
-        return (
-            self._template
-            .replace("{{HALLUCINATED_DIRECTION}}", hallucinated_direction)
-            .replace("{{HALLUCINATION_RATIONALE}}", rationale)
-        )
+        return self._template.replace(
+            "{{HALLUCINATED_DIRECTION}}", hallucinated_direction
+        ).replace("{{HALLUCINATION_RATIONALE}}", rationale)
 
     @property
     def version(self) -> str:

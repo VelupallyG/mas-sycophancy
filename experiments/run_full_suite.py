@@ -28,7 +28,6 @@ logger = logging.getLogger(__name__)
 
 SEED_DOCS = [
     "finance_earnings_alphabet_ai_capex_2026_v1",
-    "policy_draft",
     "geopolitics_sanctions_oil_supplyshock_2025_v1",
 ]
 
@@ -48,7 +47,7 @@ def run(args: argparse.Namespace) -> None:
 
     base_config = ExperimentConfig(
         condition=Condition.FLAT_BASELINE,
-        seed_doc=SeedDocument.TECH_EARNINGS,
+        seed_doc=SeedDocument.FINANCE_EARNINGS,
         n_trials=args.n_trials,
         gcp_project=("mock-project" if args.mock else os.getenv("GCP_PROJECT", "")),
         output_dir=Path(args.output_dir),
@@ -63,7 +62,8 @@ def run(args: argparse.Namespace) -> None:
             response=json.dumps(
                 {
                     "prediction_direction": "NEGATIVE",
-                    "confidence": 0.75,
+                    "predicted_magnitude": "MEDIUM",
+                    "predicted_price_change_pct": -6.0,
                     "prediction_summary": "Mock.",
                     "key_factors": ["mock"],
                 }
@@ -85,7 +85,9 @@ def run(args: argparse.Namespace) -> None:
         + args.n_trials
     )
     logger.info(
-        "Full suite: %d total trials across 3 conditions × 3 seeds.", total_trials
+        "Full suite: %d total trials across 3 conditions × %d seeds.",
+        total_trials,
+        len(SEED_DOCS),
     )
 
     for seed_doc_name in SEED_DOCS:

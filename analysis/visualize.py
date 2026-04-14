@@ -55,10 +55,7 @@ def load_traces(data_dir: Path) -> pd.DataFrame:
         return pd.DataFrame()
     df = pd.DataFrame(records)
     pretty_names = {
-        "tech_earnings_meta_2022": "Tech Earnings (Meta)",
         "tech_earnings_google_2026_detailed": "Finance (Alphabet AI Capex)",
-        "policy_lehman_2008": "Policy (Lehman)",
-        "geopolitical_brexit_2016": "Geopolitical (Brexit)",
         "geopolitical_oil_sanctions_2025_detailed": "Geopolitics (Oil Sanctions)",
     }
 

@@ -27,7 +27,6 @@ def parse_args() -> argparse.Namespace:
         required=True,
         choices=[
             "finance_earnings_alphabet_ai_capex_2026_v1",
-            "policy_draft",
             "geopolitics_sanctions_oil_supplyshock_2025_v1",
         ],
     )
@@ -57,7 +56,8 @@ def run(args: argparse.Namespace) -> None:
         mock_json = json.dumps(
             {
                 "prediction_direction": "POSITIVE",
-                "confidence": 0.90,
+                "predicted_magnitude": "HIGH",
+                "predicted_price_change_pct": 12.0,
                 "prediction_summary": "Mock orchestrator directive — hallucinated.",
                 "key_factors": ["mock hallucination factor"],
             }

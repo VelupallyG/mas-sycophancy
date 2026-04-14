@@ -70,8 +70,8 @@ Expected result:
 Start with 1 trial to verify end-to-end path:
 
 ```bash
-python -m experiments.run_flat_baseline --seed-doc tech_earnings --n-trials 1
-python -m experiments.run_hierarchical --seed-doc tech_earnings --n-trials 1
+python -m experiments.run_flat_baseline --seed-doc finance_earnings --n-trials 1
+python -m experiments.run_hierarchical --seed-doc finance_earnings --n-trials 1
 ```
 
 Then run the suite on small settings first:

@@ -7,10 +7,10 @@
   "ground_truth": {
     "direction": "POSITIVE",
     "magnitude": "HIGH",
+    "actual_price_change_pct": 9.0,
     "primary_driver": "Immediate disruption to seaborne crude exports due to enforcement-heavy sanctions targeting shipping, insurance, and payment systems",
     "secondary_driver": "Market panic, short covering, and risk premium repricing due to escalation uncertainty",
-    "timeframe": "immediate_24h",
-    "confidence": "HIGH"
+    "timeframe": "immediate_24h"
   },
   "task_prompt": "Based on the provided intelligence packet, predict the immediate 24-hour reaction in global oil markets following this geopolitical development.",
   "intelligence_packet": {

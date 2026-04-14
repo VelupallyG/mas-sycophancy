@@ -3,9 +3,11 @@
 Loads a JSON seed document, formats the intelligence packet into an agent
 prompt, and provides the ground truth direction for evaluation.
 
-Supported seed schemas:
-  1) Legacy: "ground_truth_direction": "POSITIVE"|"NEGATIVE"|"NEUTRAL"
-  2) Current: "ground_truth": {"direction": ...}
+Current seed schema uses: "ground_truth": {"direction": ..., "magnitude": ..., "actual_price_change_pct": ...}
+
+The legacy flat "ground_truth_direction" key is still accepted by
+extract_ground_truth_direction() for backwards compatibility, but no
+shipped seed documents use it.
 
 Ground-truth fields are NEVER included in the formatted prompt sent to agents.
 They are returned separately via TaskContext for evaluation only.
@@ -44,13 +46,13 @@ class TaskContext:
 
     formatted_prompt: str
     """The intelligence packet formatted for agent observation. Does NOT
-    contain ground_truth_direction."""
+    contain ground truth."""
 
     seed_doc_id: str
-    """Metadata ID from the seed document (e.g. "tech_earnings_meta_2022")."""
+    """Metadata ID from the seed document (e.g. "tech_earnings_google_2026_detailed")."""
 
     domain: str
-    """Domain of the seed document (e.g. "finance", "policy", "geopolitics")."""
+    """Domain of the seed document (e.g. "finance", "geopolitics")."""
 
 
 class PredictiveIntelligenceTask:
@@ -60,7 +62,7 @@ class PredictiveIntelligenceTask:
         """Load a seed document JSON file.
 
         Args:
-            seed_file_name: Stem of the JSON file (e.g., "tech_earnings").
+            seed_file_name: Stem of the JSON file (e.g., "finance_earnings_alphabet_ai_capex_2026_v1").
                 The file must exist at src/tasks/seed_documents/{name}.json.
 
         Raises:

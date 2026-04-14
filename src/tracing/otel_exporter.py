@@ -5,19 +5,20 @@ agent's output and appends it to a flat JSONL file (one record per agent-turn).
 
 Output schema (one JSON object per line):
   {
-    "trial_id":          "...",
-    "seed_doc":          "tech_earnings",
-    "condition":         "hierarchical_hallucination",
-    "turn":              3,
-    "agent_id":          "analyst_07",
-    "level":             3,
-    "prediction_direction": "NEGATIVE",
-    "confidence":        0.72,
-    "prediction_summary": "...",
-    "key_factors":       ["...", "..."],
-    "parse_success":     true,
-    "trail_category":    null,
-    "timestamp_ms":      1234567890
+    "trial_id":                "...",
+    "seed_doc":                "finance_earnings_alphabet_ai_capex_2026_v1",
+    "condition":               "hierarchical_hallucination",
+    "turn":                    3,
+    "agent_id":                "analyst_07",
+    "level":                   3,
+    "prediction_direction":    "NEGATIVE",
+    "predicted_magnitude":     "HIGH",
+    "predicted_price_change_pct": -6.0,
+    "prediction_summary":      "...",
+    "key_factors":             ["...", "..."],
+    "parse_success":           true,
+    "trail_category":          null,
+    "timestamp_ms":            1234567890
   }
 
 Raw Concordia traces are not recorded here — they live in data/raw_traces/.
@@ -44,7 +45,8 @@ class AgentTurnRecord:
     agent_id: str
     level: int
     prediction_direction: str
-    confidence: float
+    predicted_magnitude: str
+    predicted_price_change_pct: float
     prediction_summary: str
     key_factors: list[str]
     parse_success: bool
@@ -75,7 +77,8 @@ class AgentTurnRecord:
             agent_id=agent_id,
             level=level,
             prediction_direction=previous_direction,
-            confidence=0.0,
+            predicted_magnitude="MEDIUM",
+            predicted_price_change_pct=0.0,
             prediction_summary="[PARSE FAILURE — previous stance carried forward]",
             key_factors=[],
             parse_success=False,
@@ -95,8 +98,8 @@ class JSONLExporter:
 
         Args:
             output_path: Full path including filename (e.g. data/flat_baseline/
-                tech_earnings/trial_001/trace.jsonl). Parent directories are
-                created automatically.
+                finance_earnings_alphabet_ai_capex_2026_v1/trial_001/trace.jsonl).
+                Parent directories are created automatically.
         """
         output_path.parent.mkdir(parents=True, exist_ok=True)
         self._path = output_path
