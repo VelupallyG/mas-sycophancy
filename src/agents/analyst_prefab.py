@@ -1,11 +1,9 @@
-"""Analyst agent prefab.
+"""Analyst / Manager agent prefab.
 
-For the prototype, all 20 non-orchestrator agents use this prefab regardless
-of whether they are L2 Managers or L3 Analysts. The only difference between
-ranks is their RankComponent value, which controls the GM's communication
-routing — not any difference in reasoning capability or persona.
-
-This isolates topology as the sole independent variable per the research design.
+Builds non-orchestrator agents for both L2 Managers and L3 Analysts.
+Each rank loads a role-specific prompt:
+  - L2_MANAGER  → prompts/manager.md  (synthesis-focused)
+  - L3_ANALYST  → prompts/analyst.md  (individual analysis)
 """
 
 from __future__ import annotations
@@ -19,12 +17,21 @@ from concordia.typing import prefab as prefab_lib
 
 from src.agents import prefab_common
 
-_PROMPT_PATH = Path(__file__).parent / "prompts" / "financial_analyst.md"
+_PROMPTS_DIR = Path(__file__).parent / "prompts"
+
+_RANK_PROMPT_MAP: dict[str, Path] = {
+    "L2_MANAGER": _PROMPTS_DIR / "manager.md",
+    "L3_ANALYST": _PROMPTS_DIR / "analyst.md",
+}
 
 
 @dataclasses.dataclass
 class AnalystPrefab(prefab_lib.Prefab):
-    """Prefab for Financial Analyst agents (L2 Managers and L3 Analysts).
+    """Prefab for non-orchestrator agents (L2 Managers and L3 Analysts).
+
+    Each rank loads a different prompt file so that managers receive
+    synthesis-oriented instructions while analysts receive individual-
+    analysis instructions.
 
     Params (passed via self.params dict, all strings):
         name: Unique agent identifier (e.g., "analyst_07").
@@ -32,8 +39,8 @@ class AnalystPrefab(prefab_lib.Prefab):
     """
 
     description: str = (
-        "Financial Analyst agent for the MAS sycophancy experiment. "
-        "Produces structured JSON predictions from market intelligence packets."
+        "Intelligence agent for the MAS sycophancy experiment. "
+        "Produces structured JSON predictions from intelligence packets."
     )
 
     def build(
@@ -41,7 +48,7 @@ class AnalystPrefab(prefab_lib.Prefab):
         model: language_model.LanguageModel,
         memory_bank: basic_associative_memory.AssociativeMemoryBank,
     ) -> prefab_lib.prefab_lib.EntityWithComponents:  # type: ignore[name-defined]
-        """Build an analyst EntityAgent.
+        """Build an analyst or manager EntityAgent.
 
         Note: memory_bank is accepted per the Prefab interface contract but
         is not used — we use ListMemory (no embedder required).
@@ -52,7 +59,14 @@ class AnalystPrefab(prefab_lib.Prefab):
         rank = self.params.get("rank", "L3_ANALYST")
         tools = self.params.get("tools", None)
         max_tool_calls = int(self.params.get("max_tool_calls", 3))
-        persona = _PROMPT_PATH.read_text(encoding="utf-8")
+
+        prompt_path = _RANK_PROMPT_MAP.get(rank)
+        if prompt_path is None:
+            raise ValueError(
+                f"No prompt file mapped for rank {rank!r}. "
+                f"Expected one of {set(_RANK_PROMPT_MAP)}."
+            )
+        persona = prompt_path.read_text(encoding="utf-8")
 
         return prefab_common.make_agent(
             name=name,

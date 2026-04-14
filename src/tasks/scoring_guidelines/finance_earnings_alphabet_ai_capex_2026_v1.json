@@ -1,0 +1,64 @@
+{
+  "_description": "Task-specific scoring for Alphabet AI capex 2026 (finance_earnings_alphabet_ai_capex_2026_v1). Ground truth: NEGATIVE.",
+
+  "primary_driver": "Capital expenditures of $21B dramatically exceed the expected $14B, with management signaling sustained elevated spending and near-term margin decline, creating investor uncertainty about return on AI investment.",
+
+  "critical_factors": [
+    "capex $21 billion vs expected $14 billion",
+    "cfo states elevated spending persists for multiple quarters",
+    "operating margins expected to decline in near term",
+    "limited clarity on timeline for ai-driven revenue contribution"
+  ],
+
+  "supporting_factors": [
+    "investors increasingly differentiate between ai monetisation and ai spending",
+    "historical precedent of negative market reaction to unexpected capex increases",
+    "perception of ai arms race requiring continuous high investment"
+  ],
+
+  "trap_signals": [
+    {
+      "signal": "Revenue of $92.4B beats consensus of $89.7B",
+      "why_misleading": "The revenue beat demonstrates strong current execution but does not address the forward-looking concern. The market is reacting to the future margin trajectory, not the backward-looking quarter. A ~3% revenue beat is dwarfed by a ~50% capex overshoot."
+    },
+    {
+      "signal": "EPS of $1.98 beats expectations of $1.85",
+      "why_misleading": "Current-quarter EPS is backward-looking. The CFO has explicitly guided that margins will decline going forward. EPS beats in the current quarter make the forward guidance miss more jarring, not less."
+    },
+    {
+      "signal": "Cloud growth remains robust at 28% YoY",
+      "why_misleading": "Cloud growth is strong but was already expected. It does not justify the $7B capex surprise. The question is whether AI investment will generate proportional revenue growth, and management provided limited clarity on this."
+    },
+    {
+      "signal": "Company is investing to maintain AI leadership",
+      "why_misleading": "Strategic narratives do not resolve short-term earnings reactions. Markets have shown they punish unclear ROI timelines for large capital commitments even when the strategic rationale is sound."
+    }
+  ],
+
+  "confidence_range": {
+    "well_calibrated_min": 0.55,
+    "well_calibrated_max": 0.80,
+    "rationale": "Moderately confident negative case. The capex surprise is significant but the strong core business provides a real counter-argument. The ground truth labels this as MEDIUM magnitude, reflecting genuine ambiguity. Agents should not be extremely confident in either direction given the mixed signals."
+  },
+
+  "reasoning_quality_indicators": {
+    "strong": [
+      "Distinguishes between backward-looking beats (revenue, EPS) and forward-looking concerns (capex, margin guidance)",
+      "Identifies the capex surprise magnitude ($21B vs $14B expected, a 50% overshoot) as the decisive factor",
+      "References historical market behavior on unexpected capex announcements",
+      "Engages with the AI monetisation timeline uncertainty rather than accepting the strategic narrative at face value"
+    ],
+    "weak": [
+      "Treats the revenue and EPS beats as sufficient to offset the capex surprise",
+      "Accepts the 'investing for AI leadership' narrative without questioning ROI timeline",
+      "Fails to note the 50% magnitude of the capex overshoot relative to expectations",
+      "Does not distinguish between cloud growth (already priced in) and incremental AI capex (surprise)"
+    ]
+  },
+
+  "common_failure_modes": [
+    "Anchoring on strong headline numbers (revenue, EPS) without reading through to the capex/margin guidance",
+    "Treating cloud growth as validation of AI capex when the two are partially independent",
+    "Accepting management's strategic framing without demanding a monetisation timeline"
+  ]
+}

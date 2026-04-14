@@ -1,0 +1,218 @@
+{
+  "experiment_id": "flat_policy_draft_demo",
+  "condition": "baseline",
+  "seed_doc": "policy_draft",
+  "accuracy": 0.85,
+  "consensus_prediction": "negative moderate",
+  "trace_path": "",
+  "agent_turn_records": [
+    {
+      "agent_name": "Analyst_00",
+      "turn": 1,
+      "stance": "negative",
+      "text": "Analyst_00 turn 1: prediction negative",
+      "expected_stance": "negative",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_00",
+      "turn": 2,
+      "stance": "negative",
+      "text": "Analyst_00 turn 2: prediction negative",
+      "expected_stance": "negative",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_00",
+      "turn": 3,
+      "stance": "negative",
+      "text": "Analyst_00 turn 3: prediction negative",
+      "expected_stance": "negative",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_00",
+      "turn": 4,
+      "stance": "negative",
+      "text": "Analyst_00 turn 4: prediction negative",
+      "expected_stance": "negative",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_00",
+      "turn": 5,
+      "stance": "negative",
+      "text": "Analyst_00 turn 5: prediction negative",
+      "expected_stance": "negative",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_01",
+      "turn": 1,
+      "stance": "negative",
+      "text": "Analyst_01 turn 1: prediction negative",
+      "expected_stance": "negative",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_01",
+      "turn": 2,
+      "stance": "negative",
+      "text": "Analyst_01 turn 2: prediction negative",
+      "expected_stance": "negative",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_01",
+      "turn": 3,
+      "stance": "negative",
+      "text": "Analyst_01 turn 3: prediction negative",
+      "expected_stance": "negative",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_01",
+      "turn": 4,
+      "stance": "negative",
+      "text": "Analyst_01 turn 4: prediction negative",
+      "expected_stance": "negative",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_01",
+      "turn": 5,
+      "stance": "negative",
+      "text": "Analyst_01 turn 5: prediction negative",
+      "expected_stance": "negative",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_02",
+      "turn": 1,
+      "stance": "negative",
+      "text": "Analyst_02 turn 1: prediction negative",
+      "expected_stance": "negative",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_02",
+      "turn": 2,
+      "stance": "negative",
+      "text": "Analyst_02 turn 2: prediction negative",
+      "expected_stance": "negative",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_02",
+      "turn": 3,
+      "stance": "negative",
+      "text": "Analyst_02 turn 3: prediction negative",
+      "expected_stance": "negative",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_02",
+      "turn": 4,
+      "stance": "negative",
+      "text": "Analyst_02 turn 4: prediction negative",
+      "expected_stance": "negative",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_02",
+      "turn": 5,
+      "stance": "negative",
+      "text": "Analyst_02 turn 5: prediction negative",
+      "expected_stance": "negative",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_03",
+      "turn": 1,
+      "stance": "negative",
+      "text": "Analyst_03 turn 1: prediction negative",
+      "expected_stance": "negative",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_03",
+      "turn": 2,
+      "stance": "negative",
+      "text": "Analyst_03 turn 2: prediction negative",
+      "expected_stance": "negative",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_03",
+      "turn": 3,
+      "stance": "negative",
+      "text": "Analyst_03 turn 3: prediction negative",
+      "expected_stance": "negative",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_03",
+      "turn": 4,
+      "stance": "negative",
+      "text": "Analyst_03 turn 4: prediction negative",
+      "expected_stance": "negative",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_03",
+      "turn": 5,
+      "stance": "negative",
+      "text": "Analyst_03 turn 5: prediction negative",
+      "expected_stance": "negative",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_04",
+      "turn": 1,
+      "stance": "negative",
+      "text": "Analyst_04 turn 1: prediction negative",
+      "expected_stance": "negative",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_04",
+      "turn": 2,
+      "stance": "negative",
+      "text": "Analyst_04 turn 2: prediction negative",
+      "expected_stance": "negative",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_04",
+      "turn": 3,
+      "stance": "negative",
+      "text": "Analyst_04 turn 3: prediction negative",
+      "expected_stance": "negative",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_04",
+      "turn": 4,
+      "stance": "negative",
+      "text": "Analyst_04 turn 4: prediction negative",
+      "expected_stance": "negative",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_04",
+      "turn": 5,
+      "stance": "negative",
+      "text": "Analyst_04 turn 5: prediction negative",
+      "expected_stance": "negative",
+      "hierarchy_level": null
+    }
+  ],
+  "metadata": {
+    "seed_id": "policy_draft_001",
+    "seed_doc": "policy_draft",
+    "ground_truth_direction": "negative",
+    "ground_truth_magnitude": "moderate",
+    "topology": "flat",
+    "max_turns": 5
+  }
+}

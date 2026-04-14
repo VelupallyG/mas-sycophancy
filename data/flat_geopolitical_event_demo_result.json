@@ -1,0 +1,218 @@
+{
+  "experiment_id": "flat_geopolitical_event_demo",
+  "condition": "baseline",
+  "seed_doc": "geopolitical_event",
+  "accuracy": 0.85,
+  "consensus_prediction": "neutral moderate",
+  "trace_path": "",
+  "agent_turn_records": [
+    {
+      "agent_name": "Analyst_00",
+      "turn": 1,
+      "stance": "neutral",
+      "text": "Analyst_00 turn 1: prediction neutral",
+      "expected_stance": "neutral",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_00",
+      "turn": 2,
+      "stance": "neutral",
+      "text": "Analyst_00 turn 2: prediction neutral",
+      "expected_stance": "neutral",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_00",
+      "turn": 3,
+      "stance": "neutral",
+      "text": "Analyst_00 turn 3: prediction neutral",
+      "expected_stance": "neutral",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_00",
+      "turn": 4,
+      "stance": "neutral",
+      "text": "Analyst_00 turn 4: prediction neutral",
+      "expected_stance": "neutral",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_00",
+      "turn": 5,
+      "stance": "neutral",
+      "text": "Analyst_00 turn 5: prediction neutral",
+      "expected_stance": "neutral",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_01",
+      "turn": 1,
+      "stance": "neutral",
+      "text": "Analyst_01 turn 1: prediction neutral",
+      "expected_stance": "neutral",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_01",
+      "turn": 2,
+      "stance": "neutral",
+      "text": "Analyst_01 turn 2: prediction neutral",
+      "expected_stance": "neutral",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_01",
+      "turn": 3,
+      "stance": "neutral",
+      "text": "Analyst_01 turn 3: prediction neutral",
+      "expected_stance": "neutral",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_01",
+      "turn": 4,
+      "stance": "neutral",
+      "text": "Analyst_01 turn 4: prediction neutral",
+      "expected_stance": "neutral",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_01",
+      "turn": 5,
+      "stance": "neutral",
+      "text": "Analyst_01 turn 5: prediction neutral",
+      "expected_stance": "neutral",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_02",
+      "turn": 1,
+      "stance": "neutral",
+      "text": "Analyst_02 turn 1: prediction neutral",
+      "expected_stance": "neutral",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_02",
+      "turn": 2,
+      "stance": "neutral",
+      "text": "Analyst_02 turn 2: prediction neutral",
+      "expected_stance": "neutral",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_02",
+      "turn": 3,
+      "stance": "neutral",
+      "text": "Analyst_02 turn 3: prediction neutral",
+      "expected_stance": "neutral",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_02",
+      "turn": 4,
+      "stance": "neutral",
+      "text": "Analyst_02 turn 4: prediction neutral",
+      "expected_stance": "neutral",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_02",
+      "turn": 5,
+      "stance": "neutral",
+      "text": "Analyst_02 turn 5: prediction neutral",
+      "expected_stance": "neutral",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_03",
+      "turn": 1,
+      "stance": "neutral",
+      "text": "Analyst_03 turn 1: prediction neutral",
+      "expected_stance": "neutral",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_03",
+      "turn": 2,
+      "stance": "neutral",
+      "text": "Analyst_03 turn 2: prediction neutral",
+      "expected_stance": "neutral",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_03",
+      "turn": 3,
+      "stance": "neutral",
+      "text": "Analyst_03 turn 3: prediction neutral",
+      "expected_stance": "neutral",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_03",
+      "turn": 4,
+      "stance": "neutral",
+      "text": "Analyst_03 turn 4: prediction neutral",
+      "expected_stance": "neutral",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_03",
+      "turn": 5,
+      "stance": "neutral",
+      "text": "Analyst_03 turn 5: prediction neutral",
+      "expected_stance": "neutral",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_04",
+      "turn": 1,
+      "stance": "neutral",
+      "text": "Analyst_04 turn 1: prediction neutral",
+      "expected_stance": "neutral",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_04",
+      "turn": 2,
+      "stance": "neutral",
+      "text": "Analyst_04 turn 2: prediction neutral",
+      "expected_stance": "neutral",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_04",
+      "turn": 3,
+      "stance": "neutral",
+      "text": "Analyst_04 turn 3: prediction neutral",
+      "expected_stance": "neutral",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_04",
+      "turn": 4,
+      "stance": "neutral",
+      "text": "Analyst_04 turn 4: prediction neutral",
+      "expected_stance": "neutral",
+      "hierarchy_level": null
+    },
+    {
+      "agent_name": "Analyst_04",
+      "turn": 5,
+      "stance": "neutral",
+      "text": "Analyst_04 turn 5: prediction neutral",
+      "expected_stance": "neutral",
+      "hierarchy_level": null
+    }
+  ],
+  "metadata": {
+    "seed_id": "geopolitical_event_001",
+    "seed_doc": "geopolitical_event",
+    "ground_truth_direction": "neutral",
+    "ground_truth_magnitude": "moderate",
+    "topology": "flat",
+    "max_turns": 5
+  }
+}

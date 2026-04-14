@@ -7,3 +7,9 @@ __pycache__/
 .DS_Store
 ._.DS_Store
 **/.DS_Store
+
+# Claude Code local settings
+.claude/
+
+# Generated databases
+data/financial_db/market_data.db

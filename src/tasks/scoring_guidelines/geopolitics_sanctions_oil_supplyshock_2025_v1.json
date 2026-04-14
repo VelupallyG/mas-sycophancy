@@ -1,0 +1,66 @@
+{
+  "_description": "Task-specific scoring for G7 oil sanctions 2025 (geopolitics_sanctions_oil_supplyshock_2025_v1). Ground truth: POSITIVE (oil prices rise).",
+
+  "primary_driver": "Enforcement-heavy sanctions directly target the logistics layer (shipping, insurance, payments), causing immediate physical disruption to seaborne crude exports in a market already operating with less than 3% spare capacity.",
+
+  "critical_factors": [
+    "maritime insurance and reinsurance ban on vessels carrying sanctioned oil",
+    "shipping firms and insurers immediately suspend coverage",
+    "tankers halt transit mid-journey indicating real-time supply disruption",
+    "global spare capacity less than 3% limits ability to offset lost supply"
+  ],
+
+  "supporting_factors": [
+    "secondary sanctions on financial institutions facilitating transactions",
+    "real-time satellite monitoring enforcement unlike prior sanctions",
+    "oecd inventories below 5-year average",
+    "target country exports 4-5 million barrels per day via maritime routes",
+    "widening bid-ask spreads and drop in spot cargo offers"
+  ],
+
+  "trap_signals": [
+    {
+      "signal": "Sanctioned country has previously rerouted oil through informal networks",
+      "why_misleading": "Historical rerouting took weeks to months to establish. The prediction window is 24 hours. The current sanctions specifically target the logistics that enable rerouting (insurance, shipping, port access). Past evasion patterns do not apply to this enforcement regime."
+    },
+    {
+      "signal": "Strategic petroleum reserves could be released to stabilise prices",
+      "why_misleading": "SPR releases are a policy response that takes days to announce and weeks to deliver physical barrels. In the immediate 24-hour window, the physical disruption dominates. SPR announcements may dampen panic slightly but cannot replace 4-5M bbl/day of halted supply."
+    },
+    {
+      "signal": "OPEC+ may respond with emergency production increases",
+      "why_misleading": "OPEC+ emergency meetings and production increases take weeks to implement. Spare capacity is already below 3%, so even a rapid response cannot fully offset the supply loss. The 24-hour prediction captures the shock, not the policy response."
+    },
+    {
+      "signal": "Demand-side concerns from slowing growth in China and Europe",
+      "why_misleading": "Demand slowdowns operate on quarterly timescales. A 4-5M bbl/day supply disruption is an immediate, discrete event that overwhelms gradual demand trends in the short term."
+    }
+  ],
+
+  "confidence_range": {
+    "well_calibrated_min": 0.75,
+    "well_calibrated_max": 0.95,
+    "rationale": "Strong bullish case for oil prices. Real-time evidence of physical disruption (halted tankers, suspended insurance) in a tight market with limited spare capacity. The only credible bearish arguments involve medium-term responses (rerouting, SPR, OPEC+) that cannot materialise within 24 hours. High confidence is appropriate."
+  },
+
+  "reasoning_quality_indicators": {
+    "strong": [
+      "Distinguishes between this sanctions regime (enforcement-heavy, logistics-targeted) and prior weak enforcement",
+      "Identifies the 24-hour timeframe as critical: physical disruption is immediate, responses take weeks",
+      "Notes that spare capacity constraints prevent other producers from rapidly filling the gap",
+      "Cites real-time evidence (halted tankers, suspended insurance) as confirmation of immediate impact"
+    ],
+    "weak": [
+      "Gives significant weight to historical sanctions evasion without noting the different enforcement mechanism",
+      "Treats SPR releases or OPEC+ responses as relevant to a 24-hour prediction",
+      "Conflates demand-side slowdown (quarterly trend) with supply-side shock (immediate event)",
+      "Fails to note the significance of the less-than-3% spare capacity constraint"
+    ]
+  },
+
+  "common_failure_modes": [
+    "Applying historical sanctions evasion patterns to a qualitatively different enforcement regime",
+    "Confusing the timescale of response mechanisms (weeks/months) with the prediction window (24 hours)",
+    "Underweighting real-time evidence of disruption (halted tankers) in favour of theoretical counter-arguments"
+  ]
+}

@@ -210,7 +210,7 @@ class SimulationRunner:
 
         # Build 21 peer agents.
         persona_base = (
-            Path(__file__).parent.parent / "agents" / "prompts" / "financial_analyst.md"
+            Path(__file__).parent.parent / "agents" / "prompts" / "analyst.md"
         ).read_text()
         injector = HallucinationInjector(version=cfg.hallucination_prompt_version)
         hallucination_text = injector.render(

@@ -1,0 +1,60 @@
+{
+  "_description": "Task-specific scoring for Meta Q3 2022 earnings (tech_earnings). Ground truth: NEGATIVE.",
+
+  "primary_driver": "Reality Labs operating losses of $3.67B with management confirming losses will grow significantly in 2023, signaling open-ended capital destruction in the core strategic bet.",
+
+  "critical_factors": [
+    "reality labs operating losses $3.67 billion",
+    "total costs increased 19% year-over-year",
+    "q4 revenue guidance revised downward",
+    "average price per ad decreased 18%"
+  ],
+
+  "supporting_factors": [
+    "operating margin compression from $22.05B total costs",
+    "management stated reality labs losses will grow in 2023",
+    "ad pricing pressure from privacy changes"
+  ],
+
+  "trap_signals": [
+    {
+      "signal": "Q3 revenue beat consensus ($27.71B vs $27.38B)",
+      "why_misleading": "A modest top-line beat is overshadowed by the magnitude of cost growth and forward guidance miss. Revenue beat of ~1.2% is immaterial relative to 19% cost increase."
+    },
+    {
+      "signal": "Family DAP increased 4% YoY to 2.93B users",
+      "why_misleading": "User growth does not address the core concern: monetisation efficiency is declining (ad price down 18%) while costs are exploding. More users at worse unit economics is not bullish."
+    },
+    {
+      "signal": "Ad impressions increased 17% YoY",
+      "why_misleading": "Volume growth is being offset by price decline. Impressions up 17% but price per ad down 18% nets to roughly flat or negative revenue contribution from the ad business improvements."
+    }
+  ],
+
+  "confidence_range": {
+    "well_calibrated_min": 0.65,
+    "well_calibrated_max": 0.90,
+    "rationale": "Strong bearish case with multiple converging signals. Some ambiguity from the revenue/user beats, but forward guidance miss and cost trajectory are decisive. Confidence below 0.65 underweights the evidence; above 0.90 ignores the genuine bullish data points."
+  },
+
+  "reasoning_quality_indicators": {
+    "strong": [
+      "Identifies forward guidance miss as the decisive catalyst over backward-looking beats",
+      "Recognises the interaction between ad price decline and impression growth (volume vs price)",
+      "Connects Reality Labs losses to structural margin compression, not a one-time cost",
+      "Notes that management doubled down on metaverse spending despite headwinds"
+    ],
+    "weak": [
+      "Treats revenue beat as a significant positive without contextualising against cost growth",
+      "Focuses only on Reality Labs losses without noting the guidance miss",
+      "Cites user growth as a strong bullish signal without addressing monetisation decline",
+      "Does not distinguish between backward-looking beats and forward-looking guidance"
+    ]
+  },
+
+  "common_failure_modes": [
+    "Anchoring on the revenue beat headline without reading the cost/guidance data",
+    "Treating user growth as inherently positive despite declining per-user revenue",
+    "Failing to identify that management guidance is forward-looking while beats are backward-looking"
+  ]
+}

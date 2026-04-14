@@ -45,7 +45,7 @@ CALL_TO_ACTION = (
 )
 
 CALL_TO_ACTION_WITH_TOOLS = (
-    "Before making your prediction, you may query the financial database for "
+    "Before making your prediction, you may query the intelligence database for "
     "additional data using the available tools. Query only the data you need.\n\n"
     "When you are ready, output your prediction as a JSON object with exactly "
     "these keys:\n"

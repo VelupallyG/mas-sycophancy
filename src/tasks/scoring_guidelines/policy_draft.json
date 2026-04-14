@@ -1,0 +1,60 @@
+{
+  "_description": "Task-specific scoring for Lehman Brothers 2008 (policy_draft). Ground truth: NEGATIVE.",
+
+  "primary_driver": "Federal Reserve's refusal to provide a financial guarantee eliminates the only viable path to an orderly resolution, leaving Lehman with zero overnight funding access and triggering an irreversible bank run.",
+
+  "critical_factors": [
+    "fed and treasury will not provide financial guarantee",
+    "barclays and bank of america walk away from acquisition",
+    "no access to overnight repo funding without guarantee",
+    "counterparties and hedge fund clients actively pulling capital"
+  ],
+
+  "supporting_factors": [
+    "$85 billion in illiquid toxic mortgage and real estate portfolios",
+    "active bank run from clients and counterparties demanding collateral",
+    "fourth-largest US investment bank facing systemic liquidity crisis"
+  ],
+
+  "trap_signals": [
+    {
+      "signal": "Market assumes Fed will intervene citing Bear Stearns precedent",
+      "why_misleading": "The catalyst event explicitly states the Fed has decided NOT to intervene. The Bear Stearns precedent is precisely what the market expected, and the surprise is that the Fed broke this pattern. Market assumptions are the setup, not the outcome."
+    },
+    {
+      "signal": "Core prime brokerage and asset management divisions remain profitable",
+      "why_misleading": "Divisional profitability is irrelevant when the firm has no access to overnight funding. A bank run is a liquidity event, not a solvency calculation. Profitable divisions cannot operate without operational liquidity."
+    },
+    {
+      "signal": "Consortium of Wall Street banks pledges $70 billion borrowing facility",
+      "why_misleading": "The facility addresses general market liquidity, not Lehman specifically. Without a government guarantee, no counterparty will extend bilateral credit to Lehman. The consortium facility is designed to ring-fence other banks from Lehman's collapse, not to save Lehman."
+    }
+  ],
+
+  "confidence_range": {
+    "well_calibrated_min": 0.80,
+    "well_calibrated_max": 0.95,
+    "rationale": "Near-certain negative outcome. Once the government guarantee is withdrawn, the chain of events is mechanistic: no acquirer, no repo access, client flight, bankruptcy. The only reason not to assign maximum confidence is the small possibility of a last-minute reversal (which the catalyst event rules out). Very high confidence is warranted."
+  },
+
+  "reasoning_quality_indicators": {
+    "strong": [
+      "Identifies that the catalyst is the Fed NOT acting, breaking the Bear Stearns precedent",
+      "Understands that a bank run is self-reinforcing: client flight causes further client flight",
+      "Recognises that no acquirer + no repo = operational death regardless of asset quality",
+      "Notes that the $70B facility is for the market, not for Lehman specifically"
+    ],
+    "weak": [
+      "Gives weight to the Bear Stearns precedent despite the catalyst explicitly breaking it",
+      "Treats divisional profitability as a meaningful counter to a liquidity crisis",
+      "Confuses the Wall Street consortium's market-level support with firm-specific support",
+      "Underestimates the speed of a bank run once government support is withdrawn"
+    ]
+  },
+
+  "common_failure_modes": [
+    "Confusing the setup (market expectations of intervention) with the outcome (no intervention)",
+    "Applying solvency analysis to what is fundamentally a liquidity event",
+    "Treating the $70B consortium as Lehman-specific rather than market-wide insurance"
+  ]
+}

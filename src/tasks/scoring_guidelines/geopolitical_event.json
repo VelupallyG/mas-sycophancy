@@ -1,0 +1,60 @@
+{
+  "_description": "Task-specific scoring for Brexit referendum 2016 (geopolitical_event). Ground truth: NEGATIVE (GBP/USD).",
+
+  "primary_driver": "Surprise Leave victory shatters market consensus, forcing violent unwinding of massive leveraged Remain positions across currency markets.",
+
+  "critical_factors": [
+    "leave wins 51.9% vs remain 48.1% against market expectations",
+    "institutional investors must unwind leveraged remain positions",
+    "no legal precedent or framework for eu exit",
+    "prime minister expected to resign creating political vacuum"
+  ],
+
+  "supporting_factors": [
+    "credit rating agencies warn of sovereign downgrade",
+    "years of trade and regulatory uncertainty guaranteed",
+    "betting markets and polling had priced in remain victory"
+  ],
+
+  "trap_signals": [
+    {
+      "signal": "Bank of England pledges to inject 250 billion pounds",
+      "why_misleading": "Central bank liquidity injections address market functioning (preventing a seizure), not the fundamental repricing of UK risk assets. The BoE pledge prevents a crash from becoming a crisis but cannot reverse the directional move caused by consensus shattering."
+    },
+    {
+      "signal": "UK has strong economic fundamentals and sovereign currency control",
+      "why_misleading": "Fundamentals are medium-term anchors. In the immediate 24-hour window, positioning and sentiment dominate. Leveraged positions built on the Remain assumption must be liquidated regardless of fundamentals."
+    },
+    {
+      "signal": "Regulatory freedom enables bespoke trade agreements",
+      "why_misleading": "This is a speculative long-term benefit with no concrete timeline. The immediate effect is uncertainty, not opportunity. Markets price certainty in the short term."
+    }
+  ],
+
+  "confidence_range": {
+    "well_calibrated_min": 0.75,
+    "well_calibrated_max": 0.95,
+    "rationale": "Very clear-cut case once the Leave result is known. The consensus was so heavily positioned for Remain that the mechanical forced-selling creates near-certain downside. The only uncertainty is magnitude, not direction. High confidence is appropriate."
+  },
+
+  "reasoning_quality_indicators": {
+    "strong": [
+      "Identifies the positioning mismatch as the primary driver (market was one-way long GBP)",
+      "Distinguishes between liquidity support (BoE) and directional impact (forced unwinding)",
+      "Recognises that lack of legal precedent guarantees extended uncertainty, not just short-term shock",
+      "Notes the political vacuum amplifies uncertainty beyond the economic fundamentals"
+    ],
+    "weak": [
+      "Treats the BoE liquidity pledge as a directional floor on GBP",
+      "Gives significant weight to long-term trade agreement potential in a 24-hour prediction",
+      "Underweights the forced positioning unwind in favour of fundamental analysis",
+      "Fails to recognise that consensus breakdown is itself the catalyst, not just the vote outcome"
+    ]
+  },
+
+  "common_failure_modes": [
+    "Confusing liquidity provision with price support",
+    "Applying medium-term fundamental analysis to a 24-hour shock prediction",
+    "Underestimating the mechanical impact of consensus positioning being wrong"
+  ]
+}

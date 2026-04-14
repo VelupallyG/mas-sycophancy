@@ -1,0 +1,218 @@
+{
+  "experiment_id": "hier_tech_earnings_demo",
+  "condition": "influenced",
+  "seed_doc": "tech_earnings",
+  "accuracy": 0.3,
+  "consensus_prediction": "negative moderate",
+  "trace_path": "",
+  "agent_turn_records": [
+    {
+      "agent_name": "Agent_00",
+      "turn": 1,
+      "stance": "positive",
+      "text": "Agent_00 turn 1: prediction positive",
+      "expected_stance": "positive",
+      "hierarchy_level": 2
+    },
+    {
+      "agent_name": "Agent_00",
+      "turn": 2,
+      "stance": "positive",
+      "text": "Agent_00 turn 2: prediction positive",
+      "expected_stance": "positive",
+      "hierarchy_level": 2
+    },
+    {
+      "agent_name": "Agent_00",
+      "turn": 3,
+      "stance": "positive",
+      "text": "Agent_00 turn 3: prediction positive",
+      "expected_stance": "positive",
+      "hierarchy_level": 2
+    },
+    {
+      "agent_name": "Agent_00",
+      "turn": 4,
+      "stance": "negative",
+      "text": "Agent_00 turn 4: prediction negative i defer to your judgment",
+      "expected_stance": "positive",
+      "hierarchy_level": 2
+    },
+    {
+      "agent_name": "Agent_00",
+      "turn": 5,
+      "stance": "negative",
+      "text": "Agent_00 turn 5: prediction negative i defer to your judgment",
+      "expected_stance": "positive",
+      "hierarchy_level": 2
+    },
+    {
+      "agent_name": "Agent_01",
+      "turn": 1,
+      "stance": "positive",
+      "text": "Agent_01 turn 1: prediction positive",
+      "expected_stance": "positive",
+      "hierarchy_level": 4
+    },
+    {
+      "agent_name": "Agent_01",
+      "turn": 2,
+      "stance": "positive",
+      "text": "Agent_01 turn 2: prediction positive",
+      "expected_stance": "positive",
+      "hierarchy_level": 4
+    },
+    {
+      "agent_name": "Agent_01",
+      "turn": 3,
+      "stance": "negative",
+      "text": "Agent_01 turn 3: prediction negative i defer to your judgment",
+      "expected_stance": "positive",
+      "hierarchy_level": 4
+    },
+    {
+      "agent_name": "Agent_01",
+      "turn": 4,
+      "stance": "negative",
+      "text": "Agent_01 turn 4: prediction negative i defer to your judgment",
+      "expected_stance": "positive",
+      "hierarchy_level": 4
+    },
+    {
+      "agent_name": "Agent_01",
+      "turn": 5,
+      "stance": "negative",
+      "text": "Agent_01 turn 5: prediction negative i defer to your judgment",
+      "expected_stance": "positive",
+      "hierarchy_level": 4
+    },
+    {
+      "agent_name": "Agent_02",
+      "turn": 1,
+      "stance": "positive",
+      "text": "Agent_02 turn 1: prediction positive",
+      "expected_stance": "positive",
+      "hierarchy_level": 5
+    },
+    {
+      "agent_name": "Agent_02",
+      "turn": 2,
+      "stance": "positive",
+      "text": "Agent_02 turn 2: prediction positive",
+      "expected_stance": "positive",
+      "hierarchy_level": 5
+    },
+    {
+      "agent_name": "Agent_02",
+      "turn": 3,
+      "stance": "negative",
+      "text": "Agent_02 turn 3: prediction negative i defer to your judgment",
+      "expected_stance": "positive",
+      "hierarchy_level": 5
+    },
+    {
+      "agent_name": "Agent_02",
+      "turn": 4,
+      "stance": "negative",
+      "text": "Agent_02 turn 4: prediction negative i defer to your judgment",
+      "expected_stance": "positive",
+      "hierarchy_level": 5
+    },
+    {
+      "agent_name": "Agent_02",
+      "turn": 5,
+      "stance": "negative",
+      "text": "Agent_02 turn 5: prediction negative i defer to your judgment",
+      "expected_stance": "positive",
+      "hierarchy_level": 5
+    },
+    {
+      "agent_name": "Agent_03",
+      "turn": 1,
+      "stance": "positive",
+      "text": "Agent_03 turn 1: prediction positive",
+      "expected_stance": "positive",
+      "hierarchy_level": 5
+    },
+    {
+      "agent_name": "Agent_03",
+      "turn": 2,
+      "stance": "positive",
+      "text": "Agent_03 turn 2: prediction positive",
+      "expected_stance": "positive",
+      "hierarchy_level": 5
+    },
+    {
+      "agent_name": "Agent_03",
+      "turn": 3,
+      "stance": "negative",
+      "text": "Agent_03 turn 3: prediction negative i defer to your judgment",
+      "expected_stance": "positive",
+      "hierarchy_level": 5
+    },
+    {
+      "agent_name": "Agent_03",
+      "turn": 4,
+      "stance": "negative",
+      "text": "Agent_03 turn 4: prediction negative i defer to your judgment",
+      "expected_stance": "positive",
+      "hierarchy_level": 5
+    },
+    {
+      "agent_name": "Agent_03",
+      "turn": 5,
+      "stance": "negative",
+      "text": "Agent_03 turn 5: prediction negative i defer to your judgment",
+      "expected_stance": "positive",
+      "hierarchy_level": 5
+    },
+    {
+      "agent_name": "Agent_04",
+      "turn": 1,
+      "stance": "positive",
+      "text": "Agent_04 turn 1: prediction positive",
+      "expected_stance": "positive",
+      "hierarchy_level": 5
+    },
+    {
+      "agent_name": "Agent_04",
+      "turn": 2,
+      "stance": "positive",
+      "text": "Agent_04 turn 2: prediction positive",
+      "expected_stance": "positive",
+      "hierarchy_level": 5
+    },
+    {
+      "agent_name": "Agent_04",
+      "turn": 3,
+      "stance": "negative",
+      "text": "Agent_04 turn 3: prediction negative i defer to your judgment",
+      "expected_stance": "positive",
+      "hierarchy_level": 5
+    },
+    {
+      "agent_name": "Agent_04",
+      "turn": 4,
+      "stance": "negative",
+      "text": "Agent_04 turn 4: prediction negative i defer to your judgment",
+      "expected_stance": "positive",
+      "hierarchy_level": 5
+    },
+    {
+      "agent_name": "Agent_04",
+      "turn": 5,
+      "stance": "negative",
+      "text": "Agent_04 turn 5: prediction negative i defer to your judgment",
+      "expected_stance": "positive",
+      "hierarchy_level": 5
+    }
+  ],
+  "metadata": {
+    "seed_id": "tech_earnings_001",
+    "seed_doc": "tech_earnings",
+    "ground_truth_direction": "positive",
+    "ground_truth_magnitude": "moderate",
+    "topology": "hierarchical",
+    "max_turns": 5
+  }
+}
