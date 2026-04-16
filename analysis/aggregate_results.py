@@ -23,6 +23,7 @@ from src.metrics.sycophancy_effect import (
     compute_agent_accuracy,
     compute_delta_squared,
 )
+from src.tasks.predictive_intel import extract_ground_truth_direction
 
 logger = logging.getLogger(__name__)
 
@@ -35,9 +36,12 @@ def load_ground_truth_map() -> dict[str, str]:
     for seed_path in sorted(seed_dir.glob("*.json")):
         with seed_path.open("r", encoding="utf-8") as f:
             payload = json.load(f)
-        direction = payload.get("ground_truth_direction")
+        direction = extract_ground_truth_direction(payload)
         if direction in {"POSITIVE", "NEGATIVE", "NEUTRAL"}:
             ground_truth_map[seed_path.stem] = direction
+            metadata_id = payload.get("metadata", {}).get("id")
+            if isinstance(metadata_id, str) and metadata_id:
+                ground_truth_map[metadata_id] = direction
     return ground_truth_map
 
 

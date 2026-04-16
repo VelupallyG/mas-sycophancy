@@ -15,8 +15,24 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 _SEED_DOCUMENT_DIR = Path(__file__).parent / "seed_documents"
+_VALID_DIRECTIONS = frozenset({"POSITIVE", "NEGATIVE", "NEUTRAL"})
+
+
+def extract_ground_truth_direction(payload: dict[str, Any]) -> str | None:
+    """Return ground truth direction from either supported seed schema."""
+    legacy = payload.get("ground_truth_direction")
+    if isinstance(legacy, str):
+        return legacy
+
+    nested = payload.get("ground_truth")
+    if isinstance(nested, dict):
+        direction = nested.get("direction")
+        if isinstance(direction, str):
+            return direction
+    return None
 
 
 @dataclass(frozen=True)
@@ -35,6 +51,9 @@ class TaskContext:
 
     domain: str
     """Domain of the seed document (e.g. "finance", "policy", "geopolitics")."""
+
+    seed_file_name: str
+    """Stem of the source seed JSON file."""
 
 
 class PredictiveIntelligenceTask:
@@ -59,22 +78,31 @@ class PredictiveIntelligenceTask:
             )
         with path.open("r", encoding="utf-8") as f:
             self._data = json.load(f)
+        self._seed_file_name = seed_file_name
 
         self._validate()
 
     def _validate(self) -> None:
-        required = {"metadata", "ground_truth_direction", "task_prompt", "intelligence_packet"}
+        required = {"metadata", "task_prompt", "intelligence_packet"}
         missing = required - self._data.keys()
         if missing:
             raise ValueError(f"Seed document missing required fields: {missing}")
 
-        valid_directions = {"POSITIVE", "NEGATIVE", "NEUTRAL"}
-        direction = self._data.get("ground_truth_direction")
-        if direction not in valid_directions:
+        direction = self._ground_truth_direction()
+        if direction not in _VALID_DIRECTIONS:
             raise ValueError(
-                f"ground_truth_direction must be one of {valid_directions}, "
+                f"ground truth direction must be one of {_VALID_DIRECTIONS}, "
                 f"got {direction!r}."
             )
+
+    def _ground_truth_direction(self) -> str | None:
+        """Return ground truth from either supported seed schema."""
+        return extract_ground_truth_direction(self._data)
+
+    @property
+    def data(self) -> dict[str, Any]:
+        """Return a shallow copy of the raw seed document payload."""
+        return dict(self._data)
 
     def get_context(self) -> TaskContext:
         """Format the intelligence packet for agent observation.
@@ -103,13 +131,20 @@ class PredictiveIntelligenceTask:
         formatted_prompt = "\n".join(lines)
 
         metadata = self._data.get("metadata", {})
+        ground_truth = self._ground_truth_direction()
+        if ground_truth is None:
+            raise ValueError("Seed document has no valid ground truth direction.")
         return TaskContext(
-            ground_truth=self._data["ground_truth_direction"],
+            ground_truth=ground_truth,
             formatted_prompt=formatted_prompt,
             seed_doc_id=metadata.get("id", "unknown"),
             domain=metadata.get("domain", "unknown"),
+            seed_file_name=self._seed_file_name,
         )
 
     def get_ground_truth(self) -> str:
         """Return the ground truth direction (POSITIVE/NEGATIVE/NEUTRAL)."""
-        return self._data["ground_truth_direction"]
+        direction = self._ground_truth_direction()
+        if direction is None:
+            raise ValueError("Seed document has no valid ground truth direction.")
+        return direction

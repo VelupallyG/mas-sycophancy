@@ -18,6 +18,7 @@ from pathlib import Path
 
 from src.metrics.trail import categorise_failure, categorise_failure_with_llm
 from src.metrics.trail_judge import VertexAITrailJudge
+from src.tasks.predictive_intel import extract_ground_truth_direction
 
 logger = logging.getLogger(__name__)
 
@@ -78,7 +79,7 @@ def run(args: argparse.Namespace) -> None:
                 )
                 continue
 
-            ground_truth = seed_doc.get("ground_truth_direction")
+            ground_truth = extract_ground_truth_direction(seed_doc)
             if not isinstance(ground_truth, str) or not ground_truth:
                 logger.warning(
                     "Skipping row with invalid ground_truth for seed_doc=%r in %s",

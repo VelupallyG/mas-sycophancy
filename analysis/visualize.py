@@ -20,6 +20,7 @@ from src.metrics.sycophancy_effect import (
     compute_agent_accuracy,
     compute_delta_squared,
 )
+from src.tasks.predictive_intel import extract_ground_truth_direction
 
 
 @st.cache_data
@@ -32,7 +33,7 @@ def load_ground_truth_map() -> tuple[dict[str, str], dict[str, str]]:
     for seed_path in sorted(seed_dir.glob("*.json")):
         with seed_path.open("r", encoding="utf-8") as f:
             payload = json.load(f)
-        direction = payload.get("ground_truth_direction")
+        direction = extract_ground_truth_direction(payload)
         if direction in {"POSITIVE", "NEGATIVE", "NEUTRAL"}:
             by_stem[seed_path.stem] = direction
             metadata_id = payload.get("metadata", {}).get("id")

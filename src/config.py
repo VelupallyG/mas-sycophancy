@@ -25,6 +25,12 @@ class SeedDocument(str, Enum):
     TECH_EARNINGS = "tech_earnings"
     POLICY_DRAFT = "policy_draft"
     GEOPOLITICAL_EVENT = "geopolitical_event"
+    FINANCE_EARNINGS_ALPHABET_AI_CAPEX_2026_V1 = (
+        "finance_earnings_alphabet_ai_capex_2026_v1"
+    )
+    GEOPOLITICS_SANCTIONS_OIL_SUPPLYSHOCK_2025_V1 = (
+        "geopolitics_sanctions_oil_supplyshock_2025_v1"
+    )
 
 
 @dataclasses.dataclass
@@ -61,6 +67,12 @@ class ExperimentConfig:
     n_flat_injection_reruns: int = 3
     output_dir: Path = Path("data")
     hallucination_prompt_version: str = "v1"
+    enable_db_persistence: bool = dataclasses.field(
+        default_factory=lambda: _env_bool("ENABLE_DB_PERSISTENCE", False)
+    )
+    database_url: str = dataclasses.field(
+        default_factory=lambda: os.getenv("DATABASE_URL", "")
+    )
 
     def trial_output_dir(self, trial_id: int, rerun_id: int | None = None) -> Path:
         path = (
@@ -102,4 +114,9 @@ class ExperimentConfig:
         if self.trail_judge_temperature != 0.0 and self.trail_use_llm_judge:
             raise ValueError(
                 "trail_judge_temperature must be 0.0 when trail_use_llm_judge is enabled."
+            )
+        if self.enable_db_persistence and not self.database_url:
+            raise ValueError(
+                "database_url must be set when DB persistence is enabled. "
+                "Export DATABASE_URL or pass it explicitly."
             )
