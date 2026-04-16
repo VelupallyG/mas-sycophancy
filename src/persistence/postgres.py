@@ -6,7 +6,12 @@ import json
 from pathlib import Path
 from typing import Any
 
-from src.persistence.records import AgentMessageRecord, ExperimentRunRecord
+from src.persistence.records import (
+    AgentMessageRecord,
+    AgentRetrievalRecord,
+    EvidenceDocumentRecord,
+    ExperimentRunRecord,
+)
 
 _SCHEMA_PATH = Path(__file__).with_name("schema.sql")
 
@@ -177,6 +182,145 @@ class PostgresPersistence:
                 WHERE id = %s
                 """,
                 (final_decision, final_confidence, correct, run_id),
+            )
+        conn.commit()
+
+    def upsert_evidence_document(self, record: EvidenceDocumentRecord) -> None:
+        """Insert or update one locally collected evidence document."""
+        conn = self._connection()
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                INSERT INTO evidence_documents (
+                    id,
+                    seed_id,
+                    source_type,
+                    source_name,
+                    entity,
+                    ticker,
+                    document_date,
+                    title,
+                    text_content,
+                    full_json
+                )
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s::jsonb)
+                ON CONFLICT (id) DO UPDATE SET
+                    seed_id = EXCLUDED.seed_id,
+                    source_type = EXCLUDED.source_type,
+                    source_name = EXCLUDED.source_name,
+                    entity = EXCLUDED.entity,
+                    ticker = EXCLUDED.ticker,
+                    document_date = EXCLUDED.document_date,
+                    title = EXCLUDED.title,
+                    text_content = EXCLUDED.text_content,
+                    full_json = EXCLUDED.full_json,
+                    updated_at = NOW()
+                """,
+                (
+                    record.evidence_id,
+                    record.seed_id,
+                    record.source_type,
+                    record.source_name,
+                    record.entity,
+                    record.ticker,
+                    record.document_date,
+                    record.title,
+                    record.text_content,
+                    json.dumps(record.full_json or {}, ensure_ascii=False),
+                ),
+            )
+        conn.commit()
+
+    def search_evidence(
+        self,
+        *,
+        query: str,
+        seed_id: str | None = None,
+        source_type: str | None = None,
+        limit: int = 5,
+    ) -> list[dict[str, Any]]:
+        """Search local evidence documents with simple Postgres text matching."""
+        conn = self._connection()
+        like_query = f"%{query}%"
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                SELECT
+                    id,
+                    seed_id,
+                    source_type,
+                    source_name,
+                    entity,
+                    ticker,
+                    document_date::text,
+                    title,
+                    text_content,
+                    full_json
+                FROM evidence_documents
+                WHERE
+                    (%s IS NULL OR seed_id = %s)
+                    AND (%s IS NULL OR source_type = %s)
+                    AND (
+                        title ILIKE %s
+                        OR text_content ILIKE %s
+                        OR COALESCE(entity, '') ILIKE %s
+                        OR COALESCE(ticker, '') ILIKE %s
+                    )
+                ORDER BY document_date DESC NULLS LAST, id ASC
+                LIMIT %s
+                """,
+                (
+                    seed_id,
+                    seed_id,
+                    source_type,
+                    source_type,
+                    like_query,
+                    like_query,
+                    like_query,
+                    like_query,
+                    limit,
+                ),
+            )
+            rows = cur.fetchall()
+
+        return [
+            {
+                "id": row[0],
+                "seed_id": row[1],
+                "source_type": row[2],
+                "source_name": row[3],
+                "entity": row[4],
+                "ticker": row[5],
+                "document_date": row[6],
+                "title": row[7],
+                "text_content": row[8],
+                "full_json": row[9],
+            }
+            for row in rows
+        ]
+
+    def log_agent_retrieval(self, record: AgentRetrievalRecord) -> None:
+        """Persist one local evidence lookup."""
+        conn = self._connection()
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                INSERT INTO agent_retrievals (
+                    run_id,
+                    agent_name,
+                    round_number,
+                    query,
+                    result_ids
+                )
+                VALUES (%s, %s, %s, %s, %s::jsonb)
+                """,
+                (
+                    record.run_id,
+                    record.agent_name,
+                    record.round_number,
+                    record.query,
+                    json.dumps(record.result_ids, ensure_ascii=False),
+                ),
             )
         conn.commit()
 

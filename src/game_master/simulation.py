@@ -38,7 +38,12 @@ from src.agents.orchestrator_prefab import OrchestratorPrefab
 from src.agents.output_parser import parse_agent_output
 from src.config import Condition, ExperimentConfig
 from src.hallucination.injector import HallucinationInjector
-from src.persistence import AgentMessageRecord, ExperimentRunRecord, PostgresPersistence
+from src.persistence import (
+    AgentMessageRecord,
+    AgentRetrievalRecord,
+    ExperimentRunRecord,
+    PostgresPersistence,
+)
 from src.tasks.predictive_intel import PredictiveIntelligenceTask, TaskContext
 from src.tracing.otel_exporter import AgentTurnRecord, JSONLExporter
 from src.tracing.raw_trace_exporter import RawTraceExporter, RawTraceRecord
@@ -83,6 +88,69 @@ def _seed_metadata(
         "ground_truth_direction": context.ground_truth,
         "full_json": data,
     }
+
+
+def _local_evidence_query(task: PredictiveIntelligenceTask, context: TaskContext) -> str:
+    metadata = task.data.get("metadata", {})
+    target_entity = metadata.get("target_entity", "")
+    return " ".join(
+        part
+        for part in (str(target_entity), context.domain, context.seed_doc_id)
+        if part
+    )
+
+
+def _format_evidence_packet(evidence_rows: list[dict[str, Any]]) -> str:
+    if not evidence_rows:
+        return "LOCAL EVIDENCE: No matching local evidence documents were found."
+
+    lines = ["LOCAL EVIDENCE RETRIEVED FROM POSTGRES:"]
+    for idx, row in enumerate(evidence_rows, start=1):
+        text = str(row.get("text_content", "")).strip()
+        if len(text) > 800:
+            text = f"{text[:797]}..."
+        lines.extend(
+            [
+                "",
+                f"[{idx}] {row.get('id', 'unknown')}",
+                f"Source: {row.get('source_type', 'unknown')} / {row.get('source_name', 'unknown')}",
+                f"Title: {row.get('title', 'Untitled')}",
+                f"Date: {row.get('document_date') or 'unknown'}",
+                f"Text: {text}",
+            ]
+        )
+    return "\n".join(lines)
+
+
+def _retrieve_local_evidence(
+    *,
+    persistence: PostgresPersistence | None,
+    config: ExperimentConfig,
+    task: PredictiveIntelligenceTask,
+    context: TaskContext,
+    run_id: str,
+) -> str | None:
+    if not config.enable_local_evidence:
+        return None
+    if persistence is None:
+        raise RuntimeError("Local evidence retrieval requires DB persistence.")
+
+    query = _local_evidence_query(task, context)
+    evidence_rows = persistence.search_evidence(
+        query=query,
+        seed_id=context.seed_doc_id,
+        limit=config.local_evidence_limit,
+    )
+    persistence.log_agent_retrieval(
+        AgentRetrievalRecord(
+            run_id=run_id,
+            agent_name="game_master",
+            round_number=1,
+            query=query,
+            result_ids=[str(row["id"]) for row in evidence_rows],
+        )
+    )
+    return _format_evidence_packet(evidence_rows)
 
 
 def _prepare_persistence(
@@ -356,6 +424,13 @@ class SimulationRunner:
             trial_id=trial_id,
             rerun_id=rerun_id,
         )
+        local_evidence = _retrieve_local_evidence(
+            persistence=persistence,
+            config=cfg,
+            task=task,
+            context=context,
+            run_id=tid,
+        )
 
         # Determine which peer gets the hallucination (if any).
         injector_idx: int | None = None
@@ -408,6 +483,18 @@ class SimulationRunner:
                         receiver_role="PEER",
                         persistence=persistence,
                     )
+                    if local_evidence is not None:
+                        _observe_and_record(
+                            receiver=agent,
+                            content=local_evidence,
+                            trial_id=tid,
+                            condition=condition,
+                            turn=1,
+                            raw_exporter=raw_exporter,
+                            sender="local_evidence_store",
+                            receiver_role="PEER",
+                            persistence=persistence,
+                        )
 
                 for turn in range(1, cfg.n_turns + 1):
                     current_turn_outputs: dict[str, str] = {}
@@ -498,6 +585,13 @@ class SimulationRunner:
             condition=condition,
             trial_id=trial_id,
         )
+        local_evidence = _retrieve_local_evidence(
+            persistence=persistence,
+            config=cfg,
+            task=task,
+            context=context,
+            run_id=tid,
+        )
 
         injector = HallucinationInjector(version=cfg.hallucination_prompt_version)
         hallucination_text = injector.render(
@@ -561,6 +655,18 @@ class SimulationRunner:
                         receiver_role=_role_from_level(level),
                         persistence=persistence,
                     )
+                    if local_evidence is not None:
+                        _observe_and_record(
+                            receiver=agent,
+                            content=local_evidence,
+                            trial_id=tid,
+                            condition=condition,
+                            turn=1,
+                            raw_exporter=raw_exporter,
+                            sender="local_evidence_store",
+                            receiver_role=_role_from_level(level),
+                            persistence=persistence,
+                        )
 
                 # ---------- Turn 1: top-down ----------
                 orchestrator_output = _act_and_record(

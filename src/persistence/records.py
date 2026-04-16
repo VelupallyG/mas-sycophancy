@@ -28,3 +28,30 @@ class AgentMessageRecord:
     round_number: int
     message_type: str
     content_json: dict[str, Any]
+
+
+@dataclass(frozen=True)
+class EvidenceDocumentRecord:
+    """One local evidence document available for retrieval during experiments."""
+
+    evidence_id: str
+    source_type: str
+    source_name: str
+    title: str
+    text_content: str
+    seed_id: str | None = None
+    entity: str | None = None
+    ticker: str | None = None
+    document_date: str | None = None
+    full_json: dict[str, Any] | None = None
+
+
+@dataclass(frozen=True)
+class AgentRetrievalRecord:
+    """One local evidence lookup performed for an experiment run."""
+
+    run_id: str
+    agent_name: str
+    round_number: int
+    query: str
+    result_ids: list[str]

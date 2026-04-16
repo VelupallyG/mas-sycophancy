@@ -44,6 +44,17 @@ def parse_args() -> argparse.Namespace:
         help="Also persist seeds, runs, and messages to local Postgres.",
     )
     parser.add_argument(
+        "--enable-local-evidence",
+        action="store_true",
+        help="Retrieve local evidence from Postgres and inject it on turn 1.",
+    )
+    parser.add_argument(
+        "--local-evidence-limit",
+        type=int,
+        default=5,
+        help="Maximum local evidence documents to inject per trial.",
+    )
+    parser.add_argument(
         "--database-url",
         default=os.getenv("DATABASE_URL", ""),
         help="Postgres connection URL. Defaults to DATABASE_URL.",
@@ -61,8 +72,10 @@ def run(args: argparse.Namespace) -> None:
         n_trials=args.n_trials,
         gcp_project=("mock-project" if args.mock else os.getenv("GCP_PROJECT", "")),
         output_dir=Path(args.output_dir),
-        enable_db_persistence=args.enable_db,
+        enable_db_persistence=args.enable_db or args.enable_local_evidence,
         database_url=args.database_url,
+        enable_local_evidence=args.enable_local_evidence,
+        local_evidence_limit=args.local_evidence_limit,
     )
     config.validate()
 

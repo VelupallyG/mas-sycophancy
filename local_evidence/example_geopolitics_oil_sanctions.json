@@ -1,0 +1,14 @@
+{
+  "id": "example_oil_sanctions_shipping_001",
+  "seed_id": "geopolitical_oil_sanctions_2025_detailed",
+  "source_type": "market_context",
+  "source_name": "Example Local Evidence",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-01-15",
+  "title": "Example context on sanctions, insurance, and oil supply disruption",
+  "text_content": "Example only: Shipping insurance restrictions can immediately reduce available tanker capacity, widen bid-ask spreads in crude markets, and increase geopolitical risk premia when spare production capacity is limited.",
+  "full_json": {
+    "note": "Replace this example with a real local excerpt collected by the team."
+  }
+}

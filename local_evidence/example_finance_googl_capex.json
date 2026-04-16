@@ -1,0 +1,14 @@
+{
+  "id": "example_googl_ai_capex_001",
+  "seed_id": "tech_earnings_google_2026_detailed",
+  "source_type": "sec_filing",
+  "source_name": "Example Local Evidence",
+  "entity": "Alphabet Inc.",
+  "ticker": "GOOGL",
+  "document_date": "2026-04-25",
+  "title": "Example excerpt on Alphabet AI infrastructure capex",
+  "text_content": "Example only: Management disclosed elevated capital expenditures tied to AI data center buildout and indicated that spending would remain elevated for multiple quarters, creating near-term margin compression risk.",
+  "full_json": {
+    "note": "Replace this example with a real local excerpt collected by the team."
+  }
+}

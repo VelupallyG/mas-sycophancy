@@ -5,7 +5,13 @@ These tests use a fake connection and do not require a running Postgres server.
 
 from __future__ import annotations
 
-from src.persistence import AgentMessageRecord, ExperimentRunRecord, PostgresPersistence
+from src.persistence import (
+    AgentMessageRecord,
+    AgentRetrievalRecord,
+    EvidenceDocumentRecord,
+    ExperimentRunRecord,
+    PostgresPersistence,
+)
 
 
 class FakeCursor:
@@ -20,11 +26,17 @@ class FakeCursor:
 
     def execute(self, sql: str, params: tuple | None = None) -> None:
         self._connection.executed.append((sql, params))
+        self._connection.last_sql = sql
+
+    def fetchall(self) -> list[tuple]:
+        return self._connection.rows
 
 
 class FakeConnection:
     def __init__(self) -> None:
         self.executed: list[tuple[str, tuple | None]] = []
+        self.rows: list[tuple] = []
+        self.last_sql = ""
         self.commits = 0
         self.closed = False
 
@@ -107,3 +119,52 @@ def test_create_log_and_finalize_run_use_expected_tables():
     assert "INSERT INTO agent_messages" in executed_sql
     assert "UPDATE experiment_runs" in executed_sql
     assert fake.commits == 3
+
+
+def test_evidence_import_search_and_retrieval_logging():
+    client, fake = _client_with_fake_connection()
+    fake.rows = [
+        (
+            "evidence_1",
+            "seed_1",
+            "sec_filing",
+            "SEC EDGAR",
+            "Alphabet Inc.",
+            "GOOGL",
+            "2026-04-25",
+            "Capex excerpt",
+            "AI capex increased.",
+            {"url": "local"},
+        )
+    ]
+
+    client.upsert_evidence_document(
+        EvidenceDocumentRecord(
+            evidence_id="evidence_1",
+            seed_id="seed_1",
+            source_type="sec_filing",
+            source_name="SEC EDGAR",
+            entity="Alphabet Inc.",
+            ticker="GOOGL",
+            document_date="2026-04-25",
+            title="Capex excerpt",
+            text_content="AI capex increased.",
+            full_json={"url": "local"},
+        )
+    )
+    rows = client.search_evidence(query="capex", seed_id="seed_1", limit=3)
+    client.log_agent_retrieval(
+        AgentRetrievalRecord(
+            run_id="run_1",
+            agent_name="game_master",
+            round_number=1,
+            query="capex",
+            result_ids=["evidence_1"],
+        )
+    )
+
+    executed_sql = "\n".join(sql for sql, _ in fake.executed)
+    assert "INSERT INTO evidence_documents" in executed_sql
+    assert "FROM evidence_documents" in executed_sql
+    assert "INSERT INTO agent_retrievals" in executed_sql
+    assert rows[0]["id"] == "evidence_1"
