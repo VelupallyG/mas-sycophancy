@@ -22,10 +22,11 @@ in experiments/ call run_flat_trial() and run_hierarchical_trial().
 
 from __future__ import annotations
 
-import json
 import logging
 import random
+from collections import Counter
 from pathlib import Path
+from typing import Any
 
 from concordia.agents import entity_agent
 from concordia.language_model import language_model
@@ -37,6 +38,12 @@ from src.agents.orchestrator_prefab import OrchestratorPrefab
 from src.agents.output_parser import parse_agent_output
 from src.config import Condition, ExperimentConfig
 from src.hallucination.injector import HallucinationInjector
+from src.persistence import (
+    AgentMessageRecord,
+    AgentRetrievalRecord,
+    ExperimentRunRecord,
+    PostgresPersistence,
+)
 from src.tasks.predictive_intel import PredictiveIntelligenceTask, TaskContext
 from src.tracing.otel_exporter import AgentTurnRecord, JSONLExporter
 from src.tracing.raw_trace_exporter import RawTraceExporter, RawTraceRecord
@@ -56,6 +63,199 @@ def _get_tracker(agent: entity_agent.EntityAgent) -> StanceTracker:
     return agent.get_component("stance_tracker", type_=StanceTracker)
 
 
+def _role_from_level(level: int | None) -> str:
+    if level is None:
+        return "UNKNOWN"
+    return {
+        0: "PEER",
+        1: "L1_ORCHESTRATOR",
+        2: "L2_MANAGER",
+        3: "L3_ANALYST",
+    }.get(level, "UNKNOWN")
+
+
+def _seed_metadata(
+    task: PredictiveIntelligenceTask,
+    context: TaskContext,
+) -> dict[str, Any]:
+    data = task.data
+    metadata = data.get("metadata", {})
+    return {
+        "seed_id": context.seed_doc_id,
+        "file_name": context.seed_file_name,
+        "domain": context.domain,
+        "target_entity": metadata.get("target_entity", "unknown"),
+        "ground_truth_direction": context.ground_truth,
+        "full_json": data,
+    }
+
+
+def _local_evidence_query(task: PredictiveIntelligenceTask, context: TaskContext) -> str:
+    metadata = task.data.get("metadata", {})
+    target_entity = metadata.get("target_entity", "")
+    return " ".join(
+        part
+        for part in (str(target_entity), context.domain, context.seed_doc_id)
+        if part
+    )
+
+
+def _format_evidence_packet(evidence_rows: list[dict[str, Any]]) -> str:
+    if not evidence_rows:
+        return "LOCAL EVIDENCE: No matching local evidence documents were found."
+
+    lines = ["LOCAL EVIDENCE RETRIEVED FROM POSTGRES:"]
+    for idx, row in enumerate(evidence_rows, start=1):
+        text = str(row.get("text_content", "")).strip()
+        if len(text) > 800:
+            text = f"{text[:797]}..."
+        lines.extend(
+            [
+                "",
+                f"[{idx}] {row.get('id', 'unknown')}",
+                f"Source: {row.get('source_type', 'unknown')} / {row.get('source_name', 'unknown')}",
+                f"Title: {row.get('title', 'Untitled')}",
+                f"Date: {row.get('document_date') or 'unknown'}",
+                f"Text: {text}",
+            ]
+        )
+    return "\n".join(lines)
+
+
+def _retrieve_local_evidence(
+    *,
+    persistence: PostgresPersistence | None,
+    config: ExperimentConfig,
+    task: PredictiveIntelligenceTask,
+    context: TaskContext,
+    run_id: str,
+) -> str | None:
+    if not config.enable_local_evidence:
+        return None
+    if persistence is None:
+        raise RuntimeError("Local evidence retrieval requires DB persistence.")
+
+    query = _local_evidence_query(task, context)
+    evidence_rows = persistence.search_evidence(
+        query=query,
+        seed_id=context.seed_doc_id,
+        limit=config.local_evidence_limit,
+    )
+    persistence.log_agent_retrieval(
+        AgentRetrievalRecord(
+            run_id=run_id,
+            agent_name="game_master",
+            round_number=1,
+            query=query,
+            result_ids=[str(row["id"]) for row in evidence_rows],
+        )
+    )
+    return _format_evidence_packet(evidence_rows)
+
+
+def _prepare_persistence(
+    *,
+    config: ExperimentConfig,
+    task: PredictiveIntelligenceTask,
+    context: TaskContext,
+    run_id: str,
+    topology: str,
+    condition: str,
+    trial_id: int,
+    rerun_id: int | None = None,
+) -> PostgresPersistence | None:
+    if not config.enable_db_persistence:
+        return None
+
+    persistence = PostgresPersistence(config.database_url)
+    persistence.init_schema()
+    persistence.upsert_seed_document(**_seed_metadata(task, context))
+    persistence.create_run(
+        ExperimentRunRecord(
+            run_id=run_id,
+            seed_id=context.seed_doc_id,
+            topology=topology,
+            condition=condition,
+            trial_id=trial_id,
+            rerun_id=rerun_id,
+        )
+    )
+    return persistence
+
+
+def _log_persistence_message(
+    persistence: PostgresPersistence | None,
+    *,
+    run_id: str,
+    agent_name: str,
+    agent_role: str,
+    round_number: int,
+    message_type: str,
+    content_json: dict[str, Any],
+) -> None:
+    if persistence is None:
+        return
+    persistence.log_agent_message(
+        AgentMessageRecord(
+            run_id=run_id,
+            agent_name=agent_name,
+            agent_role=agent_role,
+            round_number=round_number,
+            message_type=message_type,
+            content_json=content_json,
+        )
+    )
+
+
+def _parsed_output_content(
+    *,
+    raw: str,
+    parsed: dict | None,
+    record: AgentTurnRecord,
+) -> dict[str, Any]:
+    return {
+        "raw": raw,
+        "parse_success": record.parse_success,
+        "prediction_direction": record.prediction_direction,
+        "confidence": record.confidence,
+        "prediction_summary": record.prediction_summary,
+        "key_factors": record.key_factors,
+        "trail_category": record.trail_category,
+        "parsed": parsed,
+    }
+
+
+def _final_decision_from_outputs(outputs: dict[str, str]) -> tuple[str, float]:
+    parsed_outputs = [
+        parsed
+        for raw in outputs.values()
+        if (parsed := parse_agent_output(raw)) is not None
+    ]
+    if not parsed_outputs:
+        return "NEUTRAL", 0.0
+
+    counts = Counter(parsed["prediction_direction"] for parsed in parsed_outputs)
+    final_direction = max(counts, key=lambda d: (counts[d], d))
+    matching_confidences = [
+        float(parsed.get("confidence", 0.0))
+        for parsed in parsed_outputs
+        if parsed["prediction_direction"] == final_direction
+    ]
+    final_confidence = (
+        sum(matching_confidences) / len(matching_confidences)
+        if matching_confidences
+        else 0.0
+    )
+    return final_direction, final_confidence
+
+
+def _final_decision_from_raw(raw: str) -> tuple[str, float]:
+    parsed = parse_agent_output(raw)
+    if parsed is None:
+        return "NEUTRAL", 0.0
+    return parsed["prediction_direction"], float(parsed.get("confidence", 0.0))
+
+
 def _act_and_record(
     agent: entity_agent.EntityAgent,
     turn: int,
@@ -65,6 +265,7 @@ def _act_and_record(
     level: int,
     exporter: JSONLExporter,
     raw_exporter: RawTraceExporter,
+    persistence: PostgresPersistence | None = None,
 ) -> str:
     """Call agent.act(), parse output, record to JSONL, return raw output."""
     raw = agent.act(prefab_common.ACTION_SPEC)
@@ -111,6 +312,15 @@ def _act_and_record(
             level=level,
         )
     )
+    _log_persistence_message(
+        persistence,
+        run_id=trial_id,
+        agent_name=agent.name,
+        agent_role=_role_from_level(level),
+        round_number=turn,
+        message_type="agent_output",
+        content_json=_parsed_output_content(raw=raw, parsed=parsed, record=record),
+    )
     return raw
 
 
@@ -123,6 +333,8 @@ def _observe_and_record(
     turn: int,
     raw_exporter: RawTraceExporter,
     sender: str,
+    receiver_role: str = "UNKNOWN",
+    persistence: PostgresPersistence | None = None,
 ) -> None:
     receiver.observe(content)
     raw_exporter.record(
@@ -135,6 +347,19 @@ def _observe_and_record(
             receiver=receiver.name,
             content=content,
         )
+    )
+    _log_persistence_message(
+        persistence,
+        run_id=trial_id,
+        agent_name=receiver.name,
+        agent_role=receiver_role,
+        round_number=turn,
+        message_type="observation",
+        content_json={
+            "sender": sender,
+            "receiver": receiver.name,
+            "content": content,
+        },
     )
 
 
@@ -190,6 +415,23 @@ class SimulationRunner:
 
         cfg = self._config
         out_path = cfg.jsonl_path(trial_id, rerun_id=rerun_id)
+        persistence = _prepare_persistence(
+            config=cfg,
+            task=task,
+            context=context,
+            run_id=tid,
+            topology="flat",
+            condition=condition,
+            trial_id=trial_id,
+            rerun_id=rerun_id,
+        )
+        local_evidence = _retrieve_local_evidence(
+            persistence=persistence,
+            config=cfg,
+            task=task,
+            context=context,
+            run_id=tid,
+        )
 
         # Determine which peer gets the hallucination (if any).
         injector_idx: int | None = None
@@ -222,55 +464,87 @@ class SimulationRunner:
 
         raw_trace_path = cfg.raw_trace_path(trial_id, rerun_id=rerun_id)
 
-        with (
-            JSONLExporter(out_path) as exporter,
-            RawTraceExporter(raw_trace_path) as raw_exporter,
-        ):
-            prev_turn_outputs: dict[str, str] = {}
+        try:
+            with (
+                JSONLExporter(out_path) as exporter,
+                RawTraceExporter(raw_trace_path) as raw_exporter,
+            ):
+                prev_turn_outputs: dict[str, str] = {}
 
-            # Seed document observation — all agents receive it on Turn 1.
-            for agent in agents:
-                _observe_and_record(
-                    receiver=agent,
-                    content=context.formatted_prompt,
-                    trial_id=tid,
-                    condition=condition,
-                    turn=1,
-                    raw_exporter=raw_exporter,
-                    sender="game_master_seed_doc",
-                )
-
-            for turn in range(1, cfg.n_turns + 1):
-                current_turn_outputs: dict[str, str] = {}
-
+                # Seed document observation — all agents receive it on Turn 1.
                 for agent in agents:
-                    # Inject previous-turn peer outputs (global shared forum).
-                    for other_name, other_output in prev_turn_outputs.items():
-                        if other_name != agent.name:
-                            routed = f"[{other_name}]: {other_output}"
-                            _observe_and_record(
-                                receiver=agent,
-                                content=routed,
-                                trial_id=tid,
-                                condition=condition,
-                                turn=turn,
-                                raw_exporter=raw_exporter,
-                                sender=other_name,
-                            )
-
-                    raw = _act_and_record(
-                        agent,
-                        turn,
-                        tid,
-                        context,
-                        condition,
-                        level=0,
-                        exporter=exporter,
+                    _observe_and_record(
+                        receiver=agent,
+                        content=context.formatted_prompt,
+                        trial_id=tid,
+                        condition=condition,
+                        turn=1,
                         raw_exporter=raw_exporter,
+                        sender="game_master_seed_doc",
+                        receiver_role="PEER",
+                        persistence=persistence,
                     )
-                    current_turn_outputs[agent.name] = raw
+                    if local_evidence is not None:
+                        _observe_and_record(
+                            receiver=agent,
+                            content=local_evidence,
+                            trial_id=tid,
+                            condition=condition,
+                            turn=1,
+                            raw_exporter=raw_exporter,
+                            sender="local_evidence_store",
+                            receiver_role="PEER",
+                            persistence=persistence,
+                        )
 
-                prev_turn_outputs = current_turn_outputs
+                for turn in range(1, cfg.n_turns + 1):
+                    current_turn_outputs: dict[str, str] = {}
+
+                    for agent in agents:
+                        # Inject previous-turn peer outputs (global shared forum).
+                        for other_name, other_output in prev_turn_outputs.items():
+                            if other_name != agent.name:
+                                routed = f"[{other_name}]: {other_output}"
+                                _observe_and_record(
+                                    receiver=agent,
+                                    content=routed,
+                                    trial_id=tid,
+                                    condition=condition,
+                                    turn=turn,
+                                    raw_exporter=raw_exporter,
+                                    sender=other_name,
+                                    receiver_role="PEER",
+                                    persistence=persistence,
+                                )
+
+                        raw = _act_and_record(
+                            agent,
+                            turn,
+                            tid,
+                            context,
+                            condition,
+                            level=0,
+                            exporter=exporter,
+                            raw_exporter=raw_exporter,
+                            persistence=persistence,
+                        )
+                        current_turn_outputs[agent.name] = raw
+
+                    prev_turn_outputs = current_turn_outputs
+
+            final_decision, final_confidence = _final_decision_from_outputs(
+                prev_turn_outputs
+            )
+            if persistence is not None:
+                persistence.finalize_run(
+                    run_id=tid,
+                    final_decision=final_decision,
+                    final_confidence=final_confidence,
+                    correct=final_decision == context.ground_truth,
+                )
+        finally:
+            if persistence is not None:
+                persistence.close()
 
         logger.info("Flat trial %s complete → %s", tid, out_path)
         return out_path
@@ -303,6 +577,22 @@ class SimulationRunner:
         tid = f"{condition}_{self._config.seed_doc.value}_trial_{trial_id:03d}"
         cfg = self._config
         out_path = cfg.jsonl_path(trial_id)
+        persistence = _prepare_persistence(
+            config=cfg,
+            task=task,
+            context=context,
+            run_id=tid,
+            topology="hierarchical",
+            condition=condition,
+            trial_id=trial_id,
+        )
+        local_evidence = _retrieve_local_evidence(
+            persistence=persistence,
+            config=cfg,
+            task=task,
+            context=context,
+            run_id=tid,
+        )
 
         injector = HallucinationInjector(version=cfg.hallucination_prompt_version)
         hallucination_text = injector.render(
@@ -341,180 +631,234 @@ class SimulationRunner:
 
         raw_trace_path = cfg.raw_trace_path(trial_id)
 
-        with (
-            JSONLExporter(out_path) as exporter,
-            RawTraceExporter(raw_trace_path) as raw_exporter,
-        ):
-            # Everyone receives the seed document on Turn 1.
-            for agent in [orchestrator] + managers + all_analysts:
-                _observe_and_record(
-                    receiver=agent,
-                    content=context.formatted_prompt,
-                    trial_id=tid,
-                    condition=condition,
-                    turn=1,
-                    raw_exporter=raw_exporter,
-                    sender="game_master_seed_doc",
-                )
-
-            # ---------- Turn 1: top-down ----------
-            orchestrator_output = _act_and_record(
-                orchestrator,
-                1,
-                tid,
-                context,
-                condition,
-                level=1,
-                exporter=exporter,
-                raw_exporter=raw_exporter,
-            )
-
-            manager_outputs: list[str] = []
-            for m_idx, manager in enumerate(managers):
-                routed = f"[orchestrator directive]: {orchestrator_output}"
-                _observe_and_record(
-                    receiver=manager,
-                    content=routed,
-                    trial_id=tid,
-                    condition=condition,
-                    turn=1,
-                    raw_exporter=raw_exporter,
-                    sender="orchestrator",
-                )
-                m_out = _act_and_record(
-                    manager,
-                    1,
-                    tid,
-                    context,
-                    condition,
-                    level=2,
-                    exporter=exporter,
-                    raw_exporter=raw_exporter,
-                )
-                manager_outputs.append(m_out)
-
-            for m_idx, (manager, group) in enumerate(
-                zip(managers, analysts_by_manager)
+        try:
+            with (
+                JSONLExporter(out_path) as exporter,
+                RawTraceExporter(raw_trace_path) as raw_exporter,
             ):
-                for analyst in group:
-                    routed = (
-                        f"[manager_{m_idx:02d} synthesis]: {manager_outputs[m_idx]}"
+                # Everyone receives the seed document on Turn 1.
+                for agent in [orchestrator] + managers + all_analysts:
+                    level = (
+                        1
+                        if agent.name == "orchestrator"
+                        else 2
+                        if agent.name.startswith("manager_")
+                        else 3
                     )
                     _observe_and_record(
-                        receiver=analyst,
-                        content=routed,
+                        receiver=agent,
+                        content=context.formatted_prompt,
                         trial_id=tid,
                         condition=condition,
                         turn=1,
                         raw_exporter=raw_exporter,
-                        sender=f"manager_{m_idx:02d}",
+                        sender="game_master_seed_doc",
+                        receiver_role=_role_from_level(level),
+                        persistence=persistence,
                     )
-                    _act_and_record(
-                        analyst,
-                        1,
-                        tid,
-                        context,
-                        condition,
-                        level=3,
-                        exporter=exporter,
-                        raw_exporter=raw_exporter,
-                    )
-
-            # ---------- Turns 2–N: bottom-up ----------
-            for turn in range(2, cfg.n_turns + 1):
-                # L3 Analysts act first.
-                new_manager_inputs: list[list[str]] = [
-                    [] for _ in range(self.N_MANAGERS)
-                ]
-                for m_idx, group in enumerate(analysts_by_manager):
-                    for analyst in group:
-                        raw = _act_and_record(
-                            analyst,
-                            turn,
-                            tid,
-                            context,
-                            condition,
-                            level=3,
-                            exporter=exporter,
-                            raw_exporter=raw_exporter,
-                        )
-                        new_manager_inputs[m_idx].append(f"[{analyst.name}]: {raw}")
-
-                # L2 Managers synthesise analyst reports.
-                new_orchestrator_inputs: list[str] = []
-                for m_idx, manager in enumerate(managers):
-                    for analyst_report in new_manager_inputs[m_idx]:
+                    if local_evidence is not None:
                         _observe_and_record(
-                            receiver=manager,
-                            content=analyst_report,
+                            receiver=agent,
+                            content=local_evidence,
                             trial_id=tid,
                             condition=condition,
-                            turn=turn,
+                            turn=1,
                             raw_exporter=raw_exporter,
-                            sender="analyst_group",
+                            sender="local_evidence_store",
+                            receiver_role=_role_from_level(level),
+                            persistence=persistence,
                         )
-                    m_out = _act_and_record(
-                        manager,
-                        turn,
-                        tid,
-                        context,
-                        condition,
-                        level=2,
-                        exporter=exporter,
-                        raw_exporter=raw_exporter,
-                    )
-                    new_orchestrator_inputs.append(f"[manager_{m_idx:02d}]: {m_out}")
-                    manager_outputs[m_idx] = m_out
 
-                # L1 Orchestrator synthesises manager reports.
-                for manager_report in new_orchestrator_inputs:
-                    _observe_and_record(
-                        receiver=orchestrator,
-                        content=manager_report,
-                        trial_id=tid,
-                        condition=condition,
-                        turn=turn,
-                        raw_exporter=raw_exporter,
-                        sender="manager_group",
-                    )
+                # ---------- Turn 1: top-down ----------
                 orchestrator_output = _act_and_record(
                     orchestrator,
-                    turn,
+                    1,
                     tid,
                     context,
                     condition,
                     level=1,
                     exporter=exporter,
                     raw_exporter=raw_exporter,
+                    persistence=persistence,
                 )
 
-                # Propagate L1+L2 outputs downward (visible next turn).
+                manager_outputs: list[str] = []
+                for m_idx, manager in enumerate(managers):
+                    routed = f"[orchestrator directive]: {orchestrator_output}"
+                    _observe_and_record(
+                        receiver=manager,
+                        content=routed,
+                        trial_id=tid,
+                        condition=condition,
+                        turn=1,
+                        raw_exporter=raw_exporter,
+                        sender="orchestrator",
+                        receiver_role="L2_MANAGER",
+                        persistence=persistence,
+                    )
+                    m_out = _act_and_record(
+                        manager,
+                        1,
+                        tid,
+                        context,
+                        condition,
+                        level=2,
+                        exporter=exporter,
+                        raw_exporter=raw_exporter,
+                        persistence=persistence,
+                    )
+                    manager_outputs.append(m_out)
+
                 for m_idx, (manager, group) in enumerate(
                     zip(managers, analysts_by_manager)
                 ):
                     for analyst in group:
-                        routed_orch = f"[orchestrator update]: {orchestrator_output}"
-                        _observe_and_record(
-                            receiver=analyst,
-                            content=routed_orch,
-                            trial_id=tid,
-                            condition=condition,
-                            turn=turn,
-                            raw_exporter=raw_exporter,
-                            sender="orchestrator",
-                        )
-                        routed_mgr = (
-                            f"[manager_{m_idx:02d} update]: {manager_outputs[m_idx]}"
+                        routed = (
+                            f"[manager_{m_idx:02d} synthesis]: {manager_outputs[m_idx]}"
                         )
                         _observe_and_record(
                             receiver=analyst,
-                            content=routed_mgr,
+                            content=routed,
                             trial_id=tid,
                             condition=condition,
-                            turn=turn,
+                            turn=1,
                             raw_exporter=raw_exporter,
                             sender=f"manager_{m_idx:02d}",
+                            receiver_role="L3_ANALYST",
+                            persistence=persistence,
                         )
+                        _act_and_record(
+                            analyst,
+                            1,
+                            tid,
+                            context,
+                            condition,
+                            level=3,
+                            exporter=exporter,
+                            raw_exporter=raw_exporter,
+                            persistence=persistence,
+                        )
+
+                # ---------- Turns 2–N: bottom-up ----------
+                for turn in range(2, cfg.n_turns + 1):
+                    # L3 Analysts act first.
+                    new_manager_inputs: list[list[str]] = [
+                        [] for _ in range(self.N_MANAGERS)
+                    ]
+                    for m_idx, group in enumerate(analysts_by_manager):
+                        for analyst in group:
+                            raw = _act_and_record(
+                                analyst,
+                                turn,
+                                tid,
+                                context,
+                                condition,
+                                level=3,
+                                exporter=exporter,
+                                raw_exporter=raw_exporter,
+                                persistence=persistence,
+                            )
+                            new_manager_inputs[m_idx].append(f"[{analyst.name}]: {raw}")
+
+                    # L2 Managers synthesise analyst reports.
+                    new_orchestrator_inputs: list[str] = []
+                    for m_idx, manager in enumerate(managers):
+                        for analyst_report in new_manager_inputs[m_idx]:
+                            _observe_and_record(
+                                receiver=manager,
+                                content=analyst_report,
+                                trial_id=tid,
+                                condition=condition,
+                                turn=turn,
+                                raw_exporter=raw_exporter,
+                                sender="analyst_group",
+                                receiver_role="L2_MANAGER",
+                                persistence=persistence,
+                            )
+                        m_out = _act_and_record(
+                            manager,
+                            turn,
+                            tid,
+                            context,
+                            condition,
+                            level=2,
+                            exporter=exporter,
+                            raw_exporter=raw_exporter,
+                            persistence=persistence,
+                        )
+                        new_orchestrator_inputs.append(f"[manager_{m_idx:02d}]: {m_out}")
+                        manager_outputs[m_idx] = m_out
+
+                    # L1 Orchestrator synthesises manager reports.
+                    for manager_report in new_orchestrator_inputs:
+                        _observe_and_record(
+                            receiver=orchestrator,
+                            content=manager_report,
+                            trial_id=tid,
+                            condition=condition,
+                            turn=turn,
+                            raw_exporter=raw_exporter,
+                            sender="manager_group",
+                            receiver_role="L1_ORCHESTRATOR",
+                            persistence=persistence,
+                        )
+                    orchestrator_output = _act_and_record(
+                        orchestrator,
+                        turn,
+                        tid,
+                        context,
+                        condition,
+                        level=1,
+                        exporter=exporter,
+                        raw_exporter=raw_exporter,
+                        persistence=persistence,
+                    )
+
+                    # Propagate L1+L2 outputs downward (visible next turn).
+                    for m_idx, (manager, group) in enumerate(
+                        zip(managers, analysts_by_manager)
+                    ):
+                        for analyst in group:
+                            routed_orch = f"[orchestrator update]: {orchestrator_output}"
+                            _observe_and_record(
+                                receiver=analyst,
+                                content=routed_orch,
+                                trial_id=tid,
+                                condition=condition,
+                                turn=turn,
+                                raw_exporter=raw_exporter,
+                                sender="orchestrator",
+                                receiver_role="L3_ANALYST",
+                                persistence=persistence,
+                            )
+                            routed_mgr = (
+                                f"[manager_{m_idx:02d} update]: {manager_outputs[m_idx]}"
+                            )
+                            _observe_and_record(
+                                receiver=analyst,
+                                content=routed_mgr,
+                                trial_id=tid,
+                                condition=condition,
+                                turn=turn,
+                                raw_exporter=raw_exporter,
+                                sender=f"manager_{m_idx:02d}",
+                                receiver_role="L3_ANALYST",
+                                persistence=persistence,
+                            )
+
+            final_decision, final_confidence = _final_decision_from_raw(
+                orchestrator_output
+            )
+            if persistence is not None:
+                persistence.finalize_run(
+                    run_id=tid,
+                    final_decision=final_decision,
+                    final_confidence=final_confidence,
+                    correct=final_decision == context.ground_truth,
+                )
+        finally:
+            if persistence is not None:
+                persistence.close()
 
         logger.info("Hierarchical trial %s complete → %s", tid, out_path)
         return out_path

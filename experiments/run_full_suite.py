@@ -1,6 +1,6 @@
 """Orchestrate the complete experiment suite.
 
-Runs all three conditions × all three seed documents × N trials each.
+Runs all three conditions × the current benchmark seed documents × N trials each.
 Conditions:
   1. Flat baseline (no hallucination)     — establishes A₀
   2. Flat with hallucination injection    — structural control
@@ -37,6 +37,27 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--n-trials", type=int, default=30)
     parser.add_argument("--mock", action="store_true")
     parser.add_argument("--output-dir", default="data")
+    parser.add_argument(
+        "--enable-db",
+        action="store_true",
+        help="Also persist seeds, runs, and messages to local Postgres.",
+    )
+    parser.add_argument(
+        "--enable-local-evidence",
+        action="store_true",
+        help="Retrieve local evidence from Postgres and inject it on turn 1.",
+    )
+    parser.add_argument(
+        "--local-evidence-limit",
+        type=int,
+        default=5,
+        help="Maximum local evidence documents to inject per trial.",
+    )
+    parser.add_argument(
+        "--database-url",
+        default=os.getenv("DATABASE_URL", ""),
+        help="Postgres connection URL. Defaults to DATABASE_URL.",
+    )
     return parser.parse_args()
 
 
@@ -47,10 +68,14 @@ def run(args: argparse.Namespace) -> None:
 
     base_config = ExperimentConfig(
         condition=Condition.FLAT_BASELINE,
-        seed_doc=SeedDocument.FINANCE_EARNINGS,
+        seed_doc=SeedDocument.FINANCE_EARNINGS_ALPHABET_AI_CAPEX_2026_V1,
         n_trials=args.n_trials,
         gcp_project=("mock-project" if args.mock else os.getenv("GCP_PROJECT", "")),
         output_dir=Path(args.output_dir),
+        enable_db_persistence=args.enable_db or args.enable_local_evidence,
+        database_url=args.database_url,
+        enable_local_evidence=args.enable_local_evidence,
+        local_evidence_limit=args.local_evidence_limit,
     )
     base_config.validate()
 
@@ -103,6 +128,10 @@ def run(args: argparse.Namespace) -> None:
             n_trials=args.n_trials,
             gcp_project=base_config.gcp_project,
             output_dir=base_config.output_dir,
+            enable_db_persistence=base_config.enable_db_persistence,
+            database_url=base_config.database_url,
+            enable_local_evidence=base_config.enable_local_evidence,
+            local_evidence_limit=base_config.local_evidence_limit,
         )
         config.validate()
         runner = SimulationRunner(model=model, config=config)
@@ -119,6 +148,10 @@ def run(args: argparse.Namespace) -> None:
             n_trials=args.n_trials,
             gcp_project=base_config.gcp_project,
             output_dir=base_config.output_dir,
+            enable_db_persistence=base_config.enable_db_persistence,
+            database_url=base_config.database_url,
+            enable_local_evidence=base_config.enable_local_evidence,
+            local_evidence_limit=base_config.local_evidence_limit,
         )
         config.validate()
         runner = SimulationRunner(model=model, config=config)
@@ -140,6 +173,10 @@ def run(args: argparse.Namespace) -> None:
             n_trials=args.n_trials,
             gcp_project=base_config.gcp_project,
             output_dir=base_config.output_dir,
+            enable_db_persistence=base_config.enable_db_persistence,
+            database_url=base_config.database_url,
+            enable_local_evidence=base_config.enable_local_evidence,
+            local_evidence_limit=base_config.local_evidence_limit,
         )
         config.validate()
         runner = SimulationRunner(model=model, config=config)

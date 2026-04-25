@@ -17,6 +17,14 @@ from pathlib import Path
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
 logger = logging.getLogger(__name__)
 
+SEED_DOC_CHOICES = [
+    "finance_earnings_alphabet_ai_capex_2026_v1",
+    "geopolitics_sanctions_oil_supplyshock_2025_v1",
+    "tech_earnings",
+    "policy_draft",
+    "geopolitical_event",
+]
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
@@ -25,14 +33,32 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--seed-doc",
         required=True,
-        choices=[
-            "finance_earnings_alphabet_ai_capex_2026_v1",
-            "geopolitics_sanctions_oil_supplyshock_2025_v1",
-        ],
+        choices=SEED_DOC_CHOICES,
     )
     parser.add_argument("--n-trials", type=int, default=30)
     parser.add_argument("--mock", action="store_true")
     parser.add_argument("--output-dir", default="data")
+    parser.add_argument(
+        "--enable-db",
+        action="store_true",
+        help="Also persist seeds, runs, and messages to local Postgres.",
+    )
+    parser.add_argument(
+        "--enable-local-evidence",
+        action="store_true",
+        help="Retrieve local evidence from Postgres and inject it on turn 1.",
+    )
+    parser.add_argument(
+        "--local-evidence-limit",
+        type=int,
+        default=5,
+        help="Maximum local evidence documents to inject per trial.",
+    )
+    parser.add_argument(
+        "--database-url",
+        default=os.getenv("DATABASE_URL", ""),
+        help="Postgres connection URL. Defaults to DATABASE_URL.",
+    )
     return parser.parse_args()
 
 
@@ -46,6 +72,10 @@ def run(args: argparse.Namespace) -> None:
         n_trials=args.n_trials,
         gcp_project=("mock-project" if args.mock else os.getenv("GCP_PROJECT", "")),
         output_dir=Path(args.output_dir),
+        enable_db_persistence=args.enable_db or args.enable_local_evidence,
+        database_url=args.database_url,
+        enable_local_evidence=args.enable_local_evidence,
+        local_evidence_limit=args.local_evidence_limit,
     )
     config.validate()
 

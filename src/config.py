@@ -60,6 +60,18 @@ class ExperimentConfig:
     n_flat_injection_reruns: int = 3
     output_dir: Path = Path("data")
     hallucination_prompt_version: str = "v1"
+    enable_db_persistence: bool = dataclasses.field(
+        default_factory=lambda: _env_bool("ENABLE_DB_PERSISTENCE", False)
+    )
+    database_url: str = dataclasses.field(
+        default_factory=lambda: os.getenv("DATABASE_URL", "")
+    )
+    enable_local_evidence: bool = dataclasses.field(
+        default_factory=lambda: _env_bool("ENABLE_LOCAL_EVIDENCE", False)
+    )
+    local_evidence_limit: int = dataclasses.field(
+        default_factory=lambda: int(os.getenv("LOCAL_EVIDENCE_LIMIT", "5"))
+    )
 
     def trial_output_dir(self, trial_id: int, rerun_id: int | None = None) -> Path:
         path = (
@@ -102,3 +114,14 @@ class ExperimentConfig:
             raise ValueError(
                 "trail_judge_temperature must be 0.0 when trail_use_llm_judge is enabled."
             )
+        if self.enable_db_persistence and not self.database_url:
+            raise ValueError(
+                "database_url must be set when DB persistence is enabled. "
+                "Export DATABASE_URL or pass it explicitly."
+            )
+        if self.enable_local_evidence and not self.enable_db_persistence:
+            raise ValueError(
+                "enable_db_persistence must be true when local evidence is enabled."
+            )
+        if self.local_evidence_limit < 1:
+            raise ValueError("local_evidence_limit must be >= 1.")

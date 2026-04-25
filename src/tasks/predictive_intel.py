@@ -18,8 +18,24 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 _SEED_DOCUMENT_DIR = Path(__file__).parent / "seed_documents"
+_VALID_DIRECTIONS = frozenset({"POSITIVE", "NEGATIVE", "NEUTRAL"})
+
+
+def extract_ground_truth_direction(payload: dict[str, Any]) -> str | None:
+    """Return ground truth direction from either supported seed schema."""
+    legacy = payload.get("ground_truth_direction")
+    if isinstance(legacy, str):
+        return legacy
+
+    nested = payload.get("ground_truth")
+    if isinstance(nested, dict):
+        direction = nested.get("direction")
+        if isinstance(direction, str):
+            return direction
+    return None
 
 
 def extract_ground_truth_direction(payload: dict) -> str | None:
@@ -54,6 +70,9 @@ class TaskContext:
     domain: str
     """Domain of the seed document (e.g. "finance", "geopolitics")."""
 
+    seed_file_name: str
+    """Stem of the source seed JSON file."""
+
 
 class PredictiveIntelligenceTask:
     """Loads and formats a seed document for the predictive intelligence task."""
@@ -77,6 +96,7 @@ class PredictiveIntelligenceTask:
             )
         with path.open("r", encoding="utf-8") as f:
             self._data = json.load(f)
+        self._seed_file_name = seed_file_name
 
         self._validate()
 
@@ -93,6 +113,15 @@ class PredictiveIntelligenceTask:
                 f"ground truth direction must be one of {valid_directions}, "
                 f"got {direction!r}."
             )
+
+    def _ground_truth_direction(self) -> str | None:
+        """Return ground truth from either supported seed schema."""
+        return extract_ground_truth_direction(self._data)
+
+    @property
+    def data(self) -> dict[str, Any]:
+        """Return a shallow copy of the raw seed document payload."""
+        return dict(self._data)
 
     def get_context(self) -> TaskContext:
         """Format the intelligence packet for agent observation.
@@ -129,6 +158,7 @@ class PredictiveIntelligenceTask:
             formatted_prompt=formatted_prompt,
             seed_doc_id=metadata.get("id", "unknown"),
             domain=metadata.get("domain", "unknown"),
+            seed_file_name=self._seed_file_name,
         )
 
     def get_ground_truth(self) -> str:
