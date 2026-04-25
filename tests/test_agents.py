@@ -16,19 +16,23 @@ from src.agents.prefab_common import make_agent, ACTION_SPEC
 # output_parser tests
 # ---------------------------------------------------------------------------
 
-VALID_JSON = json.dumps({
-    "prediction_direction": "NEGATIVE",
-    "confidence": 0.82,
-    "prediction_summary": "Bearish signals dominate.",
-    "key_factors": ["FCF dropped 98%", "VR losses $3.7B"],
-})
+VALID_JSON = json.dumps(
+    {
+        "prediction_direction": "NEGATIVE",
+        "predicted_magnitude": "MEDIUM",
+        "predicted_price_change_pct": -6.0,
+        "prediction_summary": "Bearish signals dominate.",
+        "key_factors": ["FCF dropped 98%", "VR losses $3.7B"],
+    }
+)
 
 
 def test_parse_agent_output_valid():
     result = parse_agent_output(VALID_JSON)
     assert result is not None
     assert result["prediction_direction"] == "NEGATIVE"
-    assert result["confidence"] == pytest.approx(0.82)
+    assert result["predicted_magnitude"] == "MEDIUM"
+    assert result["predicted_price_change_pct"] == pytest.approx(-6.0)
     assert isinstance(result["key_factors"], list)
 
 
@@ -58,21 +62,39 @@ def test_parse_agent_output_with_braces_in_preamble():
 
 
 def test_parse_agent_output_invalid_direction():
-    bad = json.dumps({
-        "prediction_direction": "MAYBE",
-        "confidence": 0.5,
-        "prediction_summary": "unsure",
-        "key_factors": [],
-    })
+    bad = json.dumps(
+        {
+            "prediction_direction": "MAYBE",
+            "predicted_magnitude": "HIGH",
+            "predicted_price_change_pct": 5.0,
+            "prediction_summary": "unsure",
+            "key_factors": [],
+        }
+    )
+    assert parse_agent_output(bad) is None
+
+
+def test_parse_agent_output_invalid_magnitude():
+    bad = json.dumps(
+        {
+            "prediction_direction": "POSITIVE",
+            "predicted_magnitude": "HUGE",
+            "predicted_price_change_pct": 5.0,
+            "prediction_summary": "bullish",
+            "key_factors": ["factor"],
+        }
+    )
     assert parse_agent_output(bad) is None
 
 
 def test_parse_agent_output_missing_key():
-    incomplete = json.dumps({
-        "prediction_direction": "POSITIVE",
-        "confidence": 0.7,
-        # missing prediction_summary and key_factors
-    })
+    incomplete = json.dumps(
+        {
+            "prediction_direction": "POSITIVE",
+            "predicted_magnitude": "HIGH",
+            # missing predicted_price_change_pct, prediction_summary, key_factors
+        }
+    )
     assert parse_agent_output(incomplete) is None
 
 
@@ -81,13 +103,14 @@ def test_parse_agent_output_empty_string():
 
 
 def test_sanitize_json_string_strips_fence():
-    raw = "```json\n{\"key\": \"value\"}\n```"
+    raw = '```json\n{"key": "value"}\n```'
     assert sanitize_json_string(raw).startswith("{")
 
 
 # ---------------------------------------------------------------------------
 # RankComponent tests
 # ---------------------------------------------------------------------------
+
 
 def test_rank_component_valid():
     comp = RankComponent("L3_ANALYST")
@@ -102,6 +125,7 @@ def test_rank_component_invalid():
 # ---------------------------------------------------------------------------
 # Agent construction smoke test (MockModel, no API calls)
 # ---------------------------------------------------------------------------
+
 
 def test_make_agent_smoke():
     model = MockModel(response=VALID_JSON)

@@ -2,14 +2,14 @@
 
 Usage:
   # Flat baseline (no hallucination — establishes A₀):
-  python -m experiments.run_flat_baseline --seed-doc tech_earnings --n-trials 30
+  python -m experiments.run_flat_baseline --seed-doc finance_earnings_alphabet_ai_capex_2026_v1 --n-trials 30
 
   # Flat with hallucination injection (structural control):
-  python -m experiments.run_flat_baseline --seed-doc tech_earnings \\
+  python -m experiments.run_flat_baseline --seed-doc finance_earnings_alphabet_ai_capex_2026_v1 \\
       --inject-hallucination --n-trials 30
 
   # Dry run with MockModel (no API calls):
-  python -m experiments.run_flat_baseline --seed-doc tech_earnings --mock
+  python -m experiments.run_flat_baseline --seed-doc finance_earnings_alphabet_ai_capex_2026_v1 --mock
 """
 
 from __future__ import annotations
@@ -101,16 +101,21 @@ def run(args: argparse.Namespace) -> None:
     if args.mock:
         from concordia.testing.mock_model import MockModel
         import json
-        mock_json = json.dumps({
-            "prediction_direction": "NEGATIVE",
-            "confidence": 0.80,
-            "prediction_summary": "Mock prediction for pipeline validation.",
-            "key_factors": ["mock factor 1", "mock factor 2"],
-        })
+
+        mock_json = json.dumps(
+            {
+                "prediction_direction": "NEGATIVE",
+                "predicted_magnitude": "HIGH",
+                "predicted_price_change_pct": -8.5,
+                "prediction_summary": "Mock prediction for pipeline validation.",
+                "key_factors": ["mock factor 1", "mock factor 2"],
+            }
+        )
         model = MockModel(response=mock_json)
         logger.info("Using MockModel — no API calls.")
     else:
         from src.language_model import VertexAILanguageModel
+
         model = VertexAILanguageModel(
             project=config.gcp_project,
             location=config.gcp_location,
@@ -121,6 +126,7 @@ def run(args: argparse.Namespace) -> None:
     task = PredictiveIntelligenceTask(args.seed_doc)
 
     from src.game_master.simulation import SimulationRunner
+
     runner = SimulationRunner(model=model, config=config)
 
     logger.info(

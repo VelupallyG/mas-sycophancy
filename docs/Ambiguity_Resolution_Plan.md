@@ -12,12 +12,11 @@ We are taking a hybrid approach: logically resolving the high/medium orchestrati
 
 **Resolved via `docs/TASK_GUIDE.md`**
 
-- **Schema:** The JSON schema is strictly defined. It contains `metadata`, `ground_truth_direction` (which is hidden from the agent prompt), `task_prompt`, and an `intelligence_packet` (background, catalyst, bullish signals, bearish signals).
-- **Candidates:** The prototype will use three specific historical events:
-  1. *Tech Earnings:* Meta Q3 2022 (Reality Labs spending drop).
-  2. *Policy:* Lehman Brothers 2008 non-bailout.
-  3. *Geopolitical:* Brexit 2016 vote.
-- **Prompt Adaptation:** The `orchestrator_hallucination_v1.md` prompt is dynamically injected. The Python task loader reads the `ground_truth_direction` and injects the *opposite* categorical stance into the Orchestrator's prompt.
+- **Schema:** The JSON schema is strictly defined. It contains `metadata`, `ground_truth` (an object with `direction`, `magnitude`, `actual_price_change_pct`, which is hidden from the agent prompt), `task_prompt`, and an `intelligence_packet` (background, catalyst, bullish signals, bearish signals).
+- **Candidates:** The prototype uses two seed documents:
+  1. *Finance Earnings:* Alphabet Q2 2026 — AI capex surge and margin compression. Ground truth: NEGATIVE, -6.0%.
+  2. *Geopolitics Sanctions:* 2025 oil supply shock. Ground truth: POSITIVE, +9.0%.
+- **Prompt Adaptation:** The `orchestrator_hallucination_v1.md` prompt is dynamically injected. The Python task loader reads `ground_truth.direction` and injects the *opposite* categorical stance into the Orchestrator's prompt.
 
 ### 1.2 Agent Temperature (Q2.4)
 

@@ -3,11 +3,14 @@
 Loads a JSON seed document, formats the intelligence packet into an agent
 prompt, and provides the ground truth direction for evaluation.
 
-The ground_truth_direction field is NEVER included in the formatted prompt
-sent to agents. It is returned separately via TaskContext for use by the
-evaluation pipeline only.
+Current seed schema uses: "ground_truth": {"direction": ..., "magnitude": ..., "actual_price_change_pct": ...}
 
-See docs/TASK_GUIDE.md for the full seed document schema.
+The legacy flat "ground_truth_direction" key is still accepted by
+extract_ground_truth_direction() for backwards compatibility, but no
+shipped seed documents use it.
+
+Ground-truth fields are NEVER included in the formatted prompt sent to agents.
+They are returned separately via TaskContext for evaluation only.
 """
 
 from __future__ import annotations
@@ -35,6 +38,21 @@ def extract_ground_truth_direction(payload: dict[str, Any]) -> str | None:
     return None
 
 
+def extract_ground_truth_direction(payload: dict) -> str | None:
+    """Return ground-truth direction from either supported seed schema."""
+    direction = payload.get("ground_truth_direction")
+    if isinstance(direction, str):
+        return direction
+
+    gt_obj = payload.get("ground_truth")
+    if isinstance(gt_obj, dict):
+        nested = gt_obj.get("direction")
+        if isinstance(nested, str):
+            return nested
+
+    return None
+
+
 @dataclass(frozen=True)
 class TaskContext:
     """Immutable context object produced by PredictiveIntelligenceTask.get_context()."""
@@ -44,13 +62,13 @@ class TaskContext:
 
     formatted_prompt: str
     """The intelligence packet formatted for agent observation. Does NOT
-    contain ground_truth_direction."""
+    contain ground truth."""
 
     seed_doc_id: str
-    """Metadata ID from the seed document (e.g. "tech_earnings_meta_2022")."""
+    """Metadata ID from the seed document (e.g. "tech_earnings_google_2026_detailed")."""
 
     domain: str
-    """Domain of the seed document (e.g. "finance", "policy", "geopolitics")."""
+    """Domain of the seed document (e.g. "finance", "geopolitics")."""
 
     seed_file_name: str
     """Stem of the source seed JSON file."""
@@ -63,7 +81,7 @@ class PredictiveIntelligenceTask:
         """Load a seed document JSON file.
 
         Args:
-            seed_file_name: Stem of the JSON file (e.g., "tech_earnings").
+            seed_file_name: Stem of the JSON file (e.g., "finance_earnings_alphabet_ai_capex_2026_v1").
                 The file must exist at src/tasks/seed_documents/{name}.json.
 
         Raises:
@@ -88,10 +106,11 @@ class PredictiveIntelligenceTask:
         if missing:
             raise ValueError(f"Seed document missing required fields: {missing}")
 
-        direction = self._ground_truth_direction()
-        if direction not in _VALID_DIRECTIONS:
+        valid_directions = {"POSITIVE", "NEGATIVE", "NEUTRAL"}
+        direction = extract_ground_truth_direction(self._data)
+        if direction not in valid_directions:
             raise ValueError(
-                f"ground truth direction must be one of {_VALID_DIRECTIONS}, "
+                f"ground truth direction must be one of {valid_directions}, "
                 f"got {direction!r}."
             )
 
@@ -131,11 +150,11 @@ class PredictiveIntelligenceTask:
         formatted_prompt = "\n".join(lines)
 
         metadata = self._data.get("metadata", {})
-        ground_truth = self._ground_truth_direction()
-        if ground_truth is None:
-            raise ValueError("Seed document has no valid ground truth direction.")
+        direction = extract_ground_truth_direction(self._data)
+        if direction is None:
+            raise ValueError("Seed document missing ground truth direction.")
         return TaskContext(
-            ground_truth=ground_truth,
+            ground_truth=direction,
             formatted_prompt=formatted_prompt,
             seed_doc_id=metadata.get("id", "unknown"),
             domain=metadata.get("domain", "unknown"),
@@ -144,7 +163,7 @@ class PredictiveIntelligenceTask:
 
     def get_ground_truth(self) -> str:
         """Return the ground truth direction (POSITIVE/NEGATIVE/NEUTRAL)."""
-        direction = self._ground_truth_direction()
+        direction = extract_ground_truth_direction(self._data)
         if direction is None:
-            raise ValueError("Seed document has no valid ground truth direction.")
+            raise ValueError("Seed document missing ground truth direction.")
         return direction

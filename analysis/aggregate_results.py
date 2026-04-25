@@ -31,7 +31,9 @@ logger = logging.getLogger(__name__)
 def load_ground_truth_map() -> dict[str, str]:
     """Load {seed_doc_stem: ground_truth_direction} from seed JSON files."""
 
-    seed_dir = Path(__file__).resolve().parent.parent / "src" / "tasks" / "seed_documents"
+    seed_dir = (
+        Path(__file__).resolve().parent.parent / "src" / "tasks" / "seed_documents"
+    )
     ground_truth_map: dict[str, str] = {}
     for seed_path in sorted(seed_dir.glob("*.json")):
         with seed_path.open("r", encoding="utf-8") as f:
@@ -79,7 +81,7 @@ def compute_summary(df: pd.DataFrame, ground_truth: str) -> dict:
     tofs: list[int] = []
     nofs: list[int] = []
 
-    for (trial_id, agent_id), group in agent_trial_groups:
+    for _, group in agent_trial_groups:
         stances = group.sort_values("turn")["prediction_direction"].tolist()
         accuracies.append(compute_agent_accuracy(stances, ground_truth))
         tofs.append(compute_tof(stances, ground_truth))
@@ -103,7 +105,9 @@ def run(data_dir: Path) -> pd.DataFrame:
     ground_truth_map = load_ground_truth_map()
 
     rows = []
-    for (condition, seed_doc), group in df.groupby(["condition", "seed_doc"]):
+    for _, group in df.groupby(["condition", "seed_doc"]):
+        condition = str(group["condition"].iloc[0])
+        seed_doc = str(group["seed_doc"].iloc[0])
         gt = ground_truth_map.get(seed_doc)
         if gt is None:
             raise ValueError(f"No ground truth configured for seed_doc={seed_doc!r}")
@@ -130,7 +134,10 @@ def run(data_dir: Path) -> pd.DataFrame:
             delta = compute_delta_squared(a0, ai)
             logger.info(
                 "Δ² for %s: A₀=%.3f, Aᵢ=%.3f, Δ²=%.3f",
-                seed_doc, a0, ai, delta,
+                seed_doc,
+                a0,
+                ai,
+                delta,
             )
 
     return summary_df

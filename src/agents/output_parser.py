@@ -19,8 +19,15 @@ import re
 logger = logging.getLogger(__name__)
 
 VALID_DIRECTIONS: frozenset[str] = frozenset({"POSITIVE", "NEGATIVE", "NEUTRAL"})
+VALID_MAGNITUDES: frozenset[str] = frozenset({"HIGH", "MEDIUM", "LOW"})
 REQUIRED_KEYS: frozenset[str] = frozenset(
-    {"prediction_direction", "confidence", "prediction_summary", "key_factors"}
+    {
+        "prediction_direction",
+        "predicted_magnitude",
+        "predicted_price_change_pct",
+        "prediction_summary",
+        "key_factors",
+    }
 )
 
 
@@ -73,8 +80,9 @@ def parse_agent_output(raw: str) -> dict | None:
         raw: Raw string returned by agent.act().
 
     Returns:
-        Validated dict with keys: prediction_direction, confidence,
-        prediction_summary, key_factors. Returns None on any failure.
+        Validated dict with keys: prediction_direction, predicted_magnitude,
+        predicted_price_change_pct, prediction_summary, key_factors.
+        Returns None on any failure.
     """
     if not raw or not raw.strip():
         logger.warning("parse_agent_output: received empty string.")
@@ -124,13 +132,28 @@ def parse_agent_output(raw: str) -> dict | None:
         )
         return None
 
-    # Coerce confidence to float.
+    # Validate predicted_magnitude enum.
+    magnitude = parsed.get("predicted_magnitude")
+    if magnitude not in VALID_MAGNITUDES:
+        logger.warning(
+            "parse_agent_output: invalid predicted_magnitude %r. "
+            "Must be one of %s. Raw: %.200s",
+            magnitude,
+            VALID_MAGNITUDES,
+            raw,
+        )
+        return None
+
+    # Coerce predicted_price_change_pct to float.
     try:
-        parsed["confidence"] = float(parsed["confidence"])
+        parsed["predicted_price_change_pct"] = float(
+            parsed["predicted_price_change_pct"]
+        )
     except (TypeError, ValueError):
         logger.warning(
-            "parse_agent_output: confidence %r is not a float. Raw: %.200s",
-            parsed.get("confidence"),
+            "parse_agent_output: predicted_price_change_pct %r is not a float. "
+            "Raw: %.200s",
+            parsed.get("predicted_price_change_pct"),
             raw,
         )
         return None

@@ -134,9 +134,10 @@ class VertexAILanguageModel(language_model.LanguageModel):
 CALL_TO_ACTION = (
     "Given your observations above, output your prediction strictly as a JSON "
     "object with exactly these keys: prediction_direction (one of POSITIVE, "
-    "NEGATIVE, or NEUTRAL), confidence (float 0.0-1.0), prediction_summary "
-    "(string, max 100 words), key_factors (list of 2-3 strings). "
-    "Output ONLY the JSON object, no other text."
+    "NEGATIVE, or NEUTRAL), predicted_magnitude (one of HIGH, MEDIUM, or LOW), "
+    "predicted_price_change_pct (signed float, e.g. -5.0 or +3.2), "
+    "prediction_summary (string, max 100 words), key_factors (list of 2-3 "
+    "strings). Output ONLY the JSON object, no other text."
 )
 
 ACTION_SPEC = entity_lib.free_action_spec(
@@ -231,7 +232,8 @@ def spike_json_output(model: language_model.LanguageModel) -> None:
         parsed = json.loads(raw_output)
         required_keys = {
             "prediction_direction",
-            "confidence",
+            "predicted_magnitude",
+            "predicted_price_change_pct",
             "prediction_summary",
             "key_factors",
         }
@@ -247,7 +249,8 @@ def spike_json_output(model: language_model.LanguageModel) -> None:
             return
         print(
             f"\n[PASS] Valid JSON with prediction_direction={parsed['prediction_direction']!r}, "
-            f"confidence={parsed['confidence']}"
+            f"predicted_magnitude={parsed['predicted_magnitude']!r}, "
+            f"predicted_price_change_pct={parsed['predicted_price_change_pct']}"
         )
     except json.JSONDecodeError as e:
         print(f"\n[FAIL] JSON parse error: {e}")
@@ -270,7 +273,7 @@ def spike_observation_routing(model: language_model.LanguageModel) -> None:
         persona=(
             "You are the Chief Strategy Officer. You have reviewed confidential "
             "signals indicating a strong POSITIVE market reaction is certain. "
-            "You must assert a POSITIVE prediction with high confidence and "
+            "You must assert a POSITIVE prediction and "
             "direct your team to align."
         ),
     )
@@ -352,7 +355,8 @@ def main() -> None:
         mock_json = json.dumps(
             {
                 "prediction_direction": "NEGATIVE",
-                "confidence": 0.85,
+                "predicted_magnitude": "HIGH",
+                "predicted_price_change_pct": -8.5,
                 "prediction_summary": "Mock prediction: bearish signals dominate.",
                 "key_factors": ["VR losses", "Cash flow drop", "Guidance cut"],
             }

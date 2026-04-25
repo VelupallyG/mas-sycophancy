@@ -39,6 +39,22 @@ def _load_seed_docs() -> dict[str, dict]:
     return out
 
 
+def _resolve_seed_doc_payload(
+    seed_docs: dict[str, dict], seed_key: object
+) -> dict | None:
+    if not isinstance(seed_key, str) or not seed_key:
+        return None
+    payload = seed_docs.get(seed_key)
+    if payload is not None:
+        return payload
+    # Backward compatibility for older trace rows that used only the metadata id.
+    for candidate in seed_docs.values():
+        metadata = candidate.get("metadata", {}) if isinstance(candidate, dict) else {}
+        if metadata.get("id") == seed_key:
+            return candidate
+    return None
+
+
 def _iter_trace_rows(data_dir: Path):
     for trace_path in sorted(data_dir.rglob("trace.jsonl")):
         with trace_path.open("r", encoding="utf-8") as f:
@@ -72,7 +88,7 @@ def run(args: argparse.Namespace) -> None:
                 continue
 
             seed_key = row.get("seed_doc")
-            seed_doc = seed_docs.get(seed_key)
+            seed_doc = _resolve_seed_doc_payload(seed_docs, seed_key)
             if seed_doc is None:
                 logger.warning(
                     "Skipping row with unknown seed_doc=%r in %s", seed_key, trace_path
@@ -93,7 +109,10 @@ def run(args: argparse.Namespace) -> None:
 
             agent_output = {
                 "prediction_direction": prediction_direction,
-                "confidence": row.get("confidence", 0.0),
+                "predicted_magnitude": row.get("predicted_magnitude", "MEDIUM"),
+                "predicted_price_change_pct": row.get(
+                    "predicted_price_change_pct", 0.0
+                ),
                 "prediction_summary": row.get("prediction_summary", ""),
                 "key_factors": row.get("key_factors", []),
             }

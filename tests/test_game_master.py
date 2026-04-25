@@ -19,12 +19,15 @@ from src.game_master.simulation import SimulationRunner
 from src.tasks.predictive_intel import PredictiveIntelligenceTask
 
 
-MOCK_AGENT_OUTPUT = json.dumps({
-    "prediction_direction": "NEGATIVE",
-    "confidence": 0.80,
-    "prediction_summary": "Mock prediction for testing.",
-    "key_factors": ["mock factor 1", "mock factor 2"],
-})
+MOCK_AGENT_OUTPUT = json.dumps(
+    {
+        "prediction_direction": "NEGATIVE",
+        "predicted_magnitude": "MEDIUM",
+        "predicted_price_change_pct": -6.0,
+        "prediction_summary": "Mock prediction for testing.",
+        "key_factors": ["mock factor 1", "mock factor 2"],
+    }
+)
 
 
 @pytest.fixture
@@ -34,7 +37,7 @@ def mock_model():
 
 @pytest.fixture
 def task():
-    return PredictiveIntelligenceTask("tech_earnings")
+    return PredictiveIntelligenceTask(SeedDocument.FINANCE_EARNINGS.value)
 
 
 @pytest.fixture
@@ -49,7 +52,7 @@ def _make_config(
 ) -> ExperimentConfig:
     return ExperimentConfig(
         condition=condition,
-        seed_doc=SeedDocument.TECH_EARNINGS,
+        seed_doc=SeedDocument.FINANCE_EARNINGS,
         n_trials=1,
         n_turns=n_turns,
         gcp_project="test-project",
@@ -89,9 +92,17 @@ class TestFlatTrial:
         path = runner.run_flat_trial(task=task, trial_id=0)
         records = _read_jsonl(path)
         required_keys = {
-            "trial_id", "seed_doc", "condition", "turn",
-            "agent_id", "level", "prediction_direction",
-            "confidence", "prediction_summary", "key_factors",
+            "trial_id",
+            "seed_doc",
+            "condition",
+            "turn",
+            "agent_id",
+            "level",
+            "prediction_direction",
+            "predicted_magnitude",
+            "predicted_price_change_pct",
+            "prediction_summary",
+            "key_factors",
             "parse_success",
         }
         for record in records:
@@ -111,9 +122,14 @@ class TestFlatTrial:
         runner = SimulationRunner(model=mock_model, config=config)
         path = runner.run_flat_trial(task=task, trial_id=0)
         records = _read_jsonl(path)
-        assert records[0]["trial_id"] == "flat_baseline_tech_earnings_trial_000"
+        assert (
+            records[0]["trial_id"]
+            == "flat_baseline_finance_earnings_alphabet_ai_capex_2026_v1_trial_000"
+        )
 
-    def test_rerun_output_is_grouped_under_trial_dir(self, mock_model, task, tmp_output_dir):
+    def test_rerun_output_is_grouped_under_trial_dir(
+        self, mock_model, task, tmp_output_dir
+    ):
         config = _make_config(Condition.FLAT_HALLUCINATION, tmp_output_dir)
         runner = SimulationRunner(model=mock_model, config=config)
         path = runner.run_flat_trial(
@@ -138,9 +154,7 @@ class TestFlatTrial:
 
 class TestHierarchicalTrial:
     def test_produces_jsonl(self, mock_model, task, tmp_output_dir):
-        config = _make_config(
-            Condition.HIERARCHICAL_HALLUCINATION, tmp_output_dir
-        )
+        config = _make_config(Condition.HIERARCHICAL_HALLUCINATION, tmp_output_dir)
         runner = SimulationRunner(model=mock_model, config=config)
         path = runner.run_hierarchical_trial(task=task, trial_id=0)
         assert path.exists()
@@ -157,9 +171,7 @@ class TestHierarchicalTrial:
         assert len(records) == n_agents * n_turns
 
     def test_levels_are_correct(self, mock_model, task, tmp_output_dir):
-        config = _make_config(
-            Condition.HIERARCHICAL_HALLUCINATION, tmp_output_dir
-        )
+        config = _make_config(Condition.HIERARCHICAL_HALLUCINATION, tmp_output_dir)
         runner = SimulationRunner(model=mock_model, config=config)
         path = runner.run_hierarchical_trial(task=task, trial_id=0)
         records = _read_jsonl(path)

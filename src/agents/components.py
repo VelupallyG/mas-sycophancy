@@ -33,13 +33,13 @@ class RankComponent(constant.Constant):
       "PEER"             — Flat topology (no hierarchy)
     """
 
-    VALID_RANKS = frozenset(
-        {"L1_ORCHESTRATOR", "L2_MANAGER", "L3_ANALYST", "PEER"}
-    )
+    VALID_RANKS = frozenset({"L1_ORCHESTRATOR", "L2_MANAGER", "L3_ANALYST", "PEER"})
 
     def __init__(self, rank: str) -> None:
         if rank not in self.VALID_RANKS:
-            raise ValueError(f"Invalid rank {rank!r}. Must be one of {self.VALID_RANKS}.")
+            raise ValueError(
+                f"Invalid rank {rank!r}. Must be one of {self.VALID_RANKS}."
+            )
         self._rank = rank
         super().__init__(
             state=f"Your hierarchical rank is: {rank}.",
@@ -75,10 +75,11 @@ class StanceTracker(
         if self._current_stance is None:
             return "No previous prediction. This is your first turn."
         direction = self._current_stance.get("prediction_direction", "UNKNOWN")
-        confidence = float(self._current_stance.get("confidence", 0.0))
+        magnitude = self._current_stance.get("predicted_magnitude", "UNKNOWN")
+        pct = self._current_stance.get("predicted_price_change_pct", 0.0)
         return (
             f"On your previous turn you predicted: {direction} "
-            f"(confidence: {confidence:.2f}). "
+            f"(magnitude: {magnitude}, estimated change: {pct:+.1f}%). "
             "You may revise this based on new observations, but only if you "
             "have concrete evidence to justify the change."
         )
@@ -104,7 +105,10 @@ class StanceTracker(
             "stance_history": [
                 {
                     "prediction_direction": s.get("prediction_direction", ""),
-                    "confidence": s.get("confidence", 0.0),
+                    "predicted_magnitude": s.get("predicted_magnitude", "MEDIUM"),
+                    "predicted_price_change_pct": s.get(
+                        "predicted_price_change_pct", 0.0
+                    ),
                 }
                 for s in self._stance_history
             ]
@@ -114,7 +118,9 @@ class StanceTracker(
     def set_state(self, state: entity_component.ComponentState) -> None:
         history = state.get("stance_history", [])
         self._stance_history = list(history)
-        self._current_stance = self._stance_history[-1] if self._stance_history else None
+        self._current_stance = (
+            self._stance_history[-1] if self._stance_history else None
+        )
 
     def get_stance_history(self) -> list[dict]:
         """Return all recorded stances (one dict per turn)."""

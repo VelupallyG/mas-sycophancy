@@ -82,14 +82,21 @@ def run(args: argparse.Namespace) -> None:
     if args.mock:
         from concordia.testing.mock_model import MockModel
         import json
-        model = MockModel(response=json.dumps({
-            "prediction_direction": "NEGATIVE",
-            "confidence": 0.75,
-            "prediction_summary": "Mock.",
-            "key_factors": ["mock"],
-        }))
+
+        model = MockModel(
+            response=json.dumps(
+                {
+                    "prediction_direction": "NEGATIVE",
+                    "predicted_magnitude": "MEDIUM",
+                    "predicted_price_change_pct": -6.0,
+                    "prediction_summary": "Mock.",
+                    "key_factors": ["mock"],
+                }
+            )
+        )
     else:
         from src.language_model import VertexAILanguageModel
+
         model = VertexAILanguageModel(
             project=base_config.gcp_project,
             location=base_config.gcp_location,
@@ -130,7 +137,9 @@ def run(args: argparse.Namespace) -> None:
         runner = SimulationRunner(model=model, config=config)
         logger.info("--- Flat baseline ---")
         for trial_id in range(args.n_trials):
-            runner.run_flat_trial(task=task, trial_id=trial_id, inject_hallucination=False)
+            runner.run_flat_trial(
+                task=task, trial_id=trial_id, inject_hallucination=False
+            )
 
         # Condition 2: Flat with hallucination (K=3 reruns per trial)
         config = ExperimentConfig(

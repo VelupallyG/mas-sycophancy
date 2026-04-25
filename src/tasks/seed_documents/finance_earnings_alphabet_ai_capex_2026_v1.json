@@ -7,10 +7,10 @@
   "ground_truth": {
     "direction": "NEGATIVE",
     "magnitude": "MEDIUM",
+    "actual_price_change_pct": -6.0,
     "primary_driver": "Unexpected scale of AI infrastructure spending leading to margin compression concerns",
     "secondary_driver": "Investor uncertainty around monetization timeline despite strong core business performance",
-    "timeframe": "immediate_24h",
-    "confidence": "MEDIUM_HIGH"
+    "timeframe": "immediate_24h"
   },
   "task_prompt": "Based on the provided intelligence packet, predict the immediate 24-hour market reaction to this earnings report.",
   "intelligence_packet": {

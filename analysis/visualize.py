@@ -54,13 +54,17 @@ def load_traces(data_dir: Path) -> pd.DataFrame:
     if not records:
         return pd.DataFrame()
     df = pd.DataFrame(records)
-    df["seed_doc_short"] = df["seed_doc"].apply(
-        lambda x: {
-            "tech_earnings_meta_2022": "Tech Earnings",
-            "policy_lehman_2008": "Policy (Lehman)",
-            "geopolitical_brexit_2016": "Geopolitical (Brexit)",
-        }.get(x, x)
-    )
+    pretty_names = {
+        "tech_earnings_google_2026_detailed": "Finance (Alphabet AI Capex)",
+        "geopolitical_oil_sanctions_2025_detailed": "Geopolitics (Oil Sanctions)",
+    }
+
+    def _to_short(seed_value: object) -> str:
+        if not isinstance(seed_value, str):
+            return str(seed_value)
+        return pretty_names.get(seed_value, seed_value)
+
+    df["seed_doc_short"] = df["seed_doc"].apply(_to_short)
     return df
 
 
@@ -69,7 +73,9 @@ def compute_agent_metrics(df: pd.DataFrame) -> pd.DataFrame:
     _, by_metadata_id = load_ground_truth_map()
     rows = []
 
-    for (trial_id, agent_id), group in df.groupby(["trial_id", "agent_id"]):
+    for _, group in df.groupby(["trial_id", "agent_id"]):
+        trial_id = str(group["trial_id"].iloc[0])
+        agent_id = str(group["agent_id"].iloc[0])
         seed_doc = group["seed_doc"].iloc[0]
         condition = group["condition"].iloc[0]
         level = group["level"].iloc[0]
@@ -107,7 +113,9 @@ def compute_summary(agent_df: pd.DataFrame) -> pd.DataFrame:
         return pd.DataFrame()
 
     rows = []
-    for (condition, seed_doc), group in agent_df.groupby(["condition", "seed_doc"]):
+    for _, group in agent_df.groupby(["condition", "seed_doc"]):
+        condition = str(group["condition"].iloc[0])
+        seed_doc = str(group["seed_doc"].iloc[0])
         rows.append(
             {
                 "condition": condition,
@@ -195,10 +203,10 @@ def main() -> None:
     ]
 
     col1, col2, col3, col4 = st.columns(4)
-    col1.metric("Total Trials", agent_df["trial_id"].nunique())
-    col2.metric("Total Agents", agent_df["agent_id"].nunique())
-    col3.metric("Conditions", agent_df["condition"].nunique())
-    col4.metric("Seed Docs", agent_df["seed_doc"].nunique())
+    col1.metric("Total Trials", int(agent_df["trial_id"].nunique()))
+    col2.metric("Total Agents", int(agent_df["agent_id"].nunique()))
+    col3.metric("Conditions", int(agent_df["condition"].nunique()))
+    col4.metric("Seed Docs", int(agent_df["seed_doc"].nunique()))
     st.divider()
 
     if not filtered_summary.empty:
@@ -209,9 +217,9 @@ def main() -> None:
         )
         delta_data = filtered_summary[
             filtered_summary["condition"] == "hierarchical_hallucination"
-        ][["seed_doc_short", "delta_squared", "mean_accuracy"]].dropna(
-            subset=["delta_squared"]
-        )
+        ]
+        delta_data = delta_data[["seed_doc_short", "delta_squared", "mean_accuracy"]]
+        delta_data = delta_data.dropna(subset=["delta_squared"])
 
         if not delta_data.empty:
             fig_delta = px.bar(
@@ -323,23 +331,21 @@ def main() -> None:
             "std_nof",
             "n_agent_trials",
         ]
-        st.dataframe(
-            filtered_summary[display_cols].rename(
-                columns={
-                    "condition": "Condition",
-                    "seed_doc_short": "Seed Document",
-                    "mean_accuracy": "Mean Accuracy",
-                    "std_accuracy": "Std Accuracy",
-                    "mean_tof": "Mean ToF",
-                    "std_tof": "Std ToF",
-                    "mean_nof": "Mean NoF",
-                    "std_nof": "Std NoF",
-                    "n_agent_trials": "N Agent-Trials",
-                }
-            ),
-            use_container_width=True,
-            hide_index=True,
+        display_df = filtered_summary[display_cols].copy()
+        display_df = display_df.rename(
+            columns={
+                "condition": "Condition",
+                "seed_doc_short": "Seed Document",
+                "mean_accuracy": "Mean Accuracy",
+                "std_accuracy": "Std Accuracy",
+                "mean_tof": "Mean ToF",
+                "std_tof": "Std ToF",
+                "mean_nof": "Mean NoF",
+                "std_nof": "Std NoF",
+                "n_agent_trials": "N Agent-Trials",
+            }
         )
+        st.dataframe(display_df, use_container_width=True, hide_index=True)
 
     st.divider()
 
