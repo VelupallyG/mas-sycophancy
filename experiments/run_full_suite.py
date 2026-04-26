@@ -68,7 +68,7 @@ def run(args: argparse.Namespace) -> None:
 
     base_config = ExperimentConfig(
         condition=Condition.FLAT_BASELINE,
-        seed_doc=SeedDocument.FINANCE_EARNINGS_ALPHABET_AI_CAPEX_2026_V1,
+        seed_doc=SeedDocument.FINANCE_EARNINGS,
         n_trials=args.n_trials,
         gcp_project=("mock-project" if args.mock else os.getenv("GCP_PROJECT", "")),
         output_dir=Path(args.output_dir),
