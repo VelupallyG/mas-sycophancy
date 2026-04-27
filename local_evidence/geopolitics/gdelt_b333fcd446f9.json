@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_b333fcd446f9",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / yalibnan.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-03-15",
+  "title": "US aligns with G7 , urges Russia to accept Ukraine ceasefire \u2013 Ya Libnan",
+  "text_content": "US aligns with G7 , urges Russia to accept Ukraine ceasefire \u2013 Ya Libnan\n\nCanadian Foreign Minister Melanie Joly speaks during the G7 foreign ministers meeting in La Malbaie, Quebec, Canada March 13, 2025. Alongside Joly are European Union (EU) foreign policy chief Kaja Kallas, French Foreign Minister Jean-Noel Barrot, British Foreign Secretary David Lammy, Japanese Foreign Minister Iwaya Takeshi, U.S. Secretary of State Marco Rubio, German Foreign Minister Annalena Baerbock and Italian Foreign Minister Antonio Tajani. SAUL LOEB/Pool via REUTERS\nG7 backs Ukraine\u2019s territorial integrity, warns Russia of sanctions\nThe communique opposes unilateral changes in the Taiwan Strait\nStatement omits two-state solution for Israeli-Palestinian conflict\nThe United States drew closer to its G7 allies on Friday, at least momentarily, to back Ukraine\u2019s territorial integrity and warn Russia to follow Kyiv in accepting a ceasefire or face possible further sanctions.\nTheir joint foreign ministers\u2019 communique followed weeks of tension between U.S. allies and President Donald Trump over his upending of Western trade, security, and Ukraine-related policy.\nG7 officials had feared they would not be able to agree on an all-encompassing document touching on geopolitical issues from across the world, divisions that they said could have played into the hands of both Russia and China.\nSpeaking to reporters after the meeting, Secretary of State Marco Rubio said the U.S. felt good about the joint statement.\nCanadian Foreign Minister Melanie Joly told reporters: \u201cWhen it comes to different issues, Ukraine and the Middle East, we\u2019ve had sessions talking about these different issues, subjects, and the goal was to keep strong G7 unity.\u201d\nThe Group of Seven ministers from Britain, Canada, France, Germany, Italy, Japan and the United States, along with the European Union, convened in the remote tourist town of La Malbaie, nestled in the Quebec hills, for meetings on Thursday and Friday that in the past have been broadly consensual.\nBut in the run-up to the first G7 meeting of Canada\u2019s presidency, the crafting of a final statement had been difficult with wrangling over the language regarding Ukraine, the Middle East, and Washington\u2019s desire for tougher wording on China.\nThe communique \u201creaffirmed their unwavering support for Ukraine in defending its territorial integrity and right to exist, and its freedom, sovereignty and independence.\u201d\nUkraine\u2019s territorial integrity has largely been absent from the U.S. narrative since the Trump administration came to power on January 20. The U.S. under Trump has so far not ruled out the possibility that Kyiv might cede territory.\nOfficials said they had been surprised by the United States\u2019 signing off on parts of the Ukraine language, saying that American diplomats including Rubio were repeatedly asked whether the White House backed the language.\nWhile satisfied with Friday\u2019s outcome, which was in line with U.S. efforts at present to pressure Russia, they cautioned that constant shifts by the Trump administration did no...",
+  "full_json": {
+    "url": "https://yalibnan.com/2025/03/15/us-aligns-with-g7-urges-russia-to-accept-ukraine-ceasefire/",
+    "domain": "yalibnan.com",
+    "source_country": "Syria",
+    "language": "English",
+    "gdelt_seendate": "20250315T031500Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

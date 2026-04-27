@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_ee6d5b3f202e",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / marketscreener.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-03-04",
+  "title": "Exclusive - Kazakh overproduction helped sway OPEC+ to approve output hike , sources say",
+  "text_content": "Exclusive - Kazakh overproduction helped sway OPEC+ to approve output hike , sources say\n\nDUBAI/MOSCOW/LONDON (Reuters) - As OPEC+ debated whether to keep oil output steady due to weak global demand or pump more in response to internal pressure and a call from U.S. President Donald Trump, it was record output from Kazakhstan that helped sway the decision, sources told Reuters.\nOPEC and its allies including Russia, a group known as OPEC+, decided on Monday to increase output for the first time since 2022. It said its decision took into account healthy market fundamentals and a positive market outlook, without mentioning Kazakhstan.\nThe group will make a small increase of 138,000 barrels per day from April, the first step in planned monthly increases to unwind its nearly 6 million bpd of cuts, equal to nearly 6% of global demand.\nOPEC+ member Kazakhstan is producing at a record high and well above its target, as agreed with the producer group after U.S. oil major Chevron finished a major expansion at the country's Tengiz oilfield.\nSeveral other members of the group including top producer Saudi Arabia were angered by the rising output from Kazakhstan, three OPEC+ sources told Reuters. The sources declined to be identified by name due to the sensitivity of the matter.\nOPEC's headquarters, the Saudi government communications office and the office of Russian Deputy Prime Minister Alexander Novak did not immediately respond to requests for comment.\nThe three sources said the argument inside OPEC+ was that it makes little sense to continue capping production if some of OPEC+'s own members are overproducing.\n\"It's very bad for discipline inside OPEC+ and they (OPEC+) will be pushing Kazakhstan hard to compensate,\" one of the sources said.\nCompliance from OPEC+ members with their individual output targets under the collective output agreement has worsened over the past year.\nOversupply from Kazakhstan, Iraq, Russia and the UAE has irked OPEC's de facto leader, Saudi Arabia, which has kept strictly to its output target and is making the deepest cuts.\nUntil recently, OPEC+ had been reasonably successful in keeping to the targets agreed since 2022. The group has asked members that have overproduced to compensate with deeper cuts in coming months.\nOn Monday, OPEC+ said members pledged to comply better and compensate for overproduction.\nKazakhstan raised crude and condensate output in February to a record high of 2.12 million bpd. Its OPEC+ quota doesn't regulate condensate production and the quota for crude output is set at 1.468 million bpd.\nOPEC+ has repeatedly named Kazakhstan among countries that produce above their crude quota.\nTop oil producers in Kazakhstan include both Chevron and Exxon Mobil. Export volumes are decided by the government.\nTRUMP FACTOR\nOPEC+'s production decision comes after Trump renewed pressure on OPEC and Saudi Arabia to bring down prices. He pledged in his election campaign to reduce pump prices for the U.S. population.\nTrump's public push for more oil from OPEC+ was not a factor in the group's discussions, sources said...",
+  "full_json": {
+    "url": "https://www.marketscreener.com/quote/index/S-P-GSCI-PETROLEUM-INDEX-46869201/news/Exclusive-Kazakh-overproduction-helped-sway-OPEC-to-approve-output-hike-sources-say-49234479/",
+    "domain": "marketscreener.com",
+    "source_country": "",
+    "language": "English",
+    "gdelt_seendate": "20250304T184500Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

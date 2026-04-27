@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_607f8d8b344c",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / koreatimes.co.kr",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-02-12",
+  "title": "Russia  shadow fleet  poses significant risks to global security",
+  "text_content": "Russia  shadow fleet  poses significant risks to global security\n\nAs the third full year of Russia\u2019s full-scale war against Ukraine approaches its end, the global community faces escalating challenges, including economic instability, energy insecurity and violations of international norms and principles.\nA critical issue exacerbating these crises is the operation of Russia\u2019s so-called \u201cshadow fleet,\u201d a network of clandestine vessels that evades international maritime law to transport oil, gas and other goods, directly funding Russia\u2019s war machine.\nBy circumventing sanctions, these operations undermine global trade integrity and create substantial environmental and safety risks.\nAging tankers on the verge of collapse increase the likelihood of oil spills and maritime disasters, while uninsured vessels complicate accountability in case of accidents.\nThe shadow fleet poses serious maritime security threats, as vessels frequently disable their transponders, violating International Maritime Organization (IMO) regulations and thus endangering global shipping routes.\nThese practices harm not only the environment but put at a disadvantage reputable shipping and logistics companies, which suffer financial losses and operational disruptions.\nThe shadow fleet also serves as a spy platform, and is used for sabotage activities in the interests of the aggressor state.\nRussia\u2019s shadow fleet transports about 90 percent of Russian oil. As a result, in just 11 months last year, Moscow earned $180 billion from exporting oil and petroleum products.\nThe revenues generated directly finance Russia\u2019s attacks on Ukraine\u2019s energy infrastructure, exacerbating humanitarian and economic hardships. Meanwhile, Russia\u2019s persistent use of energy blackmail contributes to broader geopolitical instability.\nFor South Korea, a nation so reliant on maritime trade and energy imports, these risks might be particularly concerning. Disruptions in shipping routes or accidents involving shadow fleet vessels could inflate costs, while Russia\u2019s weaponization of energy exports threatens supply chains vital for South Korea\u2019s economic stability.\nFurthermore, Russia\u2019s blatant violations of U.N. sanctions, including the exchange of oil for North Korean troops and weapons, fuel its war in Ukraine and escalate security risks on the Korean Peninsula and in the entire Indo-Pacific region.\nThe first documented oil transfer between Russia and North Korea was on March 7, 2024, seven months after reports emerged of Pyongyang supplying weapons to Moscow. In total, Russia is estimated to have provided North Korea with more than a million barrels of oil in 2024, twice the annual U.N.-established cap. This steady oil flow gives North Korea a level of stability it hasn\u2019t had since sanctions were imposed.\nKim Jong-un is receiving higher-quality oil directly from Russia, likely as quid pro quo for munitions. A million barrels is a negligible volume for a large oil producer like Russia but substantial for Pyongyang.\nWhile most of the North Korean population relies on coal, oil ...",
+  "full_json": {
+    "url": "https://www.koreatimes.co.kr:443/www/opinion/2025/02/197_392044.html",
+    "domain": "koreatimes.co.kr",
+    "source_country": "South Korea",
+    "language": "English",
+    "gdelt_seendate": "20250212T061500Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

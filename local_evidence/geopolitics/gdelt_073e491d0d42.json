@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_073e491d0d42",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / marketscreener.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-02-21",
+  "title": "Fossil - Fuel Companies Are Lobbying Trump to Save a Green - Fuel Program -- Commodities Roundup",
+  "text_content": "Fossil - Fuel Companies Are Lobbying Trump to Save a Green - Fuel Program -- Commodities Roundup\n\nMARKET MOVEMENTS:\n--Brent crude oil is down 1.9% at $75.03 a barrel\n--European benchmark gas is down 2.65% at 45.95 euros a megawatt-hour\n--Gold futures are down 0.1% at $2,952.30 a troy ounce\n--LME three-month copper futures are down 0.1% at $9,548 a metric ton\nTOP STORY:\nFossil-Fuel Companies Are Lobbying Trump to Save a Green-Fuel Program\nOil-and-gas companies and renewable-energy groups are teaming up to save a Biden-era tax incentive to produce green hydrogen, amid worries the Trump administration will remove the concession as part of a push to ax green subsidies.\nIn a letter with more than 100 signatories, industry groups representing oil-and-gas companies, renewable power companies and chemicals firms pushed the House, Senate and Trump administration to keep the 45V tax credit, which is dedicated to creating hydrogen as a fuel source in the U.S.\n\"The hydrogen market is growing at a rapid pace internationally and the U.S. has a unique opportunity to solidify and advance its leadership in this global commodity,\" the Feb. 18 letter said. \"To ensure our country retains its leading position, we need continued policy support, particularly as other countries are investing billions in hydrogen.\" The letter was addressed to House Speaker Mike Johnson, Senate Majority Leader John Thune, Senate Finance Committee Chairman Mike Crapo and House Ways and Means Chairman Jason Smith.\nSignatories included aircraft manufacturer Airbus, chemicals giant Dow and automaker General Motors, while industry groups including the American Petroleum Institute, which represents companies like Exxon Mobil and Chevron, also signed the letter.\nOTHER STORIES:\nGold Set for Eighth Consecutive Week of Gains on Strong Safe-Haven Demand\nGold futures are set to end their eighth consecutive week higher on persistent economic uncertainty and safe-haven demand, after setting a fresh record.\nContinuous gold futures on the New York Mercantile Exchange set a fresh record of $2,973.40 a troy ounce on Thursday. As of Friday European evening trading, futures are up 1.45% on week, and have risen more than 11% in the year-to-date.\nSeveral factors have driven up the price of the yellow metal in recent weeks.\n--\nNewmont Alert to Cost Risks From Tariff-Fueled Currency Swings\nNewmont is alive to the risk of rising costs at its global operations if proposed U.S. tariffs stoke volatility on currency markets, but doesn't anticipate an upheaval in sales given it mostly ships gold to buyers elsewhere.\nDenver-based Newmont, the world's biggest gold producer, runs mines in places including Mexico and Canada, who President Trump has threatened with 25% tariffs as part of an aggressive trade agenda that has jolted global markets.\n--\nAdnoc Sells $2.84 Billion of Shares in Gas Subsidiary\nAbu Dhabi National Oil Co. said it sold $2.84 billion of shares in Adnoc Gas, a move that will increase the subsidiary's free float and pave the way toward inclusion in share indexes.\nThe state-owned oil company said Frid...",
+  "full_json": {
+    "url": "https://www.marketscreener.com/news/latest/Fossil-Fuel-Companies-Are-Lobbying-Trump-to-Save-a-Green-Fuel-Program-Commodities-Roundup-49129839/",
+    "domain": "marketscreener.com",
+    "source_country": "",
+    "language": "English",
+    "gdelt_seendate": "20250221T180000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

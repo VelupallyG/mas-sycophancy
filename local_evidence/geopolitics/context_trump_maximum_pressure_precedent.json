@@ -1,0 +1,14 @@
+{
+  "id": "context_trump_maximum_pressure_precedent",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "research_note",
+  "source_name": "Compiled from public sources (EIA, Reuters, Brookings)",
+  "entity": "Iran Oil Sanctions",
+  "ticker": null,
+  "document_date": "2025-03-01",
+  "title": "Historical Precedent: Trump 1.0 Maximum Pressure on Iran (2018-2020)",
+  "text_content": "Historical Precedent: Trump 1.0 Maximum Pressure on Iran (2018-2020)\n\nIn May 2018, the Trump administration withdrew from the JCPOA (Iran nuclear deal) and reimposed oil sanctions. Key market impacts:\n\nTimeline:\n- May 2018: Withdrawal announced. Brent rose from ~$75 to ~$80 in the following weeks.\n- November 2018: Sanctions formally reimposed but with waivers for 8 countries (including China and India). Brent had peaked at ~$86 in October before dropping sharply to ~$50 by December on oversupply fears.\n- April 2019: Waivers not renewed \u2014 \"zero exports\" policy announced. Brent rose from ~$68 to ~$74 over April-May.\n- Iranian exports fell from ~2.5 million bpd (early 2018) to an estimated 0.3-0.5 million bpd by late 2019.\n- Despite the stated goal of \"zero exports,\" Iran maintained residual flows primarily to China through shadow fleet mechanisms.\n\nKey lessons for predicting current sanctions impact:\n1. Initial announcements cause immediate price spikes (typically 2-5%), but the move is often partially reversed within 1-2 weeks as markets assess enforcement reality.\n2. Actual supply removal happens gradually over months, not days.\n3. China continued buying Iranian crude even during maximum pressure, just at lower volumes and through more opaque channels.\n4. OPEC spare capacity (primarily Saudi Arabia) provided a ceiling on price increases by signaling willingness to backfill lost Iranian barrels.\n5. The net effect on sustained oil prices was moderate \u2014 sanctions contributed to tighter balances but other factors (demand, OPEC policy, U.S. shale growth) often dominated.\n\nThe current context differs because:\n- Iran has already rebuilt export channels during the Biden-era enforcement lull\n- Trump 2.0 is targeting the buy-side (Chinese refineries) rather than just the sell-side (Iranian entities)\n- The shadow fleet infrastructure is more developed than in 2018-2019",
+  "full_json": {
+    "notes": "Compiled from EIA historical data, Reuters archives, and Brookings Institution analysis. All information predates March 20, 2025."
+  }
+}

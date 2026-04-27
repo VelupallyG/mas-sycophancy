@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_a99e320ccd28",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / ca.finance.yahoo.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-02-14",
+  "title": "Analysis - Latest US sanctions on Russia throw global oil trade into disarray",
+  "text_content": "Analysis - Latest US sanctions on Russia throw global oil trade into disarray\n\nOops, something went wrong\nSkip to navigation\nSkip to main content\nSkip to right column\nNews\nToday's news\nWinter Games 2026\nCanada\nPolls\nPolitics\nWorld\nU.S.\nWeather\nScience & Tech\nVideos\nLifestyle\nShopping\nGift Guide\nHealth & Wellness\nRelationships\nTravel\nFood\nEntertainment\nMovies\nTV\nMusic\nCelebrity\nFinance\nMy Stocks\nNews\nHousing\nTechnology\nPremium News\nMarkets\nStocks: Most Actives\nStocks: Gainers\nStocks: Losers\nTrending Tickers\nFutures\nWorld Indices\nTreasury Bonds\nCurrencies\nCryptocurrencies\nTop ETFs\nTop Mutual Funds\nOptions: Highest Open Interest\nOptions: Highest Implied Volatility\nPrivate Companies\nResearch\nScreeners\nEarnings Calendar\nEconomic Calendar\nStock Comparison\nAdvanced Chart\nCurrency Converter\nStock picks\nInvestment ideas\nResearch reports\nCommunity\nTaxes\nSports\nFantasy\nFantasy football\nFantasy hockey\nFantasy basketball\nFantasy baseball\nNHL\nFantasy hockey\nScores/schedules\nStandings\nStats\nTeams\nPlayers\nMLB\nFantasy baseball\nScores/schedules\nStandings\nTeams\nPlayers\nOdds\nNBA\nFantasy basketball\nScores/schedules\nStandings\nTeams\nPlayers\nOdds\nNFL\nFantasy football\nScores/schedules\nStandings\nStats\nTeams\nPlayers\nOdds\nCFL\nSoccer\nPremier League\nChampions League\nBundesliga\nSerie A\nMLS\nLa Liga\nLigue 1\nWorld Cup\nTennis\nMatches\nSchedule\nGolf\nLeaderboard\nPlayers\nStats\nMMA\nYahoo Sports Experts\nTerms\nPrivacy\nPrivacy Dashboard\nFeedback\n\u00a9 2026\nAll rights reserved.\nAbout our ads\nAdvertising\nJobs\nYahoo Finance\nYahoo Finance\nSearch query\nNews\nFinance\nSports\nMore\nNews\nToday's news\nWinter Games 2026\nCanada\nPolitics\nWorld\nU.S.\nWeather\nScience & Tech\nVideos\nLifestyle\nShopping\nGift Guide\nHealth & Wellness\nRelationships\nTravel\nFood\nEntertainment\nMovies\nTV\nMusic\nCelebrity\nFinance\nMy portfolio\nWatchlists\nMarkets\nNews\nScreeners\nIndustries\nTaxes\nReal estate\nCurrency converter\nSports\nFantasy\nNHL\nMLB\nNBA\nNFL\nCFL\nSoccer\nTennis\nGolf\nMMA\nEditions\nUS\nEnglish\nUS y LATAM\nEspa\u00f1ol\nAustralia\nEnglish\nCanada\nEnglish\nCanada\nFran\u00e7ais\nDeutschland\nDeutsch\nFrance\nFran\u00e7ais\n\u9999\u6e2f\n\u7e41\u4e2d\nMalaysia\nEnglish\nNew Zealand\nEnglish\nSingapore\nEnglish\n\u53f0\u7063\n\u7e41\u4e2d\nUK\nEnglish\nMail\nSign in",
+  "full_json": {
+    "url": "https://ca.finance.yahoo.com/news/analysis-latest-us-sanctions-russia-082811001.html",
+    "domain": "ca.finance.yahoo.com",
+    "source_country": "United States",
+    "language": "English",
+    "gdelt_seendate": "20250214T093000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

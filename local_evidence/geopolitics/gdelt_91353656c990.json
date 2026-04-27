@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_91353656c990",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / finanznachrichten.de",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-03-06",
+  "title": "TORM plc Annual Report 2024 , Dividend Distribution , and Financial Outlook 2025",
+  "text_content": "TORM plc Annual Report 2024 , Dividend Distribution , and Financial Outlook 2025\n\nHELLERUP, Denmark, Feb. 26, 2026 /PRNewswire/ --\nINSIDE INFORMATION\n\"We ended 2025 on a very strong note, reaffirming the resilience of our business model and our ability to consistently execute,\" says Jacob Meldgaard, adding: \"As we look to 2026, we see a favorable market environment, and TORM is well-positioned to continue delivering value for our shareholders and to set the benchmark for our industry.\"\nFinancial Results\nTORM (NASDAQ: TRMD) (NASDAQ: TRMD A) performed well in 2025 with the fourth quarter seeing further positive momentum, demonstrating the agility and resilience of our model during a period marked by geopolitical uncertainty. The outcome supports our belief that TORM is well positioned as we move into 2026. Our culture, strategic focus, and integrated platform remain a competitive advantage ensuring we are in the best place to make the most of any opportunities or future disruption.\nIn 2025, TORM generated time charter equivalent earnings (TCE) of USD 910m (2024: USD 1,135m). Adjusted EBITDA for the Group totaled USD 578m including unrealized losses on financial instruments of USD 7m (2024: USD 844m including unrealized gains on financial instruments of USD 7m) and a net profit for the year of USD 286m (2024: USD 612m).\nLooking back, 2025 was a year in which geopolitics shaped the rhythm of global trade. The introduction of US tariffs and subsequent uncertainty around USTR-related port fees set the tone early in the year. As months passed, Houthi attacks and the unpredictability surrounding Suez Canal transits continued to affect shipping routes and schedules. At the same time, tightened sanctions on Russia, Iran, and Venezuela reshaped energy flows, while a brief but intense conflict between Israel and Iran, alongside stepped-up Ukrainian strikes on Russian infrastructure and shadow tankers, added further tension to an already complex landscape.\nAgainst this challenging environment, we kept our focus at TORM on operational excellence and agility. Our scalable platform and disciplined commercial approach enabled us to navigate market fluctuations and strengthen our standing as a dependable, resilient leader in the product tanker industry.\nIn this market, TORM achieved TCE fleet-wide rates of USD/day 28,783 on average (2024: USD/day 36,061), and available earning days increased to 31,840 (2024: 31,287). Our vessel class LR2 achieved TCE rates of USD/day 35,850, the LR1 vessels achieved TCE rates of USD/day 28,262, and the MR vessels achieved TCE rates of USD/day 26,374.\nKey Figures\n*Excludes unrealized gains/losses on derivatives.\nFor the full-year 2025, Return on Invested Capital was 11.5% (2024: 24.3%), a level that remains solid and satisfactory even as it reflects the expected normalization in freight rates and the corresponding impact on earnings.\nDuring the year, the weighted average number of outstanding shares increased to 98.2m shares (2024: 93.6m shares) which combined with the net profit led to basic EPS of USD 2.91 (20...",
+  "full_json": {
+    "url": "https://www.finanznachrichten.de/nachrichten-2025-03/64746219-torm-plc-annual-report-2024-dividend-distribution-and-financial-outlook-2025-008.htm",
+    "domain": "finanznachrichten.de",
+    "source_country": "Germany",
+    "language": "English",
+    "gdelt_seendate": "20250306T094500Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

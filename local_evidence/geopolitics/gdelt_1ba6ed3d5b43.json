@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_1ba6ed3d5b43",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / investegate.co.uk",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-03-19",
+  "title": "Full Year Financial Results for 2024 | Company Announcement",
+  "text_content": "Full Year Financial Results for 2024 | Company Announcement\n\nFerrexpo PLC\n19 March 2025\n19 March 2025\nFerrexpo plc\n(\"Ferrexpo\" or the \"Company\" or the \"Group\")\nFull Year Financial Results for 2024\nFerrexpo plc (LSE: FXPO), a producer and exporter of premium iron ore pellets, announces its audited financial results for the year ended 31 December 2024.\nLucio Genovese, Executive Chair of Ferrexpo, commented:\n\"In my full statement below, I reflect on 2024 as a year of unprecedented achievement and fortitude for Ferrexpo. Through another 12 months of operating during a time of war, our people remained determined, culminating in an increase in production and sales to the highest levels since the start of the full-scale invasion in February 2022. I am very pleased, and grateful, that our organisation has been able to achieve such a dramatic recovery.\nThroughout this operational recovery, the business demonstrated tremendous agility, coordinating more than 8,000 people, from the mine face to dock side, and varying production between one and three of our four pelletising lines, depending on power availability, customer demand and pricing, at any given time.\nBy quickly scaling up or down our production, we were able to produce a variety of different product qualities and restart shipping activities on a variety of vessel sizes, including the larger, more efficient capesize vessels. We also brought back production of our highest quality, and higher margin products in the period. This allowed us to diversify geographically and supply customers in MENA and Asia, having been constrained to mainly European markets before.\nThe 66% increase in annual production at an average realised prices 17% lower than last year, translated into a 43% increase in revenue. Overall, our C1 cash costs on a unit basis increased by 10% to US$83.9 per tonne. The main reason for the increase is the requirement to import electricity, sometimes at prices that are double the domestic price. Prices for other energy sources continue to remain high since the full-scale invasion began as well as prices for key consumables, transport and logistics, and salary increases.\nThis year we are required to record non-cash impairment loss of US$72 million as at 31 December 2024 on the Group's non-current operating assets, including property, plant and equipment, intangible assets and other non-current assets. This is due to the Group's lower cash flow generation driven by a decrease in prices for our products due to a weaker long\u2011term outlook for the iron ore market, in addition to higher prices for power and key consumables.\nAlthough the Group is reporting a loss of US$50 million for 2024, had the impairment of US$72 million not occurred the Group would have made a profit of US$22 million. This demonstrates that, while the strategy to bring back production volumes did not result in the expected growth in profits, it did help to limit losses in the face of the exceptional challenges.\nWe are closely watching the diplomatic efforts to bring an end to the war in ...",
+  "full_json": {
+    "url": "https://www.investegate.co.uk:443/announcement/rns/ferrexpo--fxpo/full-year-financial-results-for-2024/8785758",
+    "domain": "investegate.co.uk",
+    "source_country": "United Kingdom",
+    "language": "English",
+    "gdelt_seendate": "20250319T074500Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

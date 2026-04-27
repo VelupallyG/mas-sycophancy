@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_c47677be0e75",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / mondaq.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-02-20",
+  "title": "Sanctions Update : February 19 , 2025",
+  "text_content": "Sanctions Update : February 19 , 2025\n\n- in United States\n- with readers working within the Technology industries\n- within Criminal Law topic(s)\nThe Sanctions Update, compiled by attorneys from Steptoe's award-winning International Regulatory Compliance team and the Stepwise: Risk Outlook editorial team, publishes every Monday. Guided by the expertise of Steptoe's industry-leading IRC team, the Sanctions Update compiles and contextualizes weekly developments in international regulatory enforcement and compliance, as well as offers insights on geopolitical context, business impacts, and forthcoming risks.\nSubscribe to the Stepwise Risk Outlook here. To receive only the Sanctions Update edition (published most Mondays), select \"Stepwise Risk Outlook: Sanctions Update.\" For more detailed analysis on related issues, see Steptoe's International Compliance Blog. For information on industry-specific monitoring or bespoke services, please contact the team here.\nThe Lede: The Trump Administration, Sanctions and Ending the Ukraine War\nThe diplomatic dance has begun on ending the Ukraine War, with US sanctions policy \u2013 both their imposition and potential easing - emerging early as a key diplomatic tool. Lifting Russian sanctions, however, is not easy, given that some sanctions are now enshrined in US statutes and enjoy broad Congressional support. US President Trump may use presidential authorities and the administrative tools that he controls (as is being seen in other presidential actions) in order to optimize sanctions to create pressure on and incentives for the Kremlin to agree not just to negotiate, but to end the Ukraine war.\nOn one front, the US joined the G7 foreign ministers' statement on the margins of the Munich Security Conference that stated if Russia does not negotiate in good faith, the G7 will impost further costs on Russia, through caps on oil and gas prices and making sanctions more effective. The ministers stated, \"Any new, additional sanctions after February should be linked to whether the Russian Federation enters into real, good-faith efforts to bring an enduring end to the war against Ukraine that provides Ukraine with long-term security and stability as a sovereign, independent country.\"\nThe strong G7 statement is bookended by other US actions. In a phone call and meeting between US Secretary of State Rubio and Russian Foreign Minister Lavrov, the two officials discussed easing sanctions and opening of communications through functional embassies. Earlier this month, President Trump instructed the Treasury Department to disband Task Force KleptoCapture, which was a primary US government tool for targeting Russian oligarch's assets.\nThese are actions President Trump could immediately take within his authorities, and they are consistent with his transactional approach to foreign policy and primary focus on US economic security. Agreeing to the G7 statement fits with US broader priorities. Keeping energy sanctions on Russia energy exports benefits the US energy sector, keepi...",
+  "full_json": {
+    "url": "https://www.mondaq.com:443/unitedstates/export-controls-trade-investment-sanctions/1587802/sanctions-update-february-19-2025",
+    "domain": "mondaq.com",
+    "source_country": "United States",
+    "language": "English",
+    "gdelt_seendate": "20250220T184500Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

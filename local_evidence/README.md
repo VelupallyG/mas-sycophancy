@@ -47,7 +47,7 @@ Recommended fields:
 Current benchmark seed IDs:
 
 - `tech_earnings_google_2026_detailed`
-- `geopolitical_oil_sanctions_2025_detailed`
+- `iran_oil_sanctions_tightening_march_2025`
 
 ## Import Command
 

@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_748795f16aaa",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / thehindu.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-03-09",
+  "title": "Why has India promised to buy more U . S . oil ? | Explained",
+  "text_content": "Why has India promised to buy more U . S . oil ? | Explained\n\nThe story so far: India committed to procure more oil and natural gas from the U.S. when Prime Minister Narendra Modi met U.S. President Donald Trump in February in Washington amid tariff threats. Foreign Secretary Vikram Misri said India\u2019s energy purchases from the U.S. could increase from last year\u2019s $15 billion to $25 billion in the near future. A Reuters report showed that the U.S. exported about 3,57,000 barrels per day (bpd) of crude to India in February, compared with exports of about 2,21,000 bpd last year.\nIndia is the world\u2019s third-largest oil importer and consumer. For a country which relies on imports for more than 85% of its crude oil requirements, any step to secure hydrocarbon supplies is crucial. The country has promised to enhance oil and gas purchase from the U.S., which will bolster energy ties, and also help, to an extent, in achieving the ambitious doubling of bilateral trade to $500 billion over the next five years. At present, the bilateral trade is in India\u2019s favour. The statistics of the Office of the United States Trade Representative show that the goods trade deficit with India was $45.7 billion in 2024, which is a 5.4% increase from 2023. Executive Director (Energy Transition and Cleantech Consulting) at S&P Global Commodity Insights Gauri Jauhar said that procuring more oil and gas from the U.S. will add to the diversity of major, long-term sources of supply.\nPublished - March 09, 2025 06:30 am IST",
+  "full_json": {
+    "url": "https://www.thehindu.com/business/why-has-india-promised-to-buy-more-us-oil-explained/article69307515.ece",
+    "domain": "thehindu.com",
+    "source_country": "India",
+    "language": "English",
+    "gdelt_seendate": "20250309T051500Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

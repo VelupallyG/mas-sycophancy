@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_73c28b5ffcff",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / thetimes.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-02-20",
+  "title": "Russia  shadow fleet  fuels lucrative trade in old tankers",
+  "text_content": "Russia  shadow fleet  fuels lucrative trade in old tankers\n\nMoscow has been able to keep its oil trade flowing and fund its war in Ukraine despite international sanctions. It has done so by relying upon a fleet of more than 600 old and often poorly maintained ships, without adequate insurance, to transport oil. This has become what is known as Russia\u2019s \u201cshadow fleet\u201d.\nThis has led to a considerable rise in the price of ageing second-hand tankers while the number being scrapped has fallen to almost zero over the past two years, according to AXSMarine.\nFor some ship owners, including from the UK, the result has been a lucrative trade in ageing vessels. Some of the older vessels sold by European companies have eventually ended up in the shadow fleet, raising questions about whether British and European regulation covering ship sales is adequate.\nAccording to estimates from Drewry, the average price of a 15-year-old crude tanker has risen from about $32.5 million before the war started to $54 million, as of December last year. This represents an increase of over 60 per cent despite the fact that most oil majors typically avoid buying tankers more than 15 years old.\n\u201cThe invasion and the subsequent sanctions against Russia resulted in a sharp increase in second-hand tanker prices, driven by an extreme increase in tanker freight rates,\u201d Dimitris Roumeliotis, an analyst at Xclusiv Shipbrokers, said. Shipping companies have profited from rising demand in the tanker market as a whole, which has also been influenced by a pick-up in oil consumption and rising tensions in the Middle East.\nAn international research project called Shadow Fleet Secrets, of which The Times is a member, shows that more than a third of the tankers in the Russian shadow fleet were previously owned by European and US shipping companies, producing sales of more than $6 billion. Follow the Money, an investigative journalism site, said western ship owners had \u201cprofited from exceptionally high prices for old tankers\u201d.\nWhile there is no universally accepted definition of the shadow fleet, holding inadequate liability insurance is one unifying factor.\nMore than 90 per cent of goods crossing the sea possess insurance from one of the International Group, an association of leading insurers, to cover the cost of a spill or accident. Members of the shadow fleet do not generally possess such insurance and there are concerns that the ships risk causing environmental harm.\nThe presence in the shadow fleet of vessels previously owned by European companies has prompted a debate as to whether there should be tougher rules governing ship sales, and what else can be done by governments to tackle the issue.\nAmid international concerns, in May last year, the UK government published guidance on the sale of oil tankers to third countries, which recommended heightened due diligence when a number of criteria were met, including those when the vessel is more than 15 years old.\nHowever, the sales have prompted questions over whether Britain and the European Union\u2019s ap...",
+  "full_json": {
+    "url": "https://www.thetimes.com/business-money/companies/article/russias-shadow-fleet-fuels-lucrative-trade-in-old-tankers-tfzsqpt0x",
+    "domain": "thetimes.com",
+    "source_country": "",
+    "language": "English",
+    "gdelt_seendate": "20250220T004500Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

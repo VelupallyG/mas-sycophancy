@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_7078f68e0919",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / livemint.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-03-15",
+  "title": "If it comes to a stand - off , Europe has leverage over America",
+  "text_content": "If it comes to a stand - off , Europe has leverage over America\n\n\u201cTHE ACTION that is needed has to be bold and determined,\u201d declared Ursula von der Leyen, the president of the European Commission, this week. She was talking about how the European Union should respond to Donald Trump\u2019s habit of tearing up supposedly \u201cironclad commitments\u201d, thereby threatening \u201cEuropean values\u201d. \u201cExtraordinary times,\u201d she averred, \u201ccall for extraordinary measures.\u201d\nSo far, the EU\u2019s response to Mr Trump has been fairly ordinary. After America imposed a 25% tariff on steel and aluminium on March 12th, it said it would charge punitive levies on \u20ac8bn ($9bn) of American imports from April 1st and on a further \u20ac18bn of imports from mid-April. Despite Mrs von der Leyen\u2019s fighting talk, Europe does not want its row with America to escalate and hopes Mr Trump\u2019s worst instincts can be moderated. But were the EU\u2019s disputes with America to intensify, it does have a surprising number of ways to exert pressure on its wayward ally.\nThe EU\u2019s most obvious geopolitical asset is the size of its market. Together with Britain, Norway and Switzerland, the continent\u2019s GDP reaches $24.5trn, almost as big as America\u2019s $29trn. American firms, from brewers to banks, would like to continue doing business in that market. That is the premise of Europe\u2019s retaliatory tariffs, which will fall initially on easily substitutable luxury goods, such as Harley-Davidson motorcycles and whisky.\nThe hitch is that tariffs or other restrictions on imports from America hurt European consumers as well as American exporters. A case in point is Europe\u2019s biggest import from America, energy. Last year it gobbled up 35% of America\u2019s exports of crude and refined oil. More than half of America\u2019s LNG went to Europe, too. Demand from the bloc, which may well keep rising long into the 2030s, underwrites many of the multibillion-dollar gas-export projects under development in America. Were Europe to curtail LNG purchases from America, many American energy firms would be in trouble. But it is hard for Europe to do this without crippling its already limping economy or again becoming dependent on Russia, an alarming predicament from which it has only just escaped.\nTech bruise\nA more plausible, albeit for the moment entirely hypothetical, target is America\u2019s tech giants. Europe can probably do without Instagram, a social network owned by Meta, for instance, but Meta would be hit hard by the loss of European revenue. Europe has lots of ways to make life difficult for such firms short of banning them from European markets, including taxation and competition policy. This allows it to calibrate the torment, gradually tightening the screws if need be.\nThe fact that these digital giants pay little tax in Europe has been a sticking-point in the transatlantic relationship for years. In part, low tax revenues are Europe\u2019s own fault, since it has allowed Ireland and others to operate as tax havens within the EU. European countries\u2019 answer has been taxes on online advertising and other digital servi...",
+  "full_json": {
+    "url": "https://www.livemint.com/global/if-it-comes-to-a-stand-off-europe-has-leverage-over-america-11742012588280.html",
+    "domain": "livemint.com",
+    "source_country": "India",
+    "language": "English",
+    "gdelt_seendate": "20250315T183000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

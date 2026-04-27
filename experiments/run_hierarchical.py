@@ -14,15 +14,16 @@ import logging
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
 logger = logging.getLogger(__name__)
 
 SEED_DOC_CHOICES = [
     "finance_earnings_alphabet_ai_capex_2026_v1",
-    "geopolitics_sanctions_oil_supplyshock_2025_v1",
-    "tech_earnings",
-    "policy_draft",
-    "geopolitical_event",
+    "iran_oil_sanctions_tightening_march_2025",
 ]
 
 
@@ -36,6 +37,11 @@ def parse_args() -> argparse.Namespace:
         choices=SEED_DOC_CHOICES,
     )
     parser.add_argument("--n-trials", type=int, default=30)
+    parser.add_argument(
+        "--no-hallucination",
+        action="store_true",
+        help="Run hierarchical baseline (no hallucination injection).",
+    )
     parser.add_argument("--mock", action="store_true")
     parser.add_argument("--output-dir", default="data")
     parser.add_argument(
@@ -55,9 +61,25 @@ def parse_args() -> argparse.Namespace:
         help="Maximum local evidence documents to inject per trial.",
     )
     parser.add_argument(
+        "--enable-file-evidence",
+        action="store_true",
+        help="Load evidence from local_evidence/ files and inject per-agent.",
+    )
+    parser.add_argument(
+        "--evidence-docs-per-agent",
+        type=int,
+        default=5,
+        help="Number of evidence documents allocated to each agent.",
+    )
+    parser.add_argument(
         "--database-url",
         default=os.getenv("DATABASE_URL", ""),
         help="Postgres connection URL. Defaults to DATABASE_URL.",
+    )
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="Resume incomplete trials from last completed turn.",
     )
     return parser.parse_args()
 
@@ -66,8 +88,13 @@ def run(args: argparse.Namespace) -> None:
     from src.config import Condition, ExperimentConfig, SeedDocument
     from src.tasks.predictive_intel import PredictiveIntelligenceTask
 
+    inject = not args.no_hallucination
     config = ExperimentConfig(
-        condition=Condition.HIERARCHICAL_HALLUCINATION,
+        condition=(
+            Condition.HIERARCHICAL_HALLUCINATION
+            if inject
+            else Condition.HIERARCHICAL_BASELINE
+        ),
         seed_doc=SeedDocument(args.seed_doc),
         n_trials=args.n_trials,
         gcp_project=("mock-project" if args.mock else os.getenv("GCP_PROJECT", "")),
@@ -76,6 +103,8 @@ def run(args: argparse.Namespace) -> None:
         database_url=args.database_url,
         enable_local_evidence=args.enable_local_evidence,
         local_evidence_limit=args.local_evidence_limit,
+        enable_file_evidence=args.enable_file_evidence,
+        evidence_docs_per_agent=args.evidence_docs_per_agent,
     )
     config.validate()
 
@@ -118,7 +147,12 @@ def run(args: argparse.Namespace) -> None:
 
     for trial_id in range(args.n_trials):
         logger.info("Trial %d/%d ...", trial_id + 1, args.n_trials)
-        path = runner.run_hierarchical_trial(task=task, trial_id=trial_id)
+        path = runner.run_hierarchical_trial(
+            task=task,
+            trial_id=trial_id,
+            inject_hallucination=inject,
+            resume=args.resume,
+        )
         logger.info("  → %s", path)
 
     logger.info("Done.")

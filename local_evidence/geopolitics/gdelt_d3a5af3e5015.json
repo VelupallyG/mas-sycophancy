@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_d3a5af3e5015",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / newarab.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-02-05",
+  "title": "Trump says to reinstate  maximum pressure  on Iran",
+  "text_content": "Trump says to reinstate  maximum pressure  on Iran\n\nBreadcrumb\nTrump says to reinstate 'maximum pressure' on Iran\nUS President Donald Trump on Tuesday restored his \"maximum pressure\" campaign on Iran, including efforts to drive its oil exports down to zero to stop Tehran from obtaining a nuclear weapon.\nAhead of his meeting with Israeli Prime Minister Benjamin Netanyahu, Trump signed the presidential memorandum reimposing Washington's tough policy on Iran that was practised throughout his first term.\nAs he signed the memo, Trump described it as very tough and said he was torn on whether to make the move. He said he was open to a deal with Iran and expressed a willingness to talk to the Iranian leader.\n\"With me, it's very simple: Iran cannot have a nuclear weapon,\" Trump said. Asked how close Tehran is to a weapon, Trump said: \"They're too close.\"\nIran's mission to the United Nations in New York did not immediately respond to a request for comment.\nTrump has accused former President Joe Biden of failing to rigorously enforce oil-export sanctions, which Trump says emboldened Tehran by allowing it to sell oil to fund a nuclear weapons program and armed militias in the Middle East.\nIran is \"dramatically\" accelerating enrichment of uranium to up to 60 percent purity, close to the roughly 90 percent weapons-grade level, the UN nuclear watchdog chief told Reuters in December. Iran has denied wanting to develop a nuclear weapon.\nTrump's memo, among other things, orders the US Treasury secretary to impose \"maximum economic pressure\" on Iran, including sanctions and enforcement mechanisms on those violating existing sanctions.\nIt also directs the Treasury and State Department to implement a campaign aimed at \"driving Iran's oil exports to zero.\" US oil prices pared losses on Tuesday, based on the news that Trump planned to sign the memo, which offset some weakness from the tariff drama between Washington and Beijing.\nTehran's oil exports brought in $53 billion in 2023 and $54 billion a year earlier, according to US Energy Information Administration estimates. Output during 2024 was running at its highest level since 2018, based on OPEC data.\nTrump had driven Iran's oil exports to near-zero during part of his first term after reimposing sanctions. They rose under Biden's tenure as Iran succeeded in evading sanctions.\nThe Paris-based International Energy Agency believes Saudi Arabia, the United Arab Emirates, and other OPEC members have spare capacity to make up for any lost exports from Iran, which is also an OPEC member.\n(Reuters)",
+  "full_json": {
+    "url": "https://www.newarab.com/news/trump-says-reinstate-maximum-pressure-iran",
+    "domain": "newarab.com",
+    "source_country": "",
+    "language": "English",
+    "gdelt_seendate": "20250205T001500Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

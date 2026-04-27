@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_91d1e1ae16da",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / shippingtribune.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-02-17",
+  "title": "Shipping Tribune",
+  "text_content": "Shipping Tribune\n\nBREAKING NEWS\nWhile the world watches the unhinged actions of the new Trump administration\u2014playing Geopolitics 101 for Dummies\u2014leaving Europe\u2019s security in shambles and pushing risks and fear back into the market, oil and gas analysts are more concerned about oil prices. Current sentiment suggests lower oil prices as part of an expected peace dividend from a potential U.S.-Russia Ukraine deal. However, this expectation is not based on fundamentals or geopolitical-military assessments from experts.\nMeanwhile, those inside the global crude oil markets anticipate a completely different scenario. Norway\u2019s Domestic Wealth Fund, one of the country\u2019s sovereign wealth funds, and Abu Dhabi-based ADNOC L&S have already seen positive developments in the VLCC market, with significant investments underway or planned for the near future.\nU.S.-based investment bank Jefferies foresees a robust bull market developing in the VLCC sector. In a new report, Jefferies noted that the impact of U.S. sanctions on Russia is increasing weekly, removing a substantial number of VLCCs from the market. At the same time, Jefferies pointed out that overall demand for VLCCs remains strong, as oil markets continue an upward demand cycle. Sanctioned volumes\u2014particularly from Russia\u2019s dark fleet and Iran\u2014are being removed from circulation, leaving other producers scrambling for additional transportation capacity. The investment bank also expects non-sanctioned producers, especially non-OPEC, to increase production volumes. In the coming months, if OPEC statements hold true, additional volumes from Saudi Arabia, the UAE, and other Gulf producers are also expected to enter the market. Spare production capacity is expected to be utilized soon.\nCurrently, the global VLCC market consists of approximately 906 ships, 18 of which are already being used for floating storage. This leaves an available fleet of 888 VLCCs, of which 95 are under sanctions. Another 45 have been identified as having transported Iranian barrels, making them subject to sanctions as well. The former Biden administration had already placed 39 VLCCs on the OFAC list between October 2024 and January 2025. The current Trump administration is expected to impose additional or even maximum pressure sanctions on Iran and Russia in the coming months.\nThe global seaborne crude oil trade is approximately 40 million bpd, with VLCCs handling 22 million bpd. The dark fleet is believed to transport around 2 million bpd of these volumes. Jefferies predicts that overall VLCC fleet utilization will reach around 90% in 2025, with roughly 10% of ships sanctioned. If all OFAC measures are implemented, this figure could rise to 15%, removing an additional 45 VLCCs from the market.\nGiven this outlook, recent statements from ADNOC Logistics & Services (L&S) CFO Nick Gleeson come as no surprise. Gleeson stated that VLCCs currently represent an extremely attractive investment opportunity. ADNOC L&S has been building a strong position in the ma...",
+  "full_json": {
+    "url": "https://www.shippingtribune.com/news/shipping/Tanker+Market+Turns+Red+Hot+as+Dark+Fleet+Gets+Squeezed",
+    "domain": "shippingtribune.com",
+    "source_country": "India",
+    "language": "English",
+    "gdelt_seendate": "20250217T040000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

@@ -56,7 +56,7 @@ def load_traces(data_dir: Path) -> pd.DataFrame:
     df = pd.DataFrame(records)
     pretty_names = {
         "tech_earnings_google_2026_detailed": "Finance (Alphabet AI Capex)",
-        "geopolitical_oil_sanctions_2025_detailed": "Geopolitics (Oil Sanctions)",
+        "iran_oil_sanctions_tightening_march_2025": "Geopolitics (Iran Oil Sanctions)",
     }
 
     def _to_short(seed_value: object) -> str:

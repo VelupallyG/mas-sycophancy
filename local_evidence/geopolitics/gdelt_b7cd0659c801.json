@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_b7cd0659c801",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / panow.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-01-01",
+  "title": "Year in review : A look at news events in April 2024",
+  "text_content": "Year in review : A look at news events in April 2024\n\nYear in review: A look at news events in April 2024\nA look at news events in April 2024:\n1 \u2013 Nunavut is 25 years old today. Premier P.J. Akeeagok says the anniversary reminds him that his job is both a privilege and an immense responsibility. The creation of Canada\u2019s newest territory on April 1, 1999, was part of a historic land claim settlement. It was also the first major change to the country\u2019s map since Newfoundland and Labrador joined Confederation.\n1 \u2013 The national price on pollution rises by $15 per tonne. The federal government\u2019s consumer carbon levy is added to the price of more than 20 different fuel sources that produce greenhouse-gas emissions when burned for energy, including gasoline, propane, diesel and natural gas. The price change means filling a 50-litre tank with gas will cost an extra $1.65. It also means a boost to the Canada Carbon Rebate the government sends to eligible Canadians every three months to help mitigate the cost.\n1 \u2013 Trillions of red-eye cicadas are about to emerge across several U.S. states in numbers not seen in decades and possibly centuries. The Southern and Midwestern U.S. are bracing for the emergence this spring of two separate broods not seen together since 1803. The bizarre insects crawl out from underground every 13 or 17 years and can produce a sound as loud as jet engines. They have pumps in their heads that pull moisture from the roots of trees, allowing them to feed for more than a decade underground.",
+  "full_json": {
+    "url": "https://panow.com/2025/01/01/year-in-review-a-look-at-news-events-in-april-2024-2/",
+    "domain": "panow.com",
+    "source_country": "Canada",
+    "language": "English",
+    "gdelt_seendate": "20250101T090000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

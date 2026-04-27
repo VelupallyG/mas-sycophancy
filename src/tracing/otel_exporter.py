@@ -93,17 +93,60 @@ class JSONLExporter:
     Call close() when the trial ends (or use as a context manager).
     """
 
-    def __init__(self, output_path: Path) -> None:
-        """Open the JSONL file for writing.
+    def __init__(self, output_path: Path, *, resume: bool = False) -> None:
+        """Open the JSONL file for writing (or appending if resuming).
 
         Args:
             output_path: Full path including filename (e.g. data/flat_baseline/
                 finance_earnings_alphabet_ai_capex_2026_v1/trial_001/trace.jsonl).
                 Parent directories are created automatically.
+            resume: If True and the file exists, open in append mode and load
+                existing records. If False (default), truncate any existing file.
         """
         output_path.parent.mkdir(parents=True, exist_ok=True)
         self._path = output_path
-        self._fh = output_path.open("w", encoding="utf-8")
+        self._existing_records: list[dict] = []
+
+        if resume and output_path.exists():
+            # Load existing records before opening for append.
+            with output_path.open("r", encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if line:
+                        self._existing_records.append(json.loads(line))
+            self._fh = output_path.open("a", encoding="utf-8")
+        else:
+            self._fh = output_path.open("w", encoding="utf-8")
+
+    @property
+    def existing_records(self) -> list[dict]:
+        """Records loaded from a previous (incomplete) run when resume=True."""
+        return self._existing_records
+
+    def last_completed_turn(self) -> int:
+        """Return the highest turn number fully present in existing records.
+
+        A turn is "complete" if the number of records for that turn equals
+        the number of records for turn 1 (i.e. all agents acted).
+        Returns 0 if no existing records.
+        """
+        if not self._existing_records:
+            return 0
+        from collections import Counter
+
+        turn_counts = Counter(r["turn"] for r in self._existing_records)
+        if not turn_counts:
+            return 0
+        turn_1_count = turn_counts.get(1, 0)
+        if turn_1_count == 0:
+            return 0
+        max_complete = 0
+        for t in sorted(turn_counts):
+            if turn_counts[t] >= turn_1_count:
+                max_complete = t
+            else:
+                break
+        return max_complete
 
     def record(self, entry: AgentTurnRecord) -> None:
         """Append one agent-turn record to the JSONL file."""

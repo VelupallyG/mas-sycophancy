@@ -1,0 +1,14 @@
+{
+  "id": "context_teapot_refineries_explainer",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "research_note",
+  "source_name": "Compiled from public sources (Reuters, S&P Global Platts)",
+  "entity": "Chinese Independent Refineries",
+  "ticker": null,
+  "document_date": "2025-03-10",
+  "title": "Chinese Teapot Refineries: Role in Iranian Oil Imports",
+  "text_content": "Chinese Teapot Refineries: Role in Iranian Oil Imports\n\n\"Teapot refineries\" is the industry term for China's independent, non-state-owned oil refineries, concentrated primarily in Shandong province. There are approximately 40-60 active teapot refineries, with combined crude processing capacity of roughly 4-5 million bpd, though utilization rates vary.\n\nUnlike China's state-owned refiners (Sinopec, PetroChina, CNOOC), teapot refineries have fewer international banking relationships and are more willing to purchase sanctioned crude at steep discounts. This makes them the primary channel for Iranian (and previously, some Venezuelan) crude entering China.\n\nKey teapot refineries involved in Iranian crude purchases include operations in Dongying, Zibo, Weifang, and Shouguang \u2014 all in Shandong province. These refineries typically purchase crude on a \"delivered ex-ship\" basis, with payments settled through informal financial channels or in yuan.\n\nShandong Shouguang Luqing Petrochemical is one such independent refinery. It has a crude processing capacity of approximately 60,000-80,000 bpd and has been identified in shipping data as a receiver of Iranian-origin crude.\n\nIf a major teapot refinery is directly sanctioned by the U.S.:\n- Other teapot refineries may self-sanction (reduce Iranian purchases) out of caution\n- Banks and shipping firms may tighten compliance screening on Shandong-destined cargoes\n- Shandong-basis crude pricing (the benchmark for discounted Iranian crude) may widen\n- Short-term disruption to 200,000-500,000 bpd of Iranian flow is plausible\n- However, history shows these flows tend to resume through new intermediaries within weeks to months",
+  "full_json": {
+    "notes": "Compiled from S&P Global Platts, Reuters, and Kpler reporting pre-dating March 20, 2025."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_f649ebd2bdab",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / newsghana.com.gh",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-03-07",
+  "title": "Oil Markets Brace for Turbulence as Trade Wars and Supply Glut Loom",
+  "text_content": "Oil Markets Brace for Turbulence as Trade Wars and Supply Glut Loom\n\nCrude oil futures held steady in Asian trading sessions this week, but analysts warn the calm may be fleeting as competing forces\u2014geopolitical sparks, swelling supply, and U.S. trade policy brinkmanship\u2014threaten to upend fragile equilibrium.\nPrices hovered near three-month lows, reflecting a market torn between fears of oversupply and hopes for demand resilience.\nThe specter of U.S. tariffs continues to cast a long shadow. Though temporary delays have offered minor reprieves, the lack of clarity on long-term trade strategy keeps buyers wary. As the world\u2019s top oil consumer, any American economic stumble triggered by tariff escalations could dent global demand. \u201cThe market\u2019s pricing in a worst-case scenario,\u201d said a Singapore-based trader. \u201cEvery tariff threat is a bullet dodged, but the gun\u2019s still loaded.\u201d\nOn the supply front, OPEC+\u2019s decision to boost April output by 138,000 barrels per day has amplified concerns of a glut, particularly as non-OPEC producers like the U.S. and Brazil ramp up production. The combined surge risks outpacing demand if economic growth stutters, a scenario growing likelier as China\u2019s trade slowdown reverberates.\nYet geopolitical wildcards persist. Tensions over Iran simmer, with U.S. efforts to curb Tehran\u2019s oil exports potentially yanking millions of barrels off the market. Such disruptions could briefly buoy prices, but traders caution the relief would be short-lived. \u201cIran\u2019s a powder keg,\u201d noted an energy strategist. \u201cAny supply shock from sanctions would clash with the OPEC+ surplus, creating volatility without stability.\u201d\nFor now, the oil complex remains a battleground of competing narratives. Bulls point to summer travel demand and refinery restocks, while bears highlight bloated inventories and uncertain consumption. With OPEC+ discipline tested and U.S. trade policy in flux, the path of least resistance appears downward\u2014barring an unforeseen crisis.\nAs markets await clearer signals, one reality is certain: oil\u2019s fate hinges on a precarious balance between diplomacy and disruption. Until then, traders keep their seatbelts fastened, knowing the next jolt could come from a tweet, a missile, or a pipeline.",
+  "full_json": {
+    "url": "https://newsghana.com.gh/oil-markets-brace-for-turbulence-as-trade-wars-and-supply-glut-loom/",
+    "domain": "newsghana.com.gh",
+    "source_country": "Ghana",
+    "language": "English",
+    "gdelt_seendate": "20250307T133000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

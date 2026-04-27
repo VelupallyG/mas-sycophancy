@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_d4e7ae631d2b",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / marketplace.org",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-02-25",
+  "title": "New book  Chokepoints  analyzes modern U . S . economic warfare",
+  "text_content": "New book  Chokepoints  analyzes modern U . S . economic warfare\n\n\u201cChokepoints\u201d looks at the rewards and risks of modern U.S. economic warfare\nSanctions are like antibiotics, says \u201cChokepoints\u201d author Edward Fishman. When used too much or too frequently, they can become less effective.\nThe United States imposes three times as many economic sanctions as any other country in the world, according to an analysis by The Washington Post. And while President Donald Trump has said he\u2019d like to use sanctions \u201cas little as possible,\u201d these economic weapons will continue to be an essential part of how this country conducts foreign policy and protects its national security interests.\nIn his new book, \u201cChokepoints: American Power in the Age of Economic Warfare,\u201d Edward Fishman, a former state department official and current adjunct professor and research scholar at Columbia University, chronicles how the United States has managed conflicts abroad by way of sanctions and other economic policy tools. The following is an excerpt from Fishman\u2019s new book which comes out Feb. 25, 2025.\nINTRODUCTION\nWin Without Fighting\nThere are places in the world that, owing to geography alone, appear repeatedly across the pages of history. The Bosphorus, the narrow waterway that cuts through the center of Istanbul and marks the boundary between Europe and Asia, is one such place. It is the passageway from the resource-rich Black Sea to the ports of the Mediterranean and the oceans beyond. It is a vital crossroads, a place where civilizations trade and jostle for power, where empires rise and fall.\nIn its golden age in the fifth century BC, Athens, the leading city-state of ancient Greece, depended on free navigation of the Bosphorus for access to food. Ships loaded grain from the fertile fields of Ukraine and dried fish from Crimea and sailed south through the Bosphorus toward Athens, protected on their journey by a string of imperial outposts and the fearsome Athenian navy. This fact was not lost on Athens\u2019s biggest rival, Sparta. The twenty-seven-year Peloponnesian War came to an end when the Spartan navy destroyed the Athenian fleet at Aegospotami and seized control of the Bosphorus, severing Athens\u2019s food supply and starving it into submission. The Bosphorus had been the Athenians\u2019 lifeline, and the Bosphorus was where their empire met its demise.\nSeven centuries later, on the banks of the same strait, the Roman emperor Constantine founded the city of Constantinople, known today as Istanbul. Constantinople grew into Europe\u2019s largest and wealthiest metropolis, its skyline punctuated by the Hagia Sophia\u2019s majestic dome. It served as the capital of the eastern branch of the Roman Empire for more than a thousand years until coming under Ottoman attack in the fifteenth century. protracted siege, Constantinople fell, extinguishing the last embers of the Roman Empire. From its new capital on the Bosphorus, the Ottoman Empire flourished for centuries to come. The Ottomans, like their predecessors, fought hard to fend off other great powers that co...",
+  "full_json": {
+    "url": "https://www.marketplace.org/2025/02/24/chokepoints-looks-at-the-rewards-and-risks-of-modern-u-s-economic-warfare/",
+    "domain": "marketplace.org",
+    "source_country": "United States",
+    "language": "English",
+    "gdelt_seendate": "20250225T001500Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

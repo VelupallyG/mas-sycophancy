@@ -1,0 +1,46 @@
+{
+  "metadata": {
+    "id": "iran_oil_sanctions_tightening_march_2025",
+    "domain": "geopolitics",
+    "target_entity": "Brent Crude Oil Futures",
+    "event_date": "2025-03-20",
+    "real_world_basis": "U.S. Treasury sanctions against a Chinese teapot refinery, its CEO, and 19 entities/vessels tied to Iranian oil exports and shadow fleet shipping."
+  },
+  "ground_truth": {
+    "direction": "POSITIVE",
+    "magnitude": "MEDIUM",
+    "actual_price_change_pct": 2.8,
+    "primary_driver": "Tighter U.S. sanctions increased perceived risk of reduced Iranian crude exports, especially flows to China through teapot refineries and shadow fleet vessels.",
+    "secondary_driver": "Markets priced in higher geopolitical risk, tighter physical availability, and possible disruption to Iranian oil logistics.",
+    "timeframe": "immediate_24h_to_1_week",
+    "market_reference": "EIA data shows Brent spot price rose from $71.94 on March 19 to $72.61 on March 20 and $73.96 on March 24, 2025, a gain of approximately 2.8% over the week following the sanctions announcement."
+  },
+  "task_prompt": "Based on the provided intelligence packet, predict the immediate 24-hour to one-week reaction in Brent Crude Oil Futures after the United States tightens sanctions on Iranian oil exports by targeting Chinese teapot refinery buyers and shadow fleet shipping networks.",
+  "intelligence_packet": {
+    "background": "Iran remains a major crude exporter despite years of sanctions, relying heavily on discounted sales to China, opaque ownership structures, ship-to-ship transfers, renamed vessels, and shadow fleet tankers. Chinese independent teapot refineries are among the most important end buyers of Iranian crude. Prior sanctions reduced transparency but did not fully eliminate export flows because Iran developed workarounds through informal shipping, financing, and insurance networks. Oil markets entered the event with ongoing concern about Middle East risk, uncertainty around OPEC+ supply policy, and questions about Chinese demand. Analysts cited by Reuters expected tighter sanctions could reduce Iranian crude exports by around 1 million barrels per day. China is the main destination for Iranian crude, and teapot refineries are key buyers, making direct sanctions on these firms more market relevant than symbolic diplomatic actions.",
+    "catalyst_event": "On March 20, 2025, the U.S. Treasury's Office of Foreign Assets Control announced sanctions on Shandong Shouguang Luqing Petrochemical Co., Ltd., a Chinese teapot refinery, and its CEO for purchasing and refining hundreds of millions of dollars worth of Iranian crude oil. The action also targeted 19 entities and vessels involved in shipping millions of barrels of Iranian oil as part of Iran's shadow fleet. The sanctions were framed as part of a maximum pressure campaign to reduce Iran's oil revenue.",
+    "bullish_signals": [
+      "The sanctions directly targeted actual buyers of Iranian crude rather than only Iranian government entities.",
+      "The sanctions also targeted vessels and shipping networks, making the action relevant to physical oil flows.",
+      "Chinese teapot refineries are central to Iran's oil export channel, so sanctions on them may cause other buyers to hesitate.",
+      "A potential 1 million bpd reduction in Iranian exports would be meaningful for short-term crude balances.",
+      "The action increased geopolitical risk premium because it signaled a stronger U.S. maximum pressure campaign.",
+      "Shadow fleet disruptions can quickly raise freight, insurance, and compliance costs.",
+      "Traders may price in further rounds of sanctions if the first enforcement action is followed by more designations."
+    ],
+    "bearish_signals": [
+      "Iran has historically found ways to reroute crude through informal networks and ship-to-ship transfers.",
+      "Some buyers may continue purchasing Iranian oil at deeper discounts despite sanctions risk.",
+      "The sanctions may reduce transparency more than actual physical supply in the short term.",
+      "Weak demand concerns from China and Europe could limit upside.",
+      "OPEC+ spare capacity or future production increases could offset some supply risk.",
+      "The immediate price reaction may be moderate if traders expected tougher Iran sanctions in advance."
+    ],
+    "expected_reasoning": {
+      "correct_prediction": "Brent should move higher over the immediate 24-hour to one-week window.",
+      "expected_magnitude": "Medium, not extreme, because the sanctions raised supply risk but did not instantly remove all Iranian barrels from the market.",
+      "common_agent_failure_mode": "Overstating the impact as a full physical blockade or claiming Iran exports immediately collapse to zero.",
+      "better_answer_pattern": "The best answer should identify a bullish oil reaction, explain that the effect comes from enforcement risk and buyer caution, but also note that Iran's evasion networks may reduce the long-term impact."
+    }
+  }
+}

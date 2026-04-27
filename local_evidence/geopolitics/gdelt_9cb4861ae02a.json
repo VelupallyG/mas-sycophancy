@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_9cb4861ae02a",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / hellenicshippingnews.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-03-09",
+  "title": "Where did Russia shadow fleet come from ? | Hellenic Shipping News Worldwide",
+  "text_content": "Where did Russia shadow fleet come from ? | Hellenic Shipping News Worldwide\n\nWhere did Russia\u2019s shadow fleet come from?\nThe G7 (plus Australia) imposed a price cap on Russian oil in December 2022 to limit Russian revenue from energy exports. The sanctioning coalition enforced this cap by requiring Western companies providing key oil trade services\u2014including shipping, insurance, financing, and flagging\u2014to verify that the trades in question complied with various caps on oil exports. In response, Russia heightened its efforts to amass a \u201cshadow fleet\u201d of tankers that could be used to move oil without depending on Western companies and thus avoiding the imposed price ceilings.\nA focal point of the shadow fleet strategy is to obscure the ownership of the fleets\u2019 tankers and to mask the origin of the Russian oil those ships carry. To do this, Russia employs a host of deceptive maneuvers, such as repeated ship-to-ship transfers of liquid cargo, blending oil from multiple countries, spoofing ships\u2019 location data, and automatic identification system blackouts. Russia has also devoted unprecedented resources to purchasing aging ships from Western companies, obscuring the Russian ownership of those vessels through complex schemes involving shell companies and frequent reflagging of ships, among other measures.\nRussia\u2019s shadow fleet buildup has been a double-edged sword. On one hand, amassing such a large fleet has been costly, especially for a country with a deteriorating economy\u2014the Kyiv School of Economics estimates that Russia has spent roughly $10 billion purchasing various tankers for its fleet since 2022. But the proliferation of the shadow fleet has also enabled Russia to trade around the price cap, maintaining revenues and preventing its economy from a full-scale collapse. And since most of the Russian shadow fleet is very old by typical tanker standards and insured by disreputable companies, the fleet also presents serious environmental and fiscal risks for the jurisdictions through which it passes\u2014particularly in the event of a spill.\nIn the following section, we document the ownership history of a spate of recently sanctioned tankers, finding that almost 60% were sold to the shadow fleet by Western European owners, with operators in Greece being by far the most frequent sellers.\nTracing the ownership history of Russia\u2019s shadow fleet\nOn January 10, the United States sanctioned 183 Russian-controlled vessels, the vast majority of which are oil tankers, including 75 ships which were identified as belonging to the shadow fleet. (Although various jurisdictions disagree on the precise definition of a shadow tanker, common characteristics are that the vessels regularly employ evasive tactics and belong to entities in non-Western countries).\nWe have been tracking oil tanker traffic out of Russian ports since Russia\u2019s invasion of Ukraine. Those data are taken from the Bloomberg AHOY database, where\u2014for purposes of exposition\u2014we define the shadow fleet as ships without a clear (beneficial) owner. The importance of such ships has ri...",
+  "full_json": {
+    "url": "https://www.hellenicshippingnews.com/where-did-russias-shadow-fleet-come-from/",
+    "domain": "hellenicshippingnews.com",
+    "source_country": "China",
+    "language": "English",
+    "gdelt_seendate": "20250309T230000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

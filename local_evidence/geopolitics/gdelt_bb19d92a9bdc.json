@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_bb19d92a9bdc",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / oilprice.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-03-14",
+  "title": "Oil Prices Set for Weekly Gain Despite Demand Uncertainty",
+  "text_content": "Oil Prices Set for Weekly Gain Despite Demand Uncertainty\n\nOil prices are set to end the week with a slight increase despite market uncertainty over demand due to Trump's trade wars.\nFriday, March 14th, 2025\nOil prices are set for their first weekly gain in a month, even if rising by only a couple of cents week-on-week, as the continuous barrage of tariff war news was offset by concerns around Trump\u2019s Ukraine-Russia ceasefire plan and the tightening of sanctions vis-\u00e0-vis Iran. Since March 5, ICE Brent has been trading in an extremely tight band of $69.3-70.9 per barrel as the oil markets wait for new developments to sway the mood.\nIEA Slashes 2025 Demand Outlook. The International Energy Agency cut its 2025 global demand outlook by 70,000 b/d to 1.03 million b/d, citing worsening macroeconomic conditions and tariff wars, whilst it ramped up this year\u2019s pace of oversupply to 600,000 b/d, compared to 450,000 b/d last month.\nCanada Files WTO Complaint Over US Steel Tariffs. The government of Canada has requested WTO dispute consultations with the United States over the latter\u2019s whopping 50% steel and aluminium tariffs, saying the unilateral move breaches the US\u2019 GATT obligations even though Trump walked them back.\nIndia Lures Upstream Investment with Reforms. The Indian Parliament approved the amendment of the 1948 Oil Fields Act, including shale oil and gas into its scope, allowing for foreign arbitration of disputes and extending potential lease periods, seeking to boost upstream activity in its offshore zone.\nUS Doubles Down on Iranian Sanctions. The US Treasury Department imposed sanctions on Iran\u2019s oil minister Mohsen Paknejad this week, simultaneously adding three shadow fleet tankers and four shipping companies registered in Hong Kong and Liberia to its SDN list for oil deliveries to China.\nExxonMobil To Tap into Guyana\u2019s Gas. US oil major ExxonMobil (NYSE:XOM) has submitted an environmental authorization request for its first purely gas project in offshore Guyana, seeking a FID on its Longtail FPSO that is expected to process 1,000-1,500 MMCf/d of gas and 200,000 b/d of condensate.\nUkraine Keeps on Striking Russian Refineries. Concurrently to Steve Witkoff\u2019s ceasefire negotiations in Moscow, Ukraine\u2019s army attacked the 240,000 b/d Tuapse refinery in Russia\u2019s Black Sea region with drones, hitting one of the gasoline storage tanks and marking the third refinery drone attack this week.\nTariff Wars Propel Gold Above Key Threshold. Amidst stagnant US interest rates and ever-changing tariff wars, the price of gold breached the psychological milestone of 3,000 per ounce for the first time in history, peaking at 3,004/oz on Friday, capping an increase of more than 14% in 2025 alone.\nSouth Korea Confronts Nuclear Scare. Two days after a coolant leak prompted an unplanned shutdown of South Korea\u2019s 1.4 GW Shin Hanul 2 reactor in the Asian country\u2019s east, a radiation alarm was raised on March 14 after a notably higher dose rate was detected in the reactor\u2019s exhaust pipe cleaning device.\nPanama Set to Make U-Tu...",
+  "full_json": {
+    "url": "https://oilprice.com/Energy/Energy-General/Oil-Prices-Set-for-Weekly-Gain-Despite-Demand-Uncertainty.html",
+    "domain": "oilprice.com",
+    "source_country": "United States",
+    "language": "English",
+    "gdelt_seendate": "20250314T163000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

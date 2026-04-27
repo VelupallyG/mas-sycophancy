@@ -27,9 +27,12 @@ class RawTraceRecord:
 class RawTraceExporter:
     """Append raw routed messages and outputs to JSONL."""
 
-    def __init__(self, output_path: Path) -> None:
+    def __init__(self, output_path: Path, *, resume: bool = False) -> None:
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        self._fh = output_path.open("w", encoding="utf-8")
+        if resume and output_path.exists():
+            self._fh = output_path.open("a", encoding="utf-8")
+        else:
+            self._fh = output_path.open("w", encoding="utf-8")
 
     def record(self, entry: RawTraceRecord) -> None:
         self._fh.write(json.dumps(asdict(entry), ensure_ascii=True) + "\n")

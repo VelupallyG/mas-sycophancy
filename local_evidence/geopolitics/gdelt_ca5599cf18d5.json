@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_ca5599cf18d5",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / cyprus-mail.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-02-24",
+  "title": "European stocks , euro rise on German election stability ; Nvidia in focus",
+  "text_content": "European stocks , euro rise on German election stability ; Nvidia in focus\n\nEuropean shares and the euro climbed on Monday as Germany\u2019s election produced a mainstream outcome, while Wall Street futures firmed on hopes results from AI diva Nvidia this week would justify the tech sector\u2019s sky-high valuations.\nDAX futures jumped 1.2 per cent, while the single currency rose 0.44 per cent to $1.0507 and looked set to test its January top at $1.0535. EUROSTOXX 50 futures added 0.66 per cent and FTSE futures 0.1 per cent.\nGerman\u2019s new conservative leader Friedrich Merz still has to form a coalition government and it is not yet clear whether that will include one or two partners, with the latter likely to take more time and horse trading.\nThe uncertainty comes as European Union leaders are set to hold an extraordinary summit on March 6 to discuss additional support for Ukraine and how to pay for European defence needs.\nLiquidity was thinned by a holiday in Tokyo markets and MSCI\u2019s broadest index of Asia-Pacific shares outside Japan (.MIAPJ0000PUS) dipped 0.5 per cent. Nikkei futures traded at 38,310, under the cash close of 38,776.\nChinese blue chips (.CSI300) eased 0.26 per cent. Hong Kong shares (.HSI) retreated 0.34 per cent, giving up some gains from their recent tech-driven bull run.\n\u201cChinese authorities have made a meaningful pivot in their rhetoric towards Big Tech and the private economy at large,\u201d said Barclays analysts in a note.\n\u201cIt may imply a policy shift intended to unwind very low local equity valuations, encourage inflows into China, and could moderate our bullish broad dollar and cautious EM views.\u201d\nS&P 500 futures and Nasdaq futures both gained 0.5 per cent. The Nasdaq had fallen 2.5 per cent last week, its worst week in three months, with losses led by the Magnificent Seven.\nThat pullback raised the stakes for Nvidia\u2019s (NVDA.O) results on Wednesday where investors are looking for fourth-quarter sales around $38.5 billion and first-quarter guidance around $42.5 billion.\nAs usual, options point to a share price move of around 8 per cent in either direction should the results surprise.\nWall Street had taken a hit on Friday when a survey on services showed a shock slide in activity amid concerns about tariffs and cost pressures. There were even reports the White House was pressuring Mexico to put its own tariffs on Chinese imports as part of a deal.\nINFLATION SCARE\nThe Federal Reserve\u2019s favoured measure of core inflation is due on Friday and expected to show a slowdown to 2.6 per cent from 2.8 per cent, but could be overshadowed by tariff worries.\nA survey of US consumers out on Friday showed inflation expectations for 5 to 10 years ahead climbed to 3.5 per cent, the highest since 1995.\n\u201cLonger-run inflation expectations are at risk of becoming de-anchored,\u201d warned analysts at ANZ in a note. \u201cThat was the clear message from the subset of soft US economic surveys released on Friday, and for the Fed, the data signal that enhanced caution is required.\u201d\nAt least nine Fed officials are speaking this week, some of them ...",
+  "full_json": {
+    "url": "https://cyprus-mail.com/2025/02/24/european-stocks-euro-rise-on-german-election-stability-nvidia-in-focus",
+    "domain": "cyprus-mail.com",
+    "source_country": "Cyprus",
+    "language": "English",
+    "gdelt_seendate": "20250224T094500Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

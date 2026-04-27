@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_eca397248d73",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / insurancebusinessmag.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-02-14",
+  "title": "Shadow fleets and sanctions loom over marine re / insurers \u2013 Miller",
+  "text_content": "Shadow fleets and sanctions loom over marine re / insurers \u2013 Miller\n\nThe marine insurance sector is navigating heightened regulatory pressures as insurers, shipowners, and flag states confront increased scrutiny over shadow fleets and sanctions enforcement, according to Miller.\nWith an estimated 90% of global tonnage insured by the International Group of P&I Clubs, due diligence on sanctions compliance has become a focal point for insurers and maritime authorities.\nShadow vessels, which seek to evade sanctions and operate outside regulated frameworks, are adopting increasingly sophisticated methods to obscure ownership and operational intent.\nMiller reported that ship-to-ship (STS) oil transfers have risen, particularly in the Mediterranean and Black Sea, as part of efforts to disguise oil origins. Safe STS estimates that approximately 11,500 such transfers of clean and dirty oil products occur annually, with an increasing concentration in sanctioned regions.\nThe use of opaque ownership structures, including special-purpose companies financed through prepaid charter arrangements, has been one method identified in recent sanction evasion cases.\nMiller noted that tracking these vessels remains complex, with improved satellite imagery, artificial intelligence, and AIS monitoring systems playing a growing role in detecting suspicious activity.\nThe insurance industry is not the only entity increasing oversight. According to Miller, flag states are also taking action, as seen in the Panama Maritime Authority's decision to deregister vessels engaged in illegal activities or sanction evasion.\nFollowing the inclusion of seven Panamanian-flagged vessels on the US Office of Foreign Assets Control (OFAC) list, Panama has committed to canceling the registration of ships found to be in violation of international sanctions. In August, it began deregistering four LNG carriers linked to Russian interests, with additional vessels expected to follow.\nThe European Union has intensified its measures against the shadow fleet. In December 2024, the Council of the European Union adopted its 15th round of sanctions, targeting Russia\u2019s oil trade and shadow tanker operations.\nBloomberg has reported that these new sanctions include restrictions on specialized tankers used in the Sakhalin Island projects, which may disrupt the transport of up to 1.5 million barrels of crude per day from Pacific and Arctic ports.\nIn November, the UK government also expanded its sanctions against Russia\u2019s energy industry, blacklisting dozens of tankers responsible for moving the nation\u2019s oil as well as two insurers involved in the trade.\nAccording to Miller, the Biden administration also expanded US sanctions against Russia\u2019s oil industry in early 2025, with OFAC sanctioning 161 tankers and multiple trading firms. Russian ship insurers and two ship-owning companies, which accounted for nearly 30% of Russia\u2019s oil exports in the first 10 months of 2024, were also targeted.\nAs a result, Chinese and Indian refiners are reportedly seeking alternative fuel sources, w...",
+  "full_json": {
+    "url": "https://www.insurancebusinessmag.com/us/news/reinsurance/shadow-fleets-and-sanctions-loom-over-marine-reinsurers--miller-524813.aspx",
+    "domain": "insurancebusinessmag.com",
+    "source_country": "United States",
+    "language": "English",
+    "gdelt_seendate": "20250214T174500Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

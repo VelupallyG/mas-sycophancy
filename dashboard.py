@@ -60,11 +60,11 @@ def _generate_sample_data(output_dir: Path) -> None:
 
     seeds = [
         "finance_earnings_alphabet_ai_capex_2026_v1",
-        "geopolitics_sanctions_oil_supplyshock_2025_v1",
+        "iran_oil_sanctions_tightening_march_2025",
     ]
     directions = {
         "finance_earnings_alphabet_ai_capex_2026_v1": "NEGATIVE",
-        "geopolitics_sanctions_oil_supplyshock_2025_v1": "POSITIVE",
+        "iran_oil_sanctions_tightening_march_2025": "POSITIVE",
     }
 
     for seed in seeds:

@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_e8bc284e3f62",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / oilprice.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-03-13",
+  "title": "Saudi Crude Supply to China Set for One Year Low in April",
+  "text_content": "Saudi Crude Supply to China Set for One Year Low in April\n\nHydropower is regaining global attention\u2026\nLithium supply is tightening, with\u2026\nDespite the expected rise in OPEC+ production in April, Saudi Arabia is set to ship significantly lower crude oil volumes to China next month to levels not seen in over a year, Reuters reported on Thursday, quoting trade and industry sources.\nSpring maintenance at some large state-controlled refineries in the world\u2019s top crude oil importer is the key reason for the low volumes that Saudi Arabia has allocated for April.\nThese amount to about 34 million barrels, down from 41 million barrels allocated for March, according to Reuters data.\nState giant China Petroleum and Chemical Corporation, or Sinopec, is planning to shut down for about two months the crude processing capacities at several refineries. These temporary closures from the middle of March to the end of May would affect about 700,000 barrels per day (bpd) of crude processing capacity, per data compiled by Reuters from trade and industry sources.\nThe decline in Saudi shipments to China next month comes despite OPEC+ preparing to raise production by 138,000 bpd from April and Saudi Arabia reducing its official selling prices (OSPs) for crude oil to Asian buyers next month.\nChinese maintenance and reshuffled crude flows for Russian oil after the initial shock from the U.S. sanctions suggest that the call on Saudi crude for April may not be as high as in the previous two months, when uncertainties over the cheaper Russian supply were high.\nA massive reshuffle of tankers allows non-sanctioned vessels to pick up trade with Russian and Iranian oil, which will result in a rebound in China\u2019s imports of cheaper crude from the two producers in March, from a two-year low in February, analysts and traders told Reuters at the end of last month.\nThe sanctions on Russia, as well as the tightening sanctions on Iran\u2019s shadow fleet, have prompted a run on non-sanctioned vessels, with daily rates doubling and even tripling over the past month.\nThese rate hikes have attracted operators of non-sanctioned tankers to enter the trade with Russian and Iranian oil amid handsome profits being made.\nBy Charles Kennedy for Oilprice.com\nMore Top Reads From Oilprice.com\n- Baker Hughes Dashes Hopes That Oil Producers Will Increase 2025 Spending\n- China\u2019s Oil Imports Could Rise as Newest Refinery Begins Trial Runs\n- Indian Refiner BPCL Seeks to Buy U.S. WTI Oil in Four Consecutive Months\nOpen57.81\nTrading Vol.6.96M\nPrevious Vol.241.7B",
+  "full_json": {
+    "url": "https://oilprice.com/Latest-Energy-News/World-News/Saudi-Crude-Supply-to-China-Set-for-One-Year-Low-in-April.html",
+    "domain": "oilprice.com",
+    "source_country": "United States",
+    "language": "English",
+    "gdelt_seendate": "20250313T163000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

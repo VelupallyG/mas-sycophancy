@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_e3b6abffea0b",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / oilprice.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-03-07",
+  "title": "Trade War Uncertainty Keeps Oil Traders on Edge",
+  "text_content": "Trade War Uncertainty Keeps Oil Traders on Edge\n\nCrude oil prices remain under pressure, struggling to gain upside traction as bearish fundamentals dominate sentiment. A combination of OPEC+ supply hikes, trade war escalations, and weak demand indicators has kept oil bulls at bay, reinforcing a bearish outlook for the market. While a short-term technical rebound was observed, the broader downtrend remains intact.\nOPEC+ Production Hike Adds to Bearish Sentiment\nOPEC+ surprised the market with its decision to raise production quotas for the first time since 2022, adding 138,000 barrels per day (bpd) to supply starting in April. While the increase is relatively small, traders are wary that this could be the first step toward unwinding the group\u2019s larger production cuts. Analysts caution that OPEC+ may further loosen supply discipline if demand conditions deteriorate, potentially intensifying the supply glut.\nThe market had largely expected OPEC+ to maintain its output curbs, making this production decision a key bearish catalyst. Some analysts believe political motivations may be at play, with former U.S. President Donald Trump reportedly favoring lower oil prices. This shift in OPEC+ strategy has forced traders to reassess supply expectations, adding to volatility in crude markets.\nU.S. Tariffs and Retaliatory Measures Threaten Demand Growth\nNew U.S. tariffs on Canadian and Mexican crude oil imports have injected further uncertainty into the market, exacerbating fears of weaker demand. The U.S.\u2026\nCrude oil prices remain under pressure, struggling to gain upside traction as bearish fundamentals dominate sentiment. A combination of OPEC+ supply hikes, trade war escalations, and weak demand indicators has kept oil bulls at bay, reinforcing a bearish outlook for the market. While a short-term technical rebound was observed, the broader downtrend remains intact.\nOPEC+ Production Hike Adds to Bearish Sentiment\nOPEC+ surprised the market with its decision to raise production quotas for the first time since 2022, adding 138,000 barrels per day (bpd) to supply starting in April. While the increase is relatively small, traders are wary that this could be the first step toward unwinding the group\u2019s larger production cuts. Analysts caution that OPEC+ may further loosen supply discipline if demand conditions deteriorate, potentially intensifying the supply glut.\nThe market had largely expected OPEC+ to maintain its output curbs, making this production decision a key bearish catalyst. Some analysts believe political motivations may be at play, with former U.S. President Donald Trump reportedly favoring lower oil prices. This shift in OPEC+ strategy has forced traders to reassess supply expectations, adding to volatility in crude markets.\nU.S. Tariffs and Retaliatory Measures Threaten Demand Growth\nNew U.S. tariffs on Canadian and Mexican crude oil imports have injected further uncertainty into the market, exacerbating fears of weaker demand. The U.S. imposed a 10% duty on Canadian energy exports, with reports s...",
+  "full_json": {
+    "url": "https://oilprice.com/Energy/Energy-General/Trade-War-Uncertainty-Keeps-Oil-Traders-on-Edge.html",
+    "domain": "oilprice.com",
+    "source_country": "United States",
+    "language": "English",
+    "gdelt_seendate": "20250307T151500Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

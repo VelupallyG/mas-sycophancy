@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_66380e1a3c0f",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / economictimes.indiatimes.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-02-14",
+  "title": "Latest US sanctions on Russia throw global oil trade into disarray , India scrambles",
+  "text_content": "Latest US sanctions on Russia throw global oil trade into disarray , India scrambles\n\nWashington's January 10 sanctions targeted tankers carrying Russian oil in a push to more effectively limit Moscow's oil revenue, the aim of western sanctions imposed after its invasion of Ukraine three years ago.\nThe new rules have left millions of barrels floating on ships and sent traders hunting for alternatives, while dealings in Russian crude, the biggest source for top global importers China and India, have slowed for March.\nThe scramble has upended market dynamics. For a few weeks, high-sulphur benchmark Dubai became more expensive than low-sulphur Brent, which is easier to process. That opened opportunities for producers from Brazil to Kazakhstan to gain share in China and India.\nPremiums for Brazilian crude surged last month to about $5 a barrel against dated Brent on cost and freight basis to China, up from about $2 in the previous month, traders said. That premium is now just below $5 a barrel for May arrival cargoes.\nIn March, China is set to import its first cargo since June 2024 of Kazakhstan's CPC Blend, Kpler data showed.\nIn the week after the new sanctions, TotalEnergies' trading arm TOTSA received so many enquiries that it held tenders instead of private negotiations to sell its Middle Eastern crude cargoes, which eventually went to China's CNOOC and Rongsheng Petrochemical, a Singapore-based trader said.\nTotalEnergies did not immediately respond to a request for comment.\nReflecting the rush for Middle Eastern crudes, premiums for benchmarks Oman, Dubai and Murban more than doubled in January from December and remain above $3 a barrel to Dubai, despite lower demand from refineries in seasonal maintenance.\nIn addition, top exporter Saudi Aramco hiked prices for Asia-bound crude to the highest since December 2023, raising costs for refiners.\nA seller of Angolan crude said there was an increase in demand from Asian buyers looking to cover.\n\"Unipec is taking a lot West African crude cargoes, especially Angolan barrels - good buying interest after the Lunar New Year,\" a Chinese trader said. Unipec is the trading arm of Asia's largest refiner Sinopec. Sinopec did not immediately respond to a request for comment.\nWith sanctioned ships stuck on the water, many traders have rushed to switch to other vessels which now cost multiple times more, adding millions of dollars to the expense of each shipment.\nINDIA SCRAMBLES\nThe rising costs are particularly tough for refiners in India. The country late last year cemented its shift from long-standing Middle Eastern sources to buy more oil from Russia, when Reliance Industries struck a 10-year supply deal with Russian state giant Rosneft worth roughly $13 billion annually.\nThis week, India's oil secretary said the country's refiners want to buy only Russian oil supplied by companies and ships not sanctioned by the U.S. That has effectively reduced the number of cargoes and vessels available, Indian refining sources said.\nWith a limited supply of sanctions-proof cargoes, discounts for Russian Ura...",
+  "full_json": {
+    "url": "https://economictimes.indiatimes.com/industry/energy/oil-gas/latest-us-sanctions-on-russia-throw-global-oil-trade-into-disarray-india-scrambles/articleshow/118242065.cms",
+    "domain": "economictimes.indiatimes.com",
+    "source_country": "India",
+    "language": "English",
+    "gdelt_seendate": "20250214T093000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

@@ -18,12 +18,13 @@ def _env_bool(name: str, default: bool = False) -> bool:
 class Condition(str, Enum):
     FLAT_BASELINE = "flat_baseline"
     FLAT_HALLUCINATION = "flat_hallucination"
+    HIERARCHICAL_BASELINE = "hierarchical_baseline"
     HIERARCHICAL_HALLUCINATION = "hierarchical_hallucination"
 
 
 class SeedDocument(str, Enum):
     FINANCE_EARNINGS = "finance_earnings_alphabet_ai_capex_2026_v1"
-    GEOPOLITICS_SANCTIONS = "geopolitics_sanctions_oil_supplyshock_2025_v1"
+    GEOPOLITICS_SANCTIONS = "iran_oil_sanctions_tightening_march_2025"
 
 
 @dataclasses.dataclass
@@ -31,7 +32,7 @@ class ExperimentConfig:
     condition: Condition
     seed_doc: SeedDocument
     n_trials: int = 30
-    n_turns: int = 10
+    n_turns: int = 5
     random_seed: int = 42
     model_id: str = dataclasses.field(
         default_factory=lambda: os.getenv("GEMINI_MODEL_ID", "gemini-2.5-flash")
@@ -72,6 +73,13 @@ class ExperimentConfig:
     local_evidence_limit: int = dataclasses.field(
         default_factory=lambda: int(os.getenv("LOCAL_EVIDENCE_LIMIT", "5"))
     )
+    # File-based evidence (no Postgres required)
+    enable_file_evidence: bool = dataclasses.field(
+        default_factory=lambda: _env_bool("ENABLE_FILE_EVIDENCE", False)
+    )
+    evidence_docs_per_agent: int = 5
+    evidence_drip_turns: tuple[int, ...] = (3, 5, 7)
+    evidence_drip_docs_per_turn: int = 2
 
     def trial_output_dir(self, trial_id: int, rerun_id: int | None = None) -> Path:
         path = (

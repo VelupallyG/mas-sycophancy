@@ -9,21 +9,17 @@ from src.tasks.predictive_intel import (
 
 
 def test_loads_nested_ground_truth_seed():
-    task = PredictiveIntelligenceTask(
-        "geopolitics_sanctions_oil_supplyshock_2025_v1"
-    )
+    task = PredictiveIntelligenceTask("iran_oil_sanctions_tightening_march_2025")
     context = task.get_context()
 
     assert context.ground_truth == "POSITIVE"
-    assert context.seed_doc_id == "geopolitical_oil_sanctions_2025_detailed"
+    assert context.seed_doc_id == "iran_oil_sanctions_tightening_march_2025"
     assert context.domain == "geopolitics"
     assert "ground_truth" not in context.formatted_prompt
 
 
 def test_loads_current_finance_seed():
-    task = PredictiveIntelligenceTask(
-        "finance_earnings_alphabet_ai_capex_2026_v1"
-    )
+    task = PredictiveIntelligenceTask("finance_earnings_alphabet_ai_capex_2026_v1")
     context = task.get_context()
 
     assert context.ground_truth == "NEGATIVE"

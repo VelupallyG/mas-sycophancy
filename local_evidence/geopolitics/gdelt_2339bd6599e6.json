@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_2339bd6599e6",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / taipeitimes.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-03-14",
+  "title": "G7 draft focuses on geopolitical issues worldwide",
+  "text_content": "G7 draft focuses on geopolitical issues worldwide\n\n-\nG7 draft focuses on geopolitical issues worldwide\nSTATEMENT: The draft states G7 opposition to any unilateral attempts to change the status quo across the Taiwan Strait by force or coercion\nDiplomats from the G7 nations yesterday reached a deal on a joint statement aimed at showing unity after weeks of tension between US allies and President Donald Trump over his upending of Western trade, security and Ukraine-related policy, three G7 officials said.\nThe statement, an all-encompassing document touching on geopolitical issues from across the world, still needed to get the green light from ministers before they wrapped up talks yesterday morning, the diplomats said.\nThe draft states G7 opposition to any unilateral attempts to change the status quo across the Taiwan Strait by force or coercion.\nCanadian Minister of Foreign Affairs Melanie Joly talks to the press in closing remarks at the G7 Foreign Ministers\u2019 Meeting at the Fairmont Manoir Richelieu in La Malbaie, Canada, yesterday.\nPhoto: AFP\n\u201cI think we\u2019re on track to have a strong statement. I\u2019m confident that can be the case. It is normal in a G7 that there are negotiations until late in the night, and actually, I think ... political directors were really happy, because they went to bed earlier,\u201d Canadian Minister of Foreign Affairs Melanie Joly told reporters.\nThe G7 ministers from Britain, Canada, France, Germany, Italy, Japan and the US, along with the EU, convened in the remote tourist town of La Malbaie, nestled in the Quebec hills, for meetings on Thursday and yesterday that in the past have been broadly consensual.\nHowever, in the run-up to the first G7 meeting of Canada\u2019s presidency, the crafting of an agreed final statement had been difficult with wrangling over the language regarding Ukraine, the Middle East and Washington\u2019s desire for tougher wording on China.\nG7 officials said that it was imperative to show Western unity, especially in light of efforts to get a ceasefire between Ukraine and Russia.\nIn the final draft, they removed a promise of security guarantees to ensure a truce, referring to \u201cassurances,\u201d but did warn Moscow to follow Kyiv in agreeing to a ceasefire or face further sanctions, including oil price caps.\n\u201cG7 members called for Russia to reciprocate by agreeing to a ceasefire on equal terms and implementing it fully,\u201d the draft says.\n\u201cThey emphasized that any ceasefire must be respected, and underscored the need for robust and credible security arrangements to ensure that Ukraine can deter and defend against any renewed acts of aggression,\u201d the diplomats said in a reference to Ukraine\u2019s territorial integrity.\nWashington had sought to impose red lines on language around Ukraine to not harm its talks with Russia and opposed a separate declaration on curbing Moscow\u2019s so-called shadow fleet, a murky shipping network that eludes sanctions, while demanding more robust language on China.\nThere had also been wrangling over language regarding Gaza and the Middle East, notabl...",
+  "full_json": {
+    "url": "https://www.taipeitimes.com/News/front/archives/2025/03/15/2003833459",
+    "domain": "taipeitimes.com",
+    "source_country": "Taiwan",
+    "language": "English",
+    "gdelt_seendate": "20250314T180000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

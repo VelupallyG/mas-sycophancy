@@ -1,0 +1,14 @@
+{
+  "id": "context_iran_oil_exports_baseline",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "research_note",
+  "source_name": "Compiled from public sources (Reuters, EIA, Kpler)",
+  "entity": "Iran Crude Oil Exports",
+  "ticker": null,
+  "document_date": "2025-03-15",
+  "title": "Iran Crude Oil Export Volumes and Destinations (Pre-March 2025 Baseline)",
+  "text_content": "Iran Crude Oil Export Volumes and Destinations \u2014 Pre-March 2025 Baseline\n\nIran exported approximately 1.5 to 1.8 million barrels per day (bpd) of crude oil in early 2025, according to tanker tracking estimates from Kpler and Vortexa. This represents a significant recovery from the lows of approximately 0.3-0.5 million bpd reached during the first Trump administration's maximum pressure campaign in 2019-2020.\n\nChina is by far the largest buyer of Iranian crude, accounting for an estimated 80-90% of total Iranian oil exports. Most Iranian crude entering China flows through independent refineries, commonly known as \"teapot refineries,\" concentrated in Shandong province. These refineries purchase Iranian crude at significant discounts (typically $3-5/barrel below Brent) and process it for domestic fuel markets.\n\nIran's oil exports rely on several mechanisms to evade sanctions:\n- Ship-to-ship (STS) transfers at sea to obscure origin\n- Use of \"dark fleet\" or \"shadow fleet\" tankers that turn off AIS tracking\n- Fraudulent documentation listing origin as Oman, Malaysia, or UAE\n- Complex ownership structures involving shell companies\n- Use of non-Western insurance and financial intermediaries\n\nIran's oil revenue is critical to its fiscal budget. At current export levels and prices (~$70/barrel Brent equivalent with discounts), Iran earns roughly $25-30 billion annually from crude exports.\n\nKey vulnerability: If sanctions effectively cut off Chinese teapot refineries from Iranian crude, there are few alternative large-scale buyers willing to accept the sanctions risk. India largely stopped importing Iranian crude after 2019 sanctions waivers expired.",
+  "full_json": {
+    "notes": "Compiled from publicly available tanker tracking data and news reports pre-dating March 20, 2025. Figures are estimates based on Kpler/Vortexa tracking."
+  }
+}

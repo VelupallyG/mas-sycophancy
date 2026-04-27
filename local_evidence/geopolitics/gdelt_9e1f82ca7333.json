@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_9e1f82ca7333",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / kyivpost.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2024-12-27",
+  "title": "How Poland Trade with Russia Undermines EU Sanctions and Support for Ukraine",
+  "text_content": "How Poland Trade with Russia Undermines EU Sanctions and Support for Ukraine\n\nEditor\u2019s note: This is the latest in Kyiv Post\u2019s Sanctions Busting series, a look into how Russia evades sanctions to wage its war against Ukraine.\nEuropean and American allies have imposed tens of thousands of economic sanctions against Russia since the Kremlin launched the full-scale invasion of Ukraine in 2022, aiming to slowly strangle the Kremlin into retreating. Yet leaders in key business sectors across the EU and the US have continued to find ways to bypass restrictions aimed at curbing Russia\u2019s ability to fund the war through international trade and national growth, allowing the invasion to drag on as casualties mount.\nJOIN US ON TELEGRAM\nFollow our coverage of the war on the @Kyivpost_official.\nWhile some countries have successfully adapted their trade networks to replace Russian vendors with sellers from non-sanctioned states \u2013 others have simply rerouted their trade with Russia through third parties. Although Poland has been one of Ukraine\u2019s staunchest allies since Russia launched its full-scale invasion in 2022, critics have recently called out some Polish firms for increasingly circumventing international sanctions aimed at crippling Russia\u2019s economy.\nZelensky Visits Azerbaijan for Security, Energy Talks\nPolish officials have struggled to rein in companies that are suspected of sanctions-busting, according to economic watchdog reports, highlighting the enforcement challenges faced by Poland\u2019s National Revenue Administration. The trend raises questions about Poland\u2019s commitment to the sanctions regime and its implications for European security.\nSanctions and their shortcomings in Europe\nRussia\u2019s full-scale invasion of Ukraine has been heavily financed through revenues generated from exports in three key sectors: oil, gas, and iron ore and steel. In 2023, these industries alone contributed billions to Russia\u2019s federal budget and accounted for over 40% of total revenue, according to Reuters. The profits enable Russia to sustain its defense spending, which came to about \u20ac110 billion last year.\nRussian steel exports to EU countries amounted to \u20ac2.4 billion in 2023 alone, for example, with companies owned by Russian oligarchs \u2013 like NLMK Group and Evraz Group \u2013 earning the most profit. Semi-finished metal products, like slabs and pig iron, are subject to less stringent sanctions than finished goods, so these Russian companies can bypass sanctions and continue profiting from their operations in the EU by changing the form of their steel output, according to the Ukrainian think tank GMK Center.\nFormer Polish Prime Minister Mateusz Morawiecki acknowledged that the international sanctions imposed on Russia are not having the desired effect in an interview last year with the Polish news site Interia. \u201cWhat catches the eye: Russia this year and next will develop faster than Germany. And this is despite the sanctions,\u201d he said.\nMorawiecki explained that the ineffectiveness of these sanctions could be blamed on the global economy and trade partne...",
+  "full_json": {
+    "url": "https://www.kyivpost.com/post/44502",
+    "domain": "kyivpost.com",
+    "source_country": "Ukraine",
+    "language": "English",
+    "gdelt_seendate": "20241227T140000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

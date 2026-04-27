@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_c3d22fb13e53",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / oilprice.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-02-19",
+  "title": "G7 Seeks to Disrupt Russian Exports With Tighter Oil Price Cap",
+  "text_content": "G7 Seeks to Disrupt Russian Exports With Tighter Oil Price Cap\n\nThe Group of Seven is looking to send a big anti-Russia message on Feb. 24, the three-year anniversary of Putin's invasion of Ukraine, with a potential tightening of an oil price cap intended to further hurt revenue for Russia's war machine.\nBloomberg has revealed a G7 draft statement Tuesday calling for member nations to collectively redraw the price limit, which is currently set at $60 a barrel for crude oil. The document spells out pressure for Russia to \"incentivize it to negotiate a meaningful peace\" in Ukraine; however, it's anything but clear whether this is being called for in cooperation with Trump officials, who are engaged in direct talks with Moscow.\nThe draft at one point references \"troops and resources on the ground, coupled with robust international oversight to monitor agreed-upon lines,\" Bloomberg writes.\nBut based on the wording, it does seem a last-ditch parallel effort to jump-start a peace arrangement with Moscow, as European nations in particular seek a 'seat at the table' - given both Zelensky and EU officials were completely cut out of Tuesday's meetings with Russian representatives in Saudi Arabia.\nAccording to more of the content:\nThe draft indicates the allies would \u201crecognize\u201d Ukrainian President Volodymyr Zelenskiy\u2019s \u201creadiness to engage in talks to end the war,\u201d while warning that Russian President Vladimir Putin\u2019s terms for peace \u201chave so far amounted to Ukraine\u2019s complete capitulation.\u201d The draft shows the allies are planning to meet with Zelenskiy on Feb. 24.\nAllies will call, according to the draft, for a \u201ccommon sense peace that is fair, a peace that lasts,\u201d which would entail \u201ca durable security guarantee.\u201d\nThe initial oil price cap by the Western allies, first implemented in December 2022, proved too easy for Russia to work around, as India and China have remained the biggest buyers of Russian crude, and have proven not so compliant.\nThe outgoing Biden administration in December then sought to ratchet sanctions on Russian oil, including sanctions on Surgutneftgas and Gazprom Neft, two Russian oil firms which together account for 25% of exports. Middlemen who supply Russian oil have also been targeted.\nThis new planned G7 initiative would aim to severely disrupt Russian oil exports to India and China, and if successful could give Trump's team more leverage in negotiations with Moscow. But Bloomberg also notes:\nThe allies will maintain their line that any negotiation to end the war \u201cmust involve Ukraine\u2019s full participation,\u201d and leave it open to pursuing Euro-Atlantic integration.\nIt\u2019s hard to be sure what tightening or adapting the cap would look like in practice. While a lower price could be one option, another could be to try to bolster enforcement of the current measure.\nDuring a late Tuesday afternoon press Q&A from Mar-a-Lago, Trump blasted critics of his peace plan, saying \"I hear they're upset about not having a seat. Well, they've had a seat for three years.\" This was in response to Ukrainians feeling...",
+  "full_json": {
+    "url": "https://oilprice.com/Energy/Crude-Oil/G7-Seeks-to-Disrupt-Russian-Exports-With-Tighter-Oil-Price-Cap.html",
+    "domain": "oilprice.com",
+    "source_country": "United States",
+    "language": "English",
+    "gdelt_seendate": "20250219T183000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

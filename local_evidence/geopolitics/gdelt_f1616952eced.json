@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_f1616952eced",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / foreignpolicy.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-01-21",
+  "title": "Trump First 100 Days",
+  "text_content": "Trump First 100 Days\n\n-\nGifting articles is a subscriber benefit.\nALREADY AN FP SUBSCRIBER? LOGIN\n-\nThis article is an Insider exclusive.\nContact us at [email protected] to learn about upgrade options, unlocking the ability to gift this article.\nTrump\u2019s Foreign-Policy Shifts\n-\nGifting articles is a subscriber benefit.\nALREADY AN FP SUBSCRIBER? LOGIN\n-\nThis article is an Insider exclusive.\nContact us at [email protected] to learn about upgrade options, unlocking the ability to gift this article.\nWashington\u2019s One-Dimensional Chess in the Horn of Africa\nNews this week that the Trump administration has been in secret talks with the Eritrean government to remove existing U.S. sanctions on the country is, on its surface, a head-scratcher. The removal of sanctions would normally signal the end of a path of marked reforms, such as when U.S. President Donald Trump lifted terrorism sanctions on Sudan in 2020, or acknowledge a wholescale change of regime necessitating a fresh start, as was the case in Syria last year. Eritrea has achieved neither of these benchmarks.\nIn fact, the internal political and human rights situation in the country remains much as it has been since President Isaias Afwerki came to power in 1993. In his more than 30 years at the head of this militarized dictatorship, Isaias has never stood for election and continues to wield absolute power absent a constitution. The national legislature has not met since 2010, and Isaias\u2019s People\u2019s Front for Democracy and Justice remains the only legally allowed political party, guaranteeing no formal checks on his unlimited power.\nIsaias himself maintains what Human Rights Watch calls an \u201ciron grip\u201d over his people. Forced military conscription, coupled with a gulag system of thousands of political prisoners, has meant that as much as 1-2 percent of Eritrea\u2019s 3.5 million people exit the country each year seeking formal asylum abroad, though even these figures underreport the true scale of the exodus. Perhaps most inexplicable, Eritrea remains one of the worst countries in the world for religious freedom and the persecution of Christians in particular, ranking fifth worst in Open Doors\u2019 most recent World Watch List, with an outright ban on evangelical, Pentecostal, Baptist, and Adventist churches.\nSince there has been no change in the fundamental nature of the Eritrean regime, one might normally imagine that a decision to provide sanctions relief comes because the justification for imposing the sanctions\u2014Eritrea\u2019s involvement and gross human rights abuses in the 2020-22 Tigray conflict in neighboring Ethiopia\u2014has been addressed. But this could not be further from the truth. Four years post-conflict, Ethiopia and Eritrea are on the verge of a new catastrophic outbreak of violence. Eritrea was itself never a party to the 2022 Pretoria Agreement that ended the conflict between the Ethiopian federal government and the Tigray region. That war cost more than 600,000 lives by some estimates. Not bound by the terms of the peace d...",
+  "full_json": {
+    "url": "https://foreignpolicy.com/projects/trump-presidency-personnel-cabinet-policy-issues/",
+    "domain": "foreignpolicy.com",
+    "source_country": "United States",
+    "language": "English",
+    "gdelt_seendate": "20250121T193000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

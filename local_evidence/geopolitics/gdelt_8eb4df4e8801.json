@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_8eb4df4e8801",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / mondaq.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-02-07",
+  "title": "Sanctions Update : February 3 , 2025",
+  "text_content": "Sanctions Update : February 3 , 2025\n\n- in United States\n- with readers working within the Technology industries\n- within Criminal Law topic(s)\nThe Sanctions Update, compiled by attorneys from Steptoe's award-winning International Regulatory Compliance team and the Stepwise: Risk Outlook editorial team, publishes every Monday. Guided by the expertise of Steptoe's industry-leading ITRC team, the Sanctions Update compiles and contextualizes weekly developments in international regulatory enforcement and compliance, as well as offers insights on geopolitical context, business impacts, and forthcoming risks.\nFor more detailed analysis on related issues, see Steptoe's International Compliance Blog. For information on industry-specific monitoring or bespoke services, please contact the team here.\nThe Lede: EU Proposes Russia Sanctions Including Aluminum on Third Anniversary of Invasion\nThe European Commission proposed a new package of sanctions against Russia including a ban on Russian primary aluminum imports, measures to crack down on circumvention of the G7's Russian oil price cap, and a restriction of sales of video game consoles to Russia. The proposed package, which has not yet been finalized, is to take effect on the third anniversary of Russia's further invasion of Ukraine, would include aluminum alloys and have a one-year phase-in period, the proposal said, with \"necessary\" imports of 275,000 metric tons exempt for this period. The proposal also adds 50 new entities and individuals, reportedly including some Russian banks, and about 75 ships, mainly energy tankers.\nThe ban, like other sanctions on Russia, is intended to limit Russia's ability to fund its war on Ukraine. Aluminum exports to the EU garnered Russia an estimated \u20ac2.3 billion in 2022, although that number has declined. The EU relies on Russia, the world's second-largest aluminum producer after China, for some 6-9% of its aluminum imports. Aluminum had been a potentiall target for EU sanctions for months, with European aluminum producers pressing the bloc last February to restrict the cheap imports. EU diplomats initially resisted a full ban over concerns that it would face pushback from industrial nations, like Italy, for driving up prices. FACE, an EU group of industrial consumers, called the restriction \"a kind of economic tactical nuclear bomb\" last year.\nThe console restriction \u2013 which also includes entertainment tools like flight simulators and joysticks \u2013 is due to the fact that they could be used as controllers for drones. Last week, the EU's foreign policy chief told media that Russia was \"really being creative\" in finding alternative military equipment.\nNotably, the sanctions package will exclude limits on Russian LNG, which some member states had called for. The EU has spent the last three years trying to limit its dependence on Russian energy, but LNG has been hard to kick: while Russia has ceded its place as the first-largest supplier of the EU's LNG to Norway, Russian exports to the EU grew 21% year over y...",
+  "full_json": {
+    "url": "https://www.mondaq.com:443/unitedstates/export-controls-trade-investment-sanctions/1580816/sanctions-update-february-3-2025",
+    "domain": "mondaq.com",
+    "source_country": "United States",
+    "language": "English",
+    "gdelt_seendate": "20250207T160000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

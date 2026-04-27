@@ -1,0 +1,66 @@
+{
+  "id": "eia_71fa6ada2add",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "market_data",
+  "source_name": "U.S. Energy Information Administration (EIA)",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-02",
+  "title": "OECD Commercial Oil Inventory (2025-02 to 2025-02)",
+  "text_content": "OECD Commercial Oil Inventory \u2014 OECD commercial petroleum inventory levels\nPeriod: 2025-02 to 2025-02\nData:\n  2025-02: 1182.46428571428571428571428571428571429\n  2025-02: 3458.10714285714285714285714285714285714",
+  "full_json": {
+    "eia_route": "international/data",
+    "frequency": "monthly",
+    "raw_data": [
+      {
+        "period": "2025-02",
+        "productId": "54",
+        "productName": "Refined petroleum products",
+        "activityId": "2",
+        "activityName": "Consumption",
+        "countryRegionId": "ISR",
+        "countryRegionName": "Israel",
+        "countryRegionTypeId": "c",
+        "countryRegionTypeName": "Country",
+        "dataFlagId": "6",
+        "dataFlagDescription": "A value exists, but cannot be published",
+        "unitName": "thousand barrels per day",
+        "value": "w",
+        "unit": "TBPD"
+      },
+      {
+        "period": "2025-02",
+        "productId": "54",
+        "productName": "Refined petroleum products",
+        "activityId": "2",
+        "activityName": "Consumption",
+        "countryRegionId": "ITA",
+        "countryRegionName": "Italy",
+        "countryRegionTypeId": "c",
+        "countryRegionTypeName": "Country",
+        "dataFlagId": null,
+        "dataFlagDescription": null,
+        "unitName": "thousand barrels per day",
+        "value": "1182.46428571428571428571428571428571429",
+        "unit": "TBPD"
+      },
+      {
+        "period": "2025-02",
+        "productId": "54",
+        "productName": "Refined petroleum products",
+        "activityId": "2",
+        "activityName": "Consumption",
+        "countryRegionId": "JPN",
+        "countryRegionName": "Japan",
+        "countryRegionTypeId": "c",
+        "countryRegionTypeName": "Country",
+        "dataFlagId": null,
+        "dataFlagDescription": null,
+        "unitName": "thousand barrels per day",
+        "value": "3458.10714285714285714285714285714285714",
+        "unit": "TBPD"
+      }
+    ],
+    "notes": "Auto-collected from EIA Open Data API v2."
+  }
+}

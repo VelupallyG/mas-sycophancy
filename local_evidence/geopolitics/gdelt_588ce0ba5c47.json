@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_588ce0ba5c47",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / zerohedge.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-02-19",
+  "title": "G7 Weighing Tightening Russian Oil Price Cap At War 3 - Year Mark",
+  "text_content": "G7 Weighing Tightening Russian Oil Price Cap At War 3 - Year Mark\n\nHome\nJoin Premium\nContributors\nChannels\nAll\nPartners\nThe Market Ear\nSpotGamma\nStore\nDonate\nMore\nRSS\nAbout\nAdvertise\nDebates",
+  "full_json": {
+    "url": "https://www.zerohedge.com/commodities/g7-weighing-tightening-russian-oil-price-cap-wars-3-year-mark",
+    "domain": "zerohedge.com",
+    "source_country": "United States",
+    "language": "English",
+    "gdelt_seendate": "20250219T084500Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

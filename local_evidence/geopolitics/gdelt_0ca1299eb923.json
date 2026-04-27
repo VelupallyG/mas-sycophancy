@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_0ca1299eb923",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / csmonitor.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-02-12",
+  "title": "What is Russia  shadow fleet , and why does it worry Europe ? ",
+  "text_content": "What is Russia  shadow fleet , and why does it worry Europe ? \n\nWhat is Russia\u2019s \u2018shadow fleet,\u2019 and why does it worry Europe?\nLoading...\n| Basel, Switzerland\nThe phrase \u201cRussian shadow fleet\u201d conjures images of stealthy, high-tech ships cruising Western shorelines undetected.\nThe reality is decidedly less cinematic.\nThe vessels in question are not modern, but rather are primarily aging fuel tankers. Many are not even Russian ships. But they are still raising alarms across Europe.\nWhy We Wrote This\nRussia has deployed a \u201cshadow fleet\u201d of oil tankers that is worrying European nations. It\u2019s not just about sanctions, which the vessels circumvent: They also pose environmental and navigational risks, particularly in the Baltic Sea.\nRussia has adapted to Western measures to limit its economic and military capacities to wage war on Ukraine, by buying ships, rerouting oil exports from Europe to Asia, and building new markets in Africa and Latin America.\nThe fleet has become the linchpin of Russia\u2019s oil exports \u2013 with some estimates suggesting that its run-down vessels ship over 80% of Russia\u2019s seaborne crude oil exports. And its efforts to avoid Western sanction enforcement are raising environmental and navigational risks in crowded seaways.\nMoreover, the shadow vessels are linked to a series of suspected sabotage incidents damaging energy and communication infrastructure in the Baltic Sea.\nRussia\u2019s non-Russian fleet\nThere is no universally agreed-on definition of the shadow fleet, which is also known as the dark fleet or gray fleet. Other countries under sanctions \u2013 Iran, North Korea, and Venezuela \u2013 have previously employed clandestine shipping networks to circumvent international scrutiny and sanctions.\nRussia\u2019s use of the shadow fleet is of a different magnitude since the onset of Western sanctions, however. Many experts use the term to refer to vessels that are owned, managed, or insured by entities outside the sanctions coalition \u2013 and, thus, do not fall under the oil price cap.\nThe typical Russian shadow tanker is owned by a special purpose vehicle, for instance in the Marshall Islands; sails under a flag of convenience such as that of Panama or Liberia; and is managed by a company based in the United Arab Emirates.\nAnd despite the fleet\u2019s name, most of these tankers have no overt connection to Russia, says Benjamin Hilgenstock, head of macroeconomic research and strategy at the Kyiv School of Economics. \u201cThere is little explicitly Russian about the vessels except the oil on them.\u201d\nMr. Hilgenstock says about 650 shadow tankers have carried Russian oil since the start of the war in Ukraine, with about 200 leaving Russian ports every month. He estimates that in 2024 alone, their transport of crude oil alone generated around $10 billion in extra earnings for Russia.\n\u201cAs long as there are buyers of Russian crude oil, they will, of course, sell it, and that will result in revenue for the Russian war machine,\u201d says Mariliis Sepp of the sanctions and strategic export control department of the Estonian Ministry of For...",
+  "full_json": {
+    "url": "https://www.csmonitor.com/World/Europe/2025/0212/russia-shadow-fleet-oil-sanctions",
+    "domain": "csmonitor.com",
+    "source_country": "United States",
+    "language": "English",
+    "gdelt_seendate": "20250212T221500Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

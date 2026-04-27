@@ -118,26 +118,43 @@ def run(data_dir: Path) -> pd.DataFrame:
 
     summary_df = pd.DataFrame(rows)
 
-    # Compute Δ² for each seed_doc.
+    # Compute Δ² for each seed_doc (comparing flat baseline vs hierarchical hallucination).
+    # Also compare hierarchical baseline vs hierarchical hallucination to isolate
+    # the hallucination effect from the topology effect.
     for seed_doc in df["seed_doc"].unique():
         baseline = summary_df[
             (summary_df["seed_doc"] == seed_doc)
             & (summary_df["condition"] == "flat_baseline")
         ]
-        hierarchical = summary_df[
+        hier_halluc = summary_df[
             (summary_df["seed_doc"] == seed_doc)
             & (summary_df["condition"] == "hierarchical_hallucination")
         ]
-        if not baseline.empty and not hierarchical.empty:
+        hier_baseline = summary_df[
+            (summary_df["seed_doc"] == seed_doc)
+            & (summary_df["condition"] == "hierarchical_baseline")
+        ]
+        if not baseline.empty and not hier_halluc.empty:
             a0 = baseline.iloc[0]["mean_accuracy"]
-            ai = hierarchical.iloc[0]["mean_accuracy"]
+            ai = hier_halluc.iloc[0]["mean_accuracy"]
             delta = compute_delta_squared(a0, ai)
             logger.info(
-                "Δ² for %s: A₀=%.3f, Aᵢ=%.3f, Δ²=%.3f",
+                "Δ² (flat_baseline vs hier_halluc) for %s: A₀=%.3f, Aᵢ=%.3f, Δ²=%.3f",
                 seed_doc,
                 a0,
                 ai,
                 delta,
+            )
+        if not hier_baseline.empty and not hier_halluc.empty:
+            a0_hier = hier_baseline.iloc[0]["mean_accuracy"]
+            ai_hier = hier_halluc.iloc[0]["mean_accuracy"]
+            delta_hier = compute_delta_squared(a0_hier, ai_hier)
+            logger.info(
+                "Δ² (hier_baseline vs hier_halluc) for %s: A₀=%.3f, Aᵢ=%.3f, Δ²=%.3f",
+                seed_doc,
+                a0_hier,
+                ai_hier,
+                delta_hier,
             )
 
     return summary_df

@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_7d695ae19d56",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / baystreet.ca",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-03-05",
+  "title": "Baystreet . ca - Why Analysts Think Oil Prices Will Remain Subdued",
+  "text_content": "Baystreet . ca - Why Analysts Think Oil Prices Will Remain Subdued\n\nWhy Analysts Think Oil Prices Will Remain Subdued\nOil prices will likely remain around current levels or even lower this year, analysts and economists in the monthly Reuters poll said last week.\nSufficient oil supply and spare capacity within the OPEC+ group will be enough to keep prices in the low $70s per barrel, the experts said.\nSupply shocks would be balanced out with the 5 million barrels per day (bpd) of spare capacity that OPEC+ currently has, mostly within the Middle Eastern producers in OPEC.\nMajor trade and geopolitical developments since last week are likely to put additional downward pressure on oil prices\u2014the tariffs on Canada and Mexico and the higher tariff on Chinese imports into the U.S., and the possibility of some eased sanctions on Russia.\nThe four dozen analysts participating in the Reuters poll last week saw Brent Crude prices averaging $74.63 per barrel in 2025, slightly higher compared to the forecast of $74.57 in January. For WTI Crude, analysts expect an average 2025 price of $70.66 per barrel, up from $70.40 in January.\nAt the time the survey was carried out, oil prices were more or less trading around these levels.\nBut early this week, oil slumped after the Trump Administration confirmed that tariffs on Canada and Mexico are going ahead as planned on March 4, and the tariff on Chinese goods is lifted to 20% from 10%. Canada and Mexico tariffs are at 25%, with Canadian energy facing a lower, 10%, import tariff.\nEconomic Fallout from Tariffs\nOn the first trading day of March, major Wall Street indexes turned sharply lower after the Trump Administration announced that the tariffs on Canada and Mexico, and higher levies on China are going into effect on Tuesday.\nThe S&P 500 index fell by nearly 2% for the steepest one-day drop so far this year. The broad-based index has erased nearly all the 6% gain since Election Day and is now only 1% higher compared to early November when President Donald Trump was elected. The Dow Jones Industrial Average (DJIA) slumped by 1.5%, and the Nasdaq composite dipped by 2.6%.\nThe rally in the weeks since November has been largely due to hopes that the Trump Administration would boost U.S. businesses and the economy.\nBut tariffs could undermine the growth plans of many businesses, and the economy is likely to slow down, analysts say.\nA weakening economy, the world\u2019s largest at that, could dampen oil demand in the U.S. and globally\u2014that\u2019s why the market hasn\u2019t been very bullish about oil prices in recent weeks.\nSome estimates have even started to point to the U.S. economy contracting in the first quarter. The GDPNow model of Atlanta Fed, not an official forecast but a running estimate of real GDP growth based on available economic data, shows a forecast of real annual GDP growth for Q1 at a negative -2.8% on March 3, down from a -1.5% forecast on February 28. The estimate was revised down after releases from the US Census Bureau and the Institute for Supply Management. The GDPNow forecast of f...",
+  "full_json": {
+    "url": "http://baystreet.ca/articles/commodities/109084/030525",
+    "domain": "baystreet.ca",
+    "source_country": "Canada",
+    "language": "English",
+    "gdelt_seendate": "20250305T134500Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "context_trump2_iran_sanctions_escalation",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "research_note",
+  "source_name": "Compiled from public sources (Treasury.gov, Reuters)",
+  "entity": "Iran Oil Sanctions",
+  "ticker": null,
+  "document_date": "2025-03-19",
+  "title": "Trump Administration Iran Sanctions Escalation Timeline (January-March 2025)",
+  "text_content": "Trump Administration Iran Sanctions Escalation Timeline \u2014 January to Mid-March 2025\n\nThe second Trump administration signaled from inauguration that it would reinstate \"maximum pressure\" on Iran, aiming to reduce Iranian oil exports to zero. Key actions before March 20:\n\nJanuary 20, 2025: Executive Order signed reimposing maximum pressure on Iran, directing all agencies to enforce oil sanctions aggressively.\n\nFebruary 4, 2025: OFAC designated additional Iranian shipping networks and front companies involved in oil transport.\n\nFebruary 2025: Reports emerged that Trump administration officials were considering sanctions directly targeting Chinese entities purchasing Iranian crude \u2014 a significant escalation beyond traditional sanctions on Iranian entities alone.\n\nMarch 13, 2025: OFAC sanctioned additional vessels and entities involved in transporting Iranian crude. Tanker tracking firms noted that some shadow fleet vessels changed routes or went dark (turned off AIS transponders) in the days following.\n\nMarket expectations as of mid-March 2025:\n- Analysts widely expected further sanctions escalations targeting the buy-side (Chinese refineries)\n- The question was not \"if\" but \"when\" and \"how aggressively\"\n- Some price premium for Iran sanctions risk was already embedded in Brent (~$1-2/barrel estimated by Goldman Sachs)\n- Key uncertainty: whether China would push back diplomatically or quietly allow its teapot refineries to reduce Iranian purchases\n\nOil market positioning: Net speculative long positions in Brent were near multi-year lows in early March, suggesting the market was not heavily positioned for an upside move. This meant any bullish catalyst (like new sanctions) could trigger a short squeeze or rapid repositioning.",
+  "full_json": {
+    "notes": "Compiled from U.S. Treasury press releases, Reuters, and Bloomberg reporting. All events predate March 20, 2025."
+  }
+}
