@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_cadd6cc554fb",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / lloydslist.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-01-14",
+  "title": "VLCC spot rates surge higher as tanker stock rally takes a breather",
+  "text_content": "VLCC spot rates surge higher as tanker stock rally takes a breather\n\nVLCC spot rates surge higher as tanker stock rally takes a breather\nBaltic VLCC TCE index gains another 33% on Tuesday to reach $47,916 per day\nUS sanctions on Russia have reinvigorated the recently moribund VLCC business. The outlook for VLCCs is much brighter than it was only a week ago, but how sanctions play out for rates and stocks remains to be seen\nTHE sanctions-fuelled rally in very large crude carrier stocks has at least temporarily paused, but not the rally in VLCC spot rates.\nThe Baltic Exchange VLCC time charter equivalent index jumped 33% on Tuesday to $47,916 per day. The VLCC index has doubled over the past week. Some spot fixtures are much higher. The Tankers International pool reported a VLCC fixture on subjects on Tuesday at $79,817 per day.\nAverage VLCC spot TCE rates have been lower than suezmax and aframax rates for most of the past year. Now, sweeping new US sanctions have changed the equation and put VLCCs back on top.\nBy discouraging Chinese and Indian buyers from taking Russian cargoes on sanctioned tankers, more volumes should be forced toward mainstream VLCCs, increasing demand and spot rates.\nThe latest US sanctions announcement came four days after China\u2019s Shandong Port Group said it would cease handling US-sanctioned tankers, a decision that will curtail both Iranian and Russian flows, another positive for mainstream VLCCs.\nAs of Thursday, the Baltic Exchange suezmax index was at $25,110 per day and the aframax index was at $26,410 per day. Average VLCC rates are now 91% higher than suezmax rates and 81% higher than aframax rates.\nShare prices of listed VLCC owners have risen by double-digits in recent days.\nTanker shares first jumped on January 7, after unconfirmed reports of the sanctions were published by Reuters and the Shandong Port Group announced its decision. Shares then jumped again on Friday and Monday after the official US sanctions announcement came out.\nTanker shares pulled back slightly on Tuesday on much lower volumes than in the prior two trading sessions.\nYear to date, shares of Frontline are up 26%, with DHT up 16%, Okeanis Eco Tankers 15% and International Seaways (which also owns a large product tanker fleet) up 14%.\nThe Breakwave Tanker Shipping ETF (BWET) has outperformed stocks of VLCC owners in recent days and is now up 26% year to date. BWET is an exchange-traded fund that buys near-dated forward freight agreements \u2014 heavily weighted to Middle East-China VLCC FFAs \u2014 to mimic spot rate trends.\nThe sanctions-driven rebound in spot rates and sentiment follows a very bearish period for VLCCs. Average rates for VLCCs have rebounded to where they were a year ago after languishing in the second half of 2024. Most of the VLCC shipowner stocks are still below where they were at this time last year.\nDHT is the only VLCC owner stock in the black, up 9% from mid-January 2024 based on adjusted closing prices. Shares of Frontline are still down 11% year on year, International Seaways 8% and Okeanis 4%.\nBWE...",
+  "full_json": {
+    "url": "https://www.lloydslist.com/LL1152231/VLCC-spot-rates-surge-higher-as-tanker-stock-rally-takes-a-breather",
+    "domain": "lloydslist.com",
+    "source_country": "United Kingdom",
+    "language": "English",
+    "gdelt_seendate": "20250114T224500Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

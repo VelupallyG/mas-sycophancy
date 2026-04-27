@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_71b82b5ddd16",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / bignewsnetwork.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-03-05",
+  "title": "Why Russia - US talks are a good sign for all",
+  "text_content": "Why Russia - US talks are a good sign for all\n\nWhy Russia-US talks are a good sign for all\nThe shift in relations between Russia and the US may open a door for a more balanced multipolar system\nAfrica has been heavily affected by the conflict between Russia and Ukraine since the start of Russia's Special Military Operation in February 2022.\nAccording to areportcompiled byODI Global, the African Economic Research Consortium (AERC), the Economic Research Forum (ERF), and Partnership for Economic Policy (PEP), 'Impact of the Russia-Ukraine war on Africa: policy implications for navigating shocks and building resilience', Africa has been caught in the crossfire due to lack of supplies of food and agricultural commodities.\nThe report features case studies on Egypt, Ethiopia, Kenya, Morocco, Mozambique, Senegal, South Africa, and Sudan, and finds that while direct trade exposure is low, Africa relies on Russia and Ukraine for food and fertilizer imports.\nPrices up\nThe conflict has driven up prices of oil, food and fertilizers globally. Simulations suggest that a 10% shock in oil, food and fertilizer prices may reduce Africa's annual GDP by $7 billion. Actual impacts are likely to be higher since oil, food and fertilizer prices increased by larger shares, at 40%, 18% and 55%, respectively, in 2022.\nGlobal commodity price increases also prompted an increase in interest rates in high-income countries, which in turn triggered capital outflows, exchange rate depreciation and higher borrowing costs for many African countries. The magnitude of an individual country's impacts varies based on commodity dependence, financial openness, and domestic vulnerabilities.\nThe conflict may have exacerbated the impact of the Covid-19 pandemic on the deterioration of Africa's macroeconomic and social performance. The overlapping crises have slowed Africa's development progress and risk long-term \"scarring\" effects. In 2022, 18 million new poor people were added to the 546 million Africans already living in poverty, and one out of five Africans faced high levels of food insecurity. Women and vulnerable groups also tend to be disproportionately impacted by shocks.\nWheat and fertilizers\nIn Kenya and Egypt, for example, Russian and Ukrainian wheat once accounted for as much as 85% and 67% of wheat imports respectively. Fertilizers, vital for agriculture, have also become scarce and expensive. Egypt, Ethiopia, Morocco, Senegal, and South Africa sourced 11%-41% of their fertilizer imports from Russia and Ukraine. As a result, food prices have soared, pushing millions into food insecurity.\nEnergy bills have surged, putting pressure on national budgets and household finances. Fuel prices in some countries have more than doubled, forcing governments to pass costs onto consumers or risk bankruptcy. The economic strain has also forced many African families to cut spending on once-affordable essentials, with the most vulnerable populations being hit the hardest.\nIn West Africa, the situation is the same. The economic crisis in Nig...",
+  "full_json": {
+    "url": "https://www.bignewsnetwork.com/news/278074800/why-russia-us-talks-are-a-good-sign-for-all",
+    "domain": "bignewsnetwork.com",
+    "source_country": "United States",
+    "language": "English",
+    "gdelt_seendate": "20250305T101500Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

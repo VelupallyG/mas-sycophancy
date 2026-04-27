@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_7df931dec8cb",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / manilatimes.net",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-02-28",
+  "title": "FRO - Fourth Quarter and Full Year 2024 Results",
+  "text_content": "FRO - Fourth Quarter and Full Year 2024 Results\n\nFRONTLINE PLC REPORTS RESULTS FOR THE FOURTH QUARTER ENDED DECEMBER 31, 2024\nFrontline plc (the \"Company\u201d, \"Frontline,\u201d \"we,\u201d \"us,\u201d or \"our\u201d), today reported unaudited results for the three and twelve months ended December 31, 2024:\nHighlights\n- Profit of $66.7 million, or $0.30 per share for the fourth quarter of 2024.\n- Adjusted profit of $45.1 million, or $0.20 per share for the fourth quarter of 2024.\n- Declared a cash dividend of $0.20 per share for the fourth quarter of 2024.\n- Reported revenues of $425.6 million for the fourth quarter of 2024.\n- Achieved average daily spot time charter equivalent earnings (\"TCEs\")1 for VLCCs, Suezmax tankers and LR2/Aframax tankers in the fourth quarter of $35,900, $33,300 and $26,100 per day, respectively.\n- Fully drew down a sale-and-leaseback agreement in an amount of $512.1 million to refinance 10 Suezmax tankers, which generated net cash proceeds of $101.0 million in the fourth quarter of 2024.\n- Sold its oldest Suezmax tanker, built in 2010, for a net sales price of $48.5 million and delivered the vessel to its new owner in October 2024. The transaction generated net cash proceeds of $36.5 million after repayment of existing debt and a gain of $17.9 million in the fourth quarter of 2024.\n- Repaid the remaining $75.0 million outstanding under the $275.0 million senior unsecured revolving credit facility with an affiliate of Hemen Holding Limited, the Company's largest shareholder (\"Hemen\u201d) in the fourth quarter of 2024.\n- Entered into three senior secured credit facilities for a total amount of up to $239.0 million to refinance outstanding debt on three VLCCs and one Suezmax tanker and, in addition, to provide revolving credit capacity in a total amount of up to $91.9 million.\n\"The fourth quarter of 2024 came in unusually soft compared to previous years. Global oil demand was up marginally as the year came to an end, but global seaborne exports slowed in the fourth quarter. During the quarter we saw positive developments in the enforcement of sanctions against Iran and Russia in particular, but we could not escape the fact that these two countries represent a material part of the supply to Asia, at cost to demand for the vessels Frontline operates. For 2025 we have already seen broader sanctions with a wider scope, at the same time as key importers of exposed crude are diversifying away from the mentioned suppliers. Compliant fleet growth for the asset classes we deploy peaked a few years back, making the outlook very constructive as Frontline sail into the new year with our cost-efficient operations and modern fleet.\u201d\nInger M. Klemp, Chief Financial Officer of Frontline Management AS, added:\n\u201dIn February 2025 we entered into three senior secured credit facilities for a total amount of up to $239.0 million to refinance three existing term loan facilities, with total balloon payments of $142.0 million maturing during 2025, leaving the Company with no debt maturities until the end of 2026 and, in additi...",
+  "full_json": {
+    "url": "https://www.manilatimes.net/2025/02/28/tmt-newswire/globenewswire/fro-fourth-quarter-and-full-year-2024-results/2064588",
+    "domain": "manilatimes.net",
+    "source_country": "Philippines",
+    "language": "English",
+    "gdelt_seendate": "20250228T071500Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

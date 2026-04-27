@@ -23,12 +23,16 @@ import logging
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
 logger = logging.getLogger(__name__)
 
 SEED_DOCS = [
     "finance_earnings_alphabet_ai_capex_2026_v1",
-    "geopolitics_sanctions_oil_supplyshock_2025_v1",
+    "iran_oil_sanctions_tightening_march_2025",
 ]
 
 
@@ -54,6 +58,17 @@ def parse_args() -> argparse.Namespace:
         help="Maximum local evidence documents to inject per trial.",
     )
     parser.add_argument(
+        "--enable-file-evidence",
+        action="store_true",
+        help="Load evidence from local_evidence/ files and inject per-agent.",
+    )
+    parser.add_argument(
+        "--evidence-docs-per-agent",
+        type=int,
+        default=5,
+        help="Number of evidence documents allocated to each agent.",
+    )
+    parser.add_argument(
         "--database-url",
         default=os.getenv("DATABASE_URL", ""),
         help="Postgres connection URL. Defaults to DATABASE_URL.",
@@ -76,6 +91,8 @@ def run(args: argparse.Namespace) -> None:
         database_url=args.database_url,
         enable_local_evidence=args.enable_local_evidence,
         local_evidence_limit=args.local_evidence_limit,
+        enable_file_evidence=args.enable_file_evidence,
+        evidence_docs_per_agent=args.evidence_docs_per_agent,
     )
     base_config.validate()
 
@@ -105,12 +122,13 @@ def run(args: argparse.Namespace) -> None:
         )
 
     total_trials = len(SEED_DOCS) * (
-        args.n_trials
-        + (args.n_trials * base_config.n_flat_injection_reruns)
-        + args.n_trials
+        args.n_trials  # flat baseline
+        + (args.n_trials * base_config.n_flat_injection_reruns)  # flat halluc
+        + args.n_trials  # hierarchical baseline
+        + args.n_trials  # hierarchical halluc
     )
     logger.info(
-        "Full suite: %d total trials across 3 conditions × %d seeds.",
+        "Full suite: %d total trials across 4 conditions × %d seeds.",
         total_trials,
         len(SEED_DOCS),
     )
@@ -132,6 +150,8 @@ def run(args: argparse.Namespace) -> None:
             database_url=base_config.database_url,
             enable_local_evidence=base_config.enable_local_evidence,
             local_evidence_limit=base_config.local_evidence_limit,
+            enable_file_evidence=base_config.enable_file_evidence,
+            evidence_docs_per_agent=base_config.evidence_docs_per_agent,
         )
         config.validate()
         runner = SimulationRunner(model=model, config=config)
@@ -152,6 +172,8 @@ def run(args: argparse.Namespace) -> None:
             database_url=base_config.database_url,
             enable_local_evidence=base_config.enable_local_evidence,
             local_evidence_limit=base_config.local_evidence_limit,
+            enable_file_evidence=base_config.enable_file_evidence,
+            evidence_docs_per_agent=base_config.evidence_docs_per_agent,
         )
         config.validate()
         runner = SimulationRunner(model=model, config=config)
@@ -166,7 +188,29 @@ def run(args: argparse.Namespace) -> None:
                     rerun_id=k,
                 )
 
-        # Condition 3: Hierarchical with hallucination
+        # Condition 3: Hierarchical baseline (no hallucination)
+        config = ExperimentConfig(
+            condition=Condition.HIERARCHICAL_BASELINE,
+            seed_doc=seed_doc_enum,
+            n_trials=args.n_trials,
+            gcp_project=base_config.gcp_project,
+            output_dir=base_config.output_dir,
+            enable_db_persistence=base_config.enable_db_persistence,
+            database_url=base_config.database_url,
+            enable_local_evidence=base_config.enable_local_evidence,
+            local_evidence_limit=base_config.local_evidence_limit,
+            enable_file_evidence=base_config.enable_file_evidence,
+            evidence_docs_per_agent=base_config.evidence_docs_per_agent,
+        )
+        config.validate()
+        runner = SimulationRunner(model=model, config=config)
+        logger.info("--- Hierarchical baseline ---")
+        for trial_id in range(args.n_trials):
+            runner.run_hierarchical_trial(
+                task=task, trial_id=trial_id, inject_hallucination=False
+            )
+
+        # Condition 4: Hierarchical with hallucination
         config = ExperimentConfig(
             condition=Condition.HIERARCHICAL_HALLUCINATION,
             seed_doc=seed_doc_enum,
@@ -177,6 +221,8 @@ def run(args: argparse.Namespace) -> None:
             database_url=base_config.database_url,
             enable_local_evidence=base_config.enable_local_evidence,
             local_evidence_limit=base_config.local_evidence_limit,
+            enable_file_evidence=base_config.enable_file_evidence,
+            evidence_docs_per_agent=base_config.evidence_docs_per_agent,
         )
         config.validate()
         runner = SimulationRunner(model=model, config=config)

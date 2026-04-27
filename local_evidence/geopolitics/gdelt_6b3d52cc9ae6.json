@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_6b3d52cc9ae6",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / hellenicshippingnews.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-02-11",
+  "title": "Russia hikes crude exports on non - G7 tankers ; 15 sanctioned ships continue liftings",
+  "text_content": "Russia hikes crude exports on non - G7 tankers ; 15 sanctioned ships continue liftings\n\nRussia hikes crude exports on non-G7 tankers; 15 sanctioned ships continue liftings\nRussia increased seaborne crude exports in January with tankers operating outside of the G7 price cap, including 15 ships recently blacklisted in the largest US sanctions enforcement on the country\u2019s energy sector.\nData from S&P Global Commodities at Sea(opens in a new tab) and Maritime Intelligence Risk Suite showed 80.1% of Russia\u2019s seaborne crude exports last month, or 2.7 million b/d, were lifted by tankers not flagged, owned or operated by companies based in the G7, the EU, Australia, Switzerland and Norway, and not insured by Western protection and indemnity clubs.\nIn December, the non-G7 fleet \u2014 mainly composed of sanctioned ships, or vessels deemed to be transporting sanctioned oil due to their operational patterns but not yet blacklisted \u2014 loaded 78.9% of Russian exports, or 2.5 million b/d.\nRussia, one of the top OPEC+ producers, still managed to raise overall seaborne crude exports from 3.1-3.2 million b/d in December to more than 3.3 million b/d last month after the US Treasury sanctioned nearly 160 oil tankers in the final days of the Biden administration.\nTreasury has allowed the newly sanctioned ships to continue their journeys and discharge their cargoes until Feb. 27 if the oil was lifted before Jan. 10, but an analysis of CAS and MIRS data finds 15 of them have loaded 12.8 million barrels of Russian crude after the cut-off point.\nAs of early February, one of them already discharged 720,000 barrels of Sokol grade and one unloaded 730,000 barrels of Sakhalin Blend in China.\nShandong Port Group, often used by independent Chinese refineries to import Russian, Iranian and Venezuelan oil previously, declared a ban on the entry of US-sanctioned ships at the beginning of this year. The ports that received the tankers were not owned by the company.\nFurther looking, industry players suggested Russia could struggle to sell oil by sanctioned tankers in the short term before finding more ways to disguise cargo origin, such as dark ship-to-ship transfers.\nThe amount of Russian oil on the water rose to 108 million barrels on Feb. 6 from the pre-sanctions level of 88 million barrels, CAS data suggested.\nTrade dynamics\nChina and India, which have emerged as the largest Russian oil buyers since the Ukraine war, have taken a more cautious stance as the new US administration is promising more sanctions and trade tariffs.\n\u201cChina is having no qualms about appeasing the US for now over shipping sanctions, while it tries to even out a trade tariff relationship with the US,\u201d said Elisabeth Braw, a senior fellow at the think tank Atlantic Council.\nIn a recent interview with S&P Global Commodity Insights, India\u2019s Petroleum Minister Hardeep Singh Puri said the country\u2019s oil dealings with Russia would take into account sanctions development.\n\u201cThe West does not want a situation where India doesn\u2019t buy Russian oil because if India were to stop buying Russian oil, large Indian ...",
+  "full_json": {
+    "url": "https://www.hellenicshippingnews.com/russia-hikes-crude-exports-on-non-g7-tankers-15-sanctioned-ships-continue-liftings/",
+    "domain": "hellenicshippingnews.com",
+    "source_country": "China",
+    "language": "English",
+    "gdelt_seendate": "20250211T123000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

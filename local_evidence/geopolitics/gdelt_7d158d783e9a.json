@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_7d158d783e9a",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / oilprice.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-01-26",
+  "title": "U . S . Sanctions Are Squeezing India Russian Oil Imports",
+  "text_content": "U . S . Sanctions Are Squeezing India Russian Oil Imports\n\nThe 2022 Russian invasion of Ukraine and subsequent sanctions on Russian energy led to widespread gas shortages and stopped Russia from selling its crude to the U.S., Europe, and several other countries worldwide. The sanctions were aimed at hindering Russia\u2019s economic might and encouraging Putin to bring an end to the war, which has not yet happened. While most countries shifted their dependence away from Russian energy, some states decided to ignore the sanctions and purchase Russian crude at a discounted rate, including China and India. However, with additional sanctions coming into place, buying cheap Russian oil may no longer be possible for Asian countries.\nThe U.S. has introduced stricter sanctions on Russia\u2019s energy companies and tanker operators starting in March, which could make it more difficult for India to continue importing cheap Russian crude. In January, the U.S. Treasury launched new sanctions on two Russian oil and gas companies, in addition to 183 tankers. This move could drive up inflation in the South Asian state as it is forced to buy more expensive energy. A 2019 assessment from the Reserve Bank of India suggested that each $10 per barrel price increase in oil could lead to a 0.4 percent rise in headline inflation. Bob McNally, the president of Rapidan Energy Group, stated, \u201cIndia will be more affected than China by sanctions since India imports a much greater amount of its oil from Russia than China.\u201d\nIndia imported around 88 percent of its oil needs between April and November 2024, with around 40 percent coming from Russia. A reported 75 of the 183 sanctioned tankers have delivered Russian crude to India. In 2024, 30 percent of the oil shipped on the 183 tankers was earmarked for India. Much of this crude was delivered to Indian refiners. There are also concerns that the new Donald Trump government may introduce stricter sanctions on Irani oil, another major supplier of crude to India, which could push the price of crude up worldwide.\nIndia\u2019s oil consumption has been growing rapidly, in line with population growth and industrialization. It is expected to surpass that of China in 2025, with an increase of around 330,000 bpd, according to the U.S. Energy Information Administration (EIA). India contributes around 25 percent of the total oil consumption growth globally. Meanwhile, China\u2019s liquid fuel consumption is expected to grow by 250,000 bpd in 2025. India consumed 5.3 million barrels each day in 2023, according to the EIA.\nBefore the war drove the price of Russian crude down, India imported just 12 percent of its oil from Russia. As stricter sanctions were introduced on Russian oil, Putin discounted the country\u2019s fuels further, and Urals was sold for around $12 per barrel less than the global Brent benchmark and $4 per barrel cheaper than Iraqi oil.\nThe new sanctions will make it more expensive for Russia to ship crude and place more restrictions on tanker movements. The Biden administration introduced stricter sanctio...",
+  "full_json": {
+    "url": "https://oilprice.com/Energy/Energy-General/US-Sanctions-Are-Squeezing-Indias-Russian-Oil-Imports.html",
+    "domain": "oilprice.com",
+    "source_country": "United States",
+    "language": "English",
+    "gdelt_seendate": "20250126T200000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

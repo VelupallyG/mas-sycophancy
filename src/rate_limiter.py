@@ -23,9 +23,31 @@ try:
     _RETRY_EXCEPTIONS = (
         google_exceptions.ResourceExhausted,  # 429
         google_exceptions.ServiceUnavailable,  # 503
+        google_exceptions.DeadlineExceeded,  # 504 / timeout
     )
 except ImportError:
     pass
+
+try:
+    from google.genai import errors as genai_errors
+
+    _RETRY_EXCEPTIONS = _RETRY_EXCEPTIONS + (genai_errors.APIError,)
+except ImportError:
+    pass
+
+try:
+    import httpx
+
+    _RETRY_EXCEPTIONS = _RETRY_EXCEPTIONS + (
+        httpx.ReadError,
+        httpx.ConnectError,
+        httpx.RemoteProtocolError,
+    )
+except ImportError:
+    pass
+
+# Also catch generic connection resets
+_RETRY_EXCEPTIONS = _RETRY_EXCEPTIONS + (ConnectionError,)
 
 
 class SyncRateLimiter:

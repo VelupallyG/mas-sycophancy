@@ -1,0 +1,96 @@
+{
+  "id": "eia_b38c3895f084",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "market_data",
+  "source_name": "U.S. Energy Information Administration (EIA)",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2024-11",
+  "title": "US Crude Oil Imports (2024-11 to 2024-11)",
+  "text_content": "US Crude Oil Imports \u2014 Monthly US crude oil imports (thousand barrels)\nPeriod: 2024-11 to 2024-11\nData (thousand_barrels):\n  2024-11: 197326\n  2024-11: 1383\n  2024-11: 41480\n  2024-11: 41504\n  2024-11: 1383\n  2024-11: 6578",
+  "full_json": {
+    "eia_route": "petroleum/move/imp/data",
+    "frequency": "monthly",
+    "raw_data": [
+      {
+        "period": "2024-11",
+        "duoarea": "NUS-Z00",
+        "area-name": "U.S.",
+        "product": "EPC0",
+        "product-name": "Crude Oil",
+        "process": "IM0",
+        "process-name": "Imports",
+        "series": "MCRIMUS1",
+        "series-description": "U.S. Imports of Crude Oil (Thousand Barrels)",
+        "value": "197326",
+        "units": "MBBL"
+      },
+      {
+        "period": "2024-11",
+        "duoarea": "R50-Z00",
+        "area-name": "PADD 5",
+        "product": "EPC0",
+        "product-name": "Crude Oil",
+        "process": "IM0",
+        "process-name": "Imports",
+        "series": "MCRIMP52",
+        "series-description": "West Coast (PADD 5) Imports of Crude Oil (Thousand Barrels per Day)",
+        "value": "1383",
+        "units": "MBBL/D"
+      },
+      {
+        "period": "2024-11",
+        "duoarea": "R50-Z00",
+        "area-name": "PADD 5",
+        "product": "EPC0",
+        "product-name": "Crude Oil",
+        "process": "IM0",
+        "process-name": "Imports",
+        "series": "MCRIMP51",
+        "series-description": "West Coast (PADD 5) Imports of Crude Oil (Thousand Barrels)",
+        "value": "41480",
+        "units": "MBBL"
+      },
+      {
+        "period": "2024-11",
+        "duoarea": "R30-Z00",
+        "area-name": "PADD 3",
+        "product": "EPC0",
+        "product-name": "Crude Oil",
+        "process": "IM0",
+        "process-name": "Imports",
+        "series": "MCRIMP31",
+        "series-description": "Gulf Coast (PADD 3) Imports of Crude Oil (Thousand Barrels)",
+        "value": "41504",
+        "units": "MBBL"
+      },
+      {
+        "period": "2024-11",
+        "duoarea": "R30-Z00",
+        "area-name": "PADD 3",
+        "product": "EPC0",
+        "product-name": "Crude Oil",
+        "process": "IM0",
+        "process-name": "Imports",
+        "series": "MCRIMP32",
+        "series-description": "Gulf Coast (PADD 3) Imports of Crude Oil (Thousand Barrels per Day)",
+        "value": "1383",
+        "units": "MBBL/D"
+      },
+      {
+        "period": "2024-11",
+        "duoarea": "NUS-Z00",
+        "area-name": "U.S.",
+        "product": "EPC0",
+        "product-name": "Crude Oil",
+        "process": "IM0",
+        "process-name": "Imports",
+        "series": "MCRIMUS2",
+        "series-description": "U.S. Imports of Crude Oil (Thousand Barrels per Day)",
+        "value": "6578",
+        "units": "MBBL/D"
+      }
+    ],
+    "notes": "Auto-collected from EIA Open Data API v2."
+  }
+}

@@ -78,14 +78,22 @@ class HallucinationInjector:
         # Pass injection to OrchestratorPrefab params["hallucination_injection"]
     """
 
-    def __init__(self, version: str = "v1") -> None:
-        template_path = _TEMPLATES_DIR / f"orchestrator_hallucination_{version}.md"
+    def __init__(self, version: str = "v1", variant: str = "orchestrator") -> None:
+        """Load a hallucination prompt template.
+
+        Args:
+            version: Template version (e.g., "v1").
+            variant: Either "orchestrator" (for hierarchical L1) or
+                "flat_peer" (for the single injected flat peer).
+        """
+        template_path = _TEMPLATES_DIR / f"{variant}_hallucination_{version}.md"
         if not template_path.exists():
             raise FileNotFoundError(
                 f"Hallucination template not found: {template_path}"
             )
         self._template = template_path.read_text(encoding="utf-8")
         self._version = version
+        self._variant = variant
 
     def render(
         self,

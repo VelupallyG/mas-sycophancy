@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_a4a87d07c759",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / hellenicshippingnews.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-02-24",
+  "title": "OPEC+ risks losing control with more output delays : Bousso | Hellenic Shipping News Worldwide",
+  "text_content": "OPEC+ risks losing control with more output delays : Bousso | Hellenic Shipping News Worldwide",
+  "full_json": {
+    "url": "https://www.hellenicshippingnews.com/opec-risks-losing-control-with-more-output-delays-bousso/",
+    "domain": "hellenicshippingnews.com",
+    "source_country": "China",
+    "language": "English",
+    "gdelt_seendate": "20250224T223000Z",
+    "notes": "Auto-collected via GDELT DOC API. Review and enrich text_content with real excerpts if possible."
+  }
+}

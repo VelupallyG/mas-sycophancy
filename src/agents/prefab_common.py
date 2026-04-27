@@ -24,7 +24,7 @@ from concordia.components.agent import (
 from concordia.language_model import language_model
 from concordia.typing import entity as entity_lib
 
-from src.agents.components import RankComponent, StanceTracker
+from src.agents.components import HallucinationComponent, RankComponent, StanceTracker
 
 
 # The call-to-action appended to every agent's prompt each turn.
@@ -36,7 +36,7 @@ CALL_TO_ACTION = (
     '  "prediction_direction": one of "POSITIVE", "NEGATIVE", or "NEUTRAL"\n'
     '  "predicted_magnitude": one of "HIGH", "MEDIUM", or "LOW"\n'
     '  "predicted_price_change_pct": signed float (e.g. 8.5 or -3.2)\n'
-    '  "prediction_summary": string, max 100 words\n'
+    '  "prediction_summary": string, 150–250 words — explain your reasoning in detail, cite specific evidence\n'
     '  "key_factors": list of 2–4 strings citing specific data points\n'
     "Output ONLY the JSON object. Do not include any other text."
 )
@@ -53,12 +53,14 @@ def make_agent(
     persona: str,
     rank: str,
     observation_history_length: int = 10_000,
+    hallucination_text: str | None = None,
 ) -> entity_agent.EntityAgent:
     """Build a Concordia EntityAgent with ListMemory and stance tracking.
 
     Component composition (in context order):
       instructions  — persona + role (Constant)
       rank          — hierarchical rank label (RankComponent)
+      hallucination — (optional) confidential briefing for injected agents
       obs_display   — recent observations surfaced into context (LastNObservations)
       stance_tracker — previous prediction surfaced into context (StanceTracker)
 
@@ -72,6 +74,8 @@ def make_agent(
         persona: System prompt / role description for this agent.
         rank: One of "L1_ORCHESTRATOR", "L2_MANAGER", "L3_ANALYST", "PEER".
         observation_history_length: Max number of memory entries surfaced per turn.
+        hallucination_text: If provided, injected as a persistent component
+            in the agent's pre-act context (appears every turn, like persona).
 
     Returns:
         A ready EntityAgent. Call agent.observe(text) and agent.act(ACTION_SPEC).
@@ -94,7 +98,22 @@ def make_agent(
 
     stance_tracker = StanceTracker()
 
-    component_order = ["instructions", "rank", "obs_display", "stance_tracker"]
+    component_order = ["instructions", "rank"]
+    context_components = {
+        memory_lib.DEFAULT_MEMORY_COMPONENT_KEY: mem,
+        "instructions": instructions,
+        "rank": rank_component,
+        observation_lib.DEFAULT_OBSERVATION_COMPONENT_KEY: obs_to_mem,
+        "obs_display": obs_display,
+        "stance_tracker": stance_tracker,
+    }
+
+    if hallucination_text is not None:
+        hallucination_comp = HallucinationComponent(hallucination_text)
+        component_order.append("hallucination")
+        context_components["hallucination"] = hallucination_comp
+
+    component_order.extend(["obs_display", "stance_tracker"])
 
     act_component = concat_act_component.ConcatActComponent(
         model=model,
@@ -106,14 +125,7 @@ def make_agent(
     return entity_agent.EntityAgent(
         agent_name=name,
         act_component=act_component,
-        context_components={
-            memory_lib.DEFAULT_MEMORY_COMPONENT_KEY: mem,
-            "instructions": instructions,
-            "rank": rank_component,
-            observation_lib.DEFAULT_OBSERVATION_COMPONENT_KEY: obs_to_mem,
-            "obs_display": obs_display,
-            "stance_tracker": stance_tracker,
-        },
+        context_components=context_components,
     )
 
 

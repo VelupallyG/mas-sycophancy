@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_2a11072c917a",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / maritime-executive.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-01-07",
+  "title": "Report : White House Plans to Sanction 100 More Russian Dark Fleet Tankers",
+  "text_content": "Report : White House Plans to Sanction 100 More Russian Dark Fleet Tankers\n\nReport: White House Plans to Sanction 100 More Russian Dark Fleet Tankers\nIn its final days, the Biden administration plans to sanction a large number of additional \"shadow fleet\" tankers involved in the Russian energy trade, two officials told Reuters last weekend. The U.S. Treasury has more than 200 Russian vessels of various types on its blacklist, and this final round of designations could make the list far longer.\nThe new package targets tankers from the lightly-regulated fleet that now carries the majority of Russian oil exports: shipments priced over the G7 \"cap\" of $60 per barrel. The carefully-calibrated cap was intended to restrict the amount of money that Russia could earn without cutting down on its export volume, thereby keeping global energy supplies - and prices - as steady as possible. In practice, Russia's ESPO oil grade never fell below $60, and Russian Urals exports quickly exceeded the cap, enabled by a burgeoning fleet of non-Western tankers. These vessels are typically older than 15 years and flagged in low-governance jurisdictions like Gabon or the Cook Islands.\nAccording to Platts, Russia's \"shadow fleet\" now numbers about 600 ships, primarily MRs, LRs and Aframaxes, vessels suitable for operations in the Baltic. Sanctions-evading tankers now carry more than 80 percent of all Russian oil, according to Platts - raising questions about the effectiveness of the G7 price cap.\nOver the years, the U.S. has had some success combating oil trafficking by imposing blocking sanctions on specific ships. Transacting with a U.S.-sanctioned vessel can expose any service provider to the risk of severe penalties from the Treasury; this is enough to dissuade many banks, suppliers, terminal operators and flag registries (though not all). Leveraging this strategy one last time, Biden aides plan to impose sanctions on more than 100 tankers, along with various oil companies, oil traders, and Russian insurance companies, one official told Reuters.\nthat matters most\nGet the latest maritime news delivered to your inbox daily.\nHowever, the future of the list under President-elect Donald Trump is uncertain. In July 2024, during the campaign, Trump expressed ambivalence about sanctions on Russia. \"So what we're doing with sanctions is we're forcing everyone away from us. So I don't love sanctions,\" he told Bloomberg at the time.\nAmerica's allies in Europe have been looking carefully at ways to maintain a tough sanctions regime on Russian oil shipping in case the next administration lifts existing restrictions. \"Should a Trump presidency reverse U.S. sanctions on Russia, Europeans will need to be much more muscular in . . . enforcement action and will no longer be able to hide behind Uncle Sam,\" analyst Tom Keatinge of the Royal United Services Institute told Reuters in October.",
+  "full_json": {
+    "url": "https://www.maritime-executive.com/article/report-white-house-plans-to-sanction-100-more-russian-dark-fleet-tankers",
+    "domain": "maritime-executive.com",
+    "source_country": "United States",
+    "language": "English",
+    "gdelt_seendate": "20250107T083000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

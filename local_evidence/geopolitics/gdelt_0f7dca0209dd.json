@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_0f7dca0209dd",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / businesstimes.com.sg",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-03-14",
+  "title": "G7 ministers unite to back Ukraine and warn Russia of sanctions",
+  "text_content": "G7 ministers unite to back Ukraine and warn Russia of sanctions\n\nG7 ministers unite to back Ukraine and warn Russia of sanctions\nThey \u201creaffirmed their unwavering support for Ukraine in defending its territorial integrity and right to exist, and its freedom, sovereignty and independence\u201d\n[LA MALBAIE, CANADA] Foreign ministers from the G7 nations reached a deal on a joint statement aimed at showing unity on Friday (Mar 14) that backed Ukraine\u2019s territorial integrity and warned Russia to follow Kyiv in accepting a ceasefire or face possible further sanctions.\nThe meeting followed weeks of tension between US allies and President Donald Trump over his upending of Western trade, security and Ukraine-related policy.\nG7 officials had feared they would not be able to agree on an all-encompassing document touching on geopolitical issues from across the world, divisions that they said could have played into the hands of both Russia and China.\n\u201cI think we\u2019re on track to have a strong statement. I\u2019m confident that can be the case,\u201d Canadian Foreign Minister Melanie Joly told reporters minutes before ministers approved a final text.\n\u201cWhen it comes to different issues, Ukraine and the Middle East, we\u2019ve had sessions talking about these different issues, subjects, and the goal was to keep strong G7 unity.\u201d\nThe Group of Seven ministers from Britain, Canada, France, Germany, Italy, Japan and the United States, along with the European Union, convened in the remote tourist town of La Malbaie, nestled in the Quebec hills, for meetings on Thursday and Friday that in the past have been broadly consensual.\nNavigate Asia in\na new global order\nGet the insights delivered to your inbox.\nBut in the run-up to the first G7 meeting of Canada\u2019s presidency, the crafting of an agreed final statement had been difficult with wrangling over the language regarding Ukraine, the Middle East and Washington\u2019s desire for tougher wording on China.\nIn the final draft, they \u201creaffirmed their unwavering support for Ukraine in defending its territorial integrity and right to exist, and its freedom, sovereignty and independence.\u201d\nAn earlier text referring to the need for security guarantees to ensure a truce was replaced by \u201cassurances,\u201d but they did warn Moscow to follow Kyiv in agreeing to a ceasefire or face further sanctions, including oil price caps.\n\u201cG7 members called for Russia to reciprocate by agreeing to a ceasefire on equal terms and implementing it fully.\n\u201cThey emphasised that any ceasefire must be respected and underscored the need for robust and credible security arrangements to ensure that Ukraine can deter and defend against any renewed acts of aggression,\u201d they said in a reference to Ukraine\u2019s territorial integrity.\nWashington had sought to impose red lines on language around Ukraine to not harm its talks with Russia and opposed a separate declaration on curbing Russia\u2019s so-called shadow fleet, a murky shipping network that eludes sanctions, while demanding more robust language on China.\nThe final communique stated G7 opposition to any unila...",
+  "full_json": {
+    "url": "https://www.businesstimes.com.sg/international/g7-ministers-unite-back-ukraine-and-warn-russia-sanctions",
+    "domain": "businesstimes.com.sg",
+    "source_country": "Singapore",
+    "language": "English",
+    "gdelt_seendate": "20250314T193000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

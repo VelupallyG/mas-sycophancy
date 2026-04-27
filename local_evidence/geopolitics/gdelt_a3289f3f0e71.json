@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_a3289f3f0e71",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / hellenicshippingnews.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-03-17",
+  "title": "Iranian crude inflows to China seen stable even as US sanctions more ships | Hellenic Shipping News Worldwide",
+  "text_content": "Iranian crude inflows to China seen stable even as US sanctions more ships | Hellenic Shipping News Worldwide\n\nIranian crude inflows to China seen stable even as US sanctions more ships\nIranian crude inflows to Chinese independent refineries have likely remained stable following a rebound in February, despite new US sanctions on the country that could disrupt the delivery of about 2.87 million barrels later in March, trading and refining sources told Platts on March 14.\nOn March 13, Washington added nine crude tankers to its sanctions list, including six VLCCs, two Aframaxes and one Panamax, due to their involvement in transporting Iranian oil. Platts is part of S&P Global Commodity Insights.\nConsidering the newly included tankers in the list, a total of 232 ships have been identified as facilitating Iranian crude oil exports since 2023. Of these, 163 tankers are currently sanctioned by the US Department of the Treasury\u2019s Office of Foreign Assets Control, according to S&P Global Commodities at Sea.\n\u201cIt certainly lowers the availability of the non-sanctioned vessels in the shadow fleet, but the Iranian flows to China remain sustainable until the next round of sanctions, as some private ports accept sanctioned Aframaxes, while demand is strong for the most competitive crudes in the market in terms of the prices and specs,\u201d a Shandong-based trader said.\nFour of the nine vessels included in the latest sanctions list were active in March.\nA VLCC named Blue Gulf and an Aframax named Lydya N were in transit, scheduled to deliver 2.87 million barrels of unidentified crude cargoes from Malaysia to China in the second half of March, according to CAS.\nIranian oil barrels typically undergo ship-to-ship operations in Malaysian waters and acquire Malaysia-origin certificates before proceeding to China.\nThe Panamax Peace Hill discharged 464,458 barrels of fuel oil loaded from Malaysia at Shandong\u2019s Dongjiakou port on March 5, CAS data showed. The other Aframax, Seasky, delivered 720,360 barrels of Russian Sokol to the Rizhao port in Shandong on March 10.\nOn March 14, the price of Iranian Light crude remained unchanged for three days, at a discount of around $1/b against the ICE Brent Futures on a DES Shandong basis, widening from a previous discount of 80 cents/b, according to market sources. Meanwhile, Iranian Heavy crude continued to be at a bigger discount of $3.5/b on the same basis.\nOvercoming logistical challenges\nThe latest sanctions were imposed as Iranian crude cargoes successfully overcame logistical challenges to reach China\u2019s independent refineries. Arrivals in February rebounded by 89% to 1.6 million b/d, the second highest in history, up from a 12-month low of 850,000 b/d in January.\nAlthough the US imposed sanctions on 13 tankers that shipped Iranian oil on Feb. 24, Platts data shows that 5.27 million mt of Iranian crude is scheduled to arrive at eastern China\u2019s berths in Shandong province in the first half of March, surging 54% from H1 February.\nThe volume in February was transported by 29 ships, including VLCCs and Aframaxes, which discharged Iranian cr...",
+  "full_json": {
+    "url": "https://www.hellenicshippingnews.com/iranian-crude-inflows-to-china-seen-stable-even-as-us-sanctions-more-ships/",
+    "domain": "hellenicshippingnews.com",
+    "source_country": "China",
+    "language": "English",
+    "gdelt_seendate": "20250317T121500Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

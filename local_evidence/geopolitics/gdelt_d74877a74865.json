@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_d74877a74865",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / miragenews.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-03-14",
+  "title": "G7 Ministers : Maritime Security & Prosperity Pact",
+  "text_content": "G7 Ministers : Maritime Security & Prosperity Pact\n\nThe text of the following statement was released by the G7 Foreign Ministers of Canada, France, Germany, Italy, Japan, the United Kingdom, the United States of America, and the High Representative of the European Union.\nBegin Text:\n- We, the Foreign Ministers of Canada, France, Germany, Italy, Japan, the United Kingdom, and the United States of America, and the High Representative of the European Union, reaffirm the G7's steadfast commitment to contribute towards a free, open, and secure maritime domain based on the rule of law that strengthens international security, fosters economic prosperity, and ensures the sustainable use of marine resources.\n- Maritime security and prosperity are fundamental to global stability, economic resilience, and the well-being of all nations, and the conservation and sustainable use of ocean ecosystems is essential to all life on Earth. Over 80% of global trade is transported by sea, and 97% of global data flows through submarine cables. Disruptions to maritime routes pose a direct threat to international food security, critical minerals, energy security, global supply chains, and economic stability. We express deep concern over the growing risks to maritime security, including strategic contestation, threats to freedom of navigation and overflight, and illicit shipping activities. State behaviour in these areas has increased the risk of conflict and environmental damage, and imperils all nations' prosperity and living standards, especially for the world's poorest.\n- We recognize the role of the UN Convention on the Law of the Sea (UNCLOS) as the legal framework for governing all activities in the oceans and the seas.\n- We recall the G7 Statements on Maritime Security adopted in L\u00fcbeck (2015) and Hiroshima (2016). We welcome related work presently underway through other G7 ministerial tracks and working groups, on a range of issues including securing undersea cable networks and combating abandoned fishing gear. We welcome, as well, G7 work relating to transnational organized crime and terrorism that touches on the maritime domain, including in relation to piracy and armed robbery at sea, trafficking in persons, and strengthening the maritime law enforcement capabilities of coastal states. We acknowledge the importance of regional maritime security frameworks, to support coastal states to address collectively threats to their maritime security. We welcome existing initiatives, such as the G7++ Friends of the Gulf of Guinea (G7++ FoGG, that Canada chairs this year), which has been, the primary forum for dialogue among G7 members and partners on maritime security in the Gulf of Guinea.\nEmerging Threat on Safe Seas and Freedom of Navigation and Overflight\n- Enhancing Stability: We underscore the importance of freedom of navigation and overflight and other internationally lawful uses of the high seas and the exclusive economic zones as well as to the related rights and freedoms in other maritime zones, including the rig...",
+  "full_json": {
+    "url": "https://www.miragenews.com/g7-ministers-maritime-security-prosperity-pact-1426274/",
+    "domain": "miragenews.com",
+    "source_country": "United States",
+    "language": "English",
+    "gdelt_seendate": "20250314T174500Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

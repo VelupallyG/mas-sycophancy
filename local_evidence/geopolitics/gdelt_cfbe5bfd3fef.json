@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_cfbe5bfd3fef",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / yahoo.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-01-06",
+  "title": "Russia oil future dims as US mulls new sanctions",
+  "text_content": "Russia oil future dims as US mulls new sanctions\n\nRussia\u2019s oil future dims as US mulls new sanctions\n- The Biden administration is set to impose new sanctions on Russian oil exports, targeting tankers, traders, and insurance companies involved in transporting Russian crude oil.\nIn its final days, the Biden administration is poised to impose a new round of sanctions on Russian oil exports, marking a significant escalation in efforts to curtail Moscow\u2019s energy revenues.\nThese sanctions \u2014 targeting tankers, traders and insurance companies involved in the transport of Russian crude oil \u2014 are set to accelerate the reshaping of global oil supply chains, with possible headwinds for the shipping industry.\nA long-awaited crackdown\nThe latest U.S. sanctions package is rumored to be expansive, encompassing two Russian oil companies and more than 100 tankers, as well as oil traders and Russian insurance firms. U.S. Treasury Secretary Janet Yellen has indicated that the sanctions net may widen even further, potentially including Chinese banks involved in facilitating Russian oil trades.\nAt their core, the sanctions would aim to enforce the $60-per-barrel price cap on Russian oil, a measure agreed upon by the G7 coalition, the European Union and Australia in 2022. This measure came as part of a broader strategy to limit Russia\u2019s ability to fund its ongoing military operations in Ukraine, while still trying to minimize further disruptions to global energy markets.\nLars Barstad, CEO of Frontline Management, one of the world\u2019s largest publicly listed oil tanker operators, has raised alarm over the growing \u201cdark fleet\u201d of unregulated vessels used to circumvent these sanctions.\n\u201cAll these vessels are trading outside the [U.N.\u2019s] framework,\u201d Barstad stated, highlighting the risks associated with these operations. \u201cThey have been sleeping behind the wheel now for quite some time in respect of tankers.\u201d\nRussia\u2019s \u201cdark fleet\u201d is a shadow network of aging ships, with intentionally obscure ownership, that operate outside international maritime regulations. These vessels, estimated to make up about 20% of the world\u2019s oil tanker fleet, pose significant safety and environmental risks.\nBarstad warns further, \u201cI think it\u2019s only a question of time until we get a big one\u201d \u2014 in other words, a major maritime disaster.\nIn fact, Russia is currently contending with an ecological catastrophe in the Black Sea, following an oil spill that prompted a state-of-emergency declaration in Crimea.\nThe incident, which occurred in mid-December, involved two aged oil tankers that succumbed to a storm, releasing heavy M100-grade fuel oil into the sea \u2014 a type notorious for sinking rather than floating, complicating clean-up efforts. Authorities have cleared over 86,000 metric tons of contaminated sand and soil thus far, employing more than 10,000 responders in a large-scale effort to mitigate environmental damage.\nThe fallout has already proved severe, with notable losses of marine life such as dolphins and seabirds.\nShifting sands\nThe threat of...",
+  "full_json": {
+    "url": "https://www.yahoo.com/news/russia-oil-future-dims-us-173500306.html",
+    "domain": "yahoo.com",
+    "source_country": "United States",
+    "language": "English",
+    "gdelt_seendate": "20250106T190000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

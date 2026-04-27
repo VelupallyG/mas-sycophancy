@@ -1,0 +1,96 @@
+{
+  "id": "eia_f306f62adb55",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "market_data",
+  "source_name": "U.S. Energy Information Administration (EIA)",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-01",
+  "title": "US Crude Oil Imports (2025-01 to 2025-01)",
+  "text_content": "US Crude Oil Imports \u2014 Monthly US crude oil imports (thousand barrels)\nPeriod: 2025-01 to 2025-01\nData (thousand_barrels):\n  2025-01: 3102\n  2025-01: 206130\n  2025-01: 6649\n  2025-01: 630\n  2025-01: 19536\n  2025-01: 10742",
+  "full_json": {
+    "eia_route": "petroleum/move/imp/data",
+    "frequency": "monthly",
+    "raw_data": [
+      {
+        "period": "2025-01",
+        "duoarea": "R20-Z00",
+        "area-name": "PADD 2",
+        "product": "EPC0",
+        "product-name": "Crude Oil",
+        "process": "IM0",
+        "process-name": "Imports",
+        "series": "MCRIMP22",
+        "series-description": "Midwest (PADD 2) Imports of Crude Oil (Thousand Barrels per Day)",
+        "value": "3102",
+        "units": "MBBL/D"
+      },
+      {
+        "period": "2025-01",
+        "duoarea": "NUS-Z00",
+        "area-name": "U.S.",
+        "product": "EPC0",
+        "product-name": "Crude Oil",
+        "process": "IM0",
+        "process-name": "Imports",
+        "series": "MCRIMUS1",
+        "series-description": "U.S. Imports of Crude Oil (Thousand Barrels)",
+        "value": "206130",
+        "units": "MBBL"
+      },
+      {
+        "period": "2025-01",
+        "duoarea": "NUS-Z00",
+        "area-name": "U.S.",
+        "product": "EPC0",
+        "product-name": "Crude Oil",
+        "process": "IM0",
+        "process-name": "Imports",
+        "series": "MCRIMUS2",
+        "series-description": "U.S. Imports of Crude Oil (Thousand Barrels per Day)",
+        "value": "6649",
+        "units": "MBBL/D"
+      },
+      {
+        "period": "2025-01",
+        "duoarea": "R10-Z00",
+        "area-name": "PADD 1",
+        "product": "EPC0",
+        "product-name": "Crude Oil",
+        "process": "IM0",
+        "process-name": "Imports",
+        "series": "MCRIMP12",
+        "series-description": "East Coast (PADD 1) Imports of Crude Oil (Thousand Barrels per Day)",
+        "value": "630",
+        "units": "MBBL/D"
+      },
+      {
+        "period": "2025-01",
+        "duoarea": "R10-Z00",
+        "area-name": "PADD 1",
+        "product": "EPC0",
+        "product-name": "Crude Oil",
+        "process": "IM0",
+        "process-name": "Imports",
+        "series": "MCRIMP11",
+        "series-description": "East Coast (PADD 1) Imports of Crude Oil (Thousand Barrels)",
+        "value": "19536",
+        "units": "MBBL"
+      },
+      {
+        "period": "2025-01",
+        "duoarea": "R40-Z00",
+        "area-name": "PADD 4",
+        "product": "EPC0",
+        "product-name": "Crude Oil",
+        "process": "IM0",
+        "process-name": "Imports",
+        "series": "MCRIMP41",
+        "series-description": "Rocky Mountain (PADD 4) Imports of Crude Oil (Thousand Barrels)",
+        "value": "10742",
+        "units": "MBBL"
+      }
+    ],
+    "notes": "Auto-collected from EIA Open Data API v2."
+  }
+}

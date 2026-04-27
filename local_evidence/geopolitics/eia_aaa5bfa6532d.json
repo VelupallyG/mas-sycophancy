@@ -1,0 +1,44 @@
+{
+  "id": "eia_aaa5bfa6532d",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "market_data",
+  "source_name": "U.S. Energy Information Administration (EIA)",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-02",
+  "title": "WTI Crude Spot Price (2025-01 to 2025-02)",
+  "text_content": "WTI Crude Spot Price \u2014 Monthly WTI crude oil spot price ($/barrel)\nPeriod: 2025-01 to 2025-02\nData:\n  2025-01: 75.74\n  2025-02: 71.53",
+  "full_json": {
+    "eia_route": "petroleum/pri/spt/data",
+    "frequency": "monthly",
+    "raw_data": [
+      {
+        "period": "2025-01",
+        "duoarea": "YCUOK",
+        "area-name": "NA",
+        "product": "EPCWTI",
+        "product-name": "WTI Crude Oil",
+        "process": "PF4",
+        "process-name": "Spot Price FOB",
+        "series": "RWTC",
+        "series-description": "Cushing, OK WTI Spot Price FOB (Dollars per Barrel)",
+        "value": "75.74",
+        "units": "$/BBL"
+      },
+      {
+        "period": "2025-02",
+        "duoarea": "YCUOK",
+        "area-name": "NA",
+        "product": "EPCWTI",
+        "product-name": "WTI Crude Oil",
+        "process": "PF4",
+        "process-name": "Spot Price FOB",
+        "series": "RWTC",
+        "series-description": "Cushing, OK WTI Spot Price FOB (Dollars per Barrel)",
+        "value": "71.53",
+        "units": "$/BBL"
+      }
+    ],
+    "notes": "Auto-collected from EIA Open Data API v2."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_3605a04f7411",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / marketscreener.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-02-07",
+  "title": "Utility Probes Connection Between L . A . Deadly Eaton Fire , Inactive Power Line -- Commodities Roundup",
+  "text_content": "Utility Probes Connection Between L . A . Deadly Eaton Fire , Inactive Power Line -- Commodities Roundup\n\nMARKET MOVEMENTS:\n--Brent crude oil is up 0.9% at $74.96 a barrel\n--European benchmark gas is up 2.1% at 55.63 euros a megawatt-hour\n--Gold futures are up 0.7% at $2,896.70 a troy ounce\n--LME three-month copper futures are up 2.1% at $9,481.50 a metric ton\nTOP STORY:\nUtility Probes Connection Between L.A.'s Deadly Eaton Fire, Inactive Power Line\nEvidence is emerging that an inactive power line owned by Southern California Edison ignited the Eaton fire, which killed 17 people and destroyed part of the Los Angeles area last month.\nThe utility said it is investigating the possibility that active high-voltage transmission lines near the suspected ignition point could have sent electricity into a nearby inactive line, giving it enough power to spark the fire. The company had said it hasn't found indications that the fire resulted from any of the active lines, all of which remained energized when the fire started on Jan. 7.\nSCE, a unit of Edison International, said Thursday that it discovered damage on the idle line, which runs parallel to the four active lines in the Eaton Canyon, where investigators said the fire started before spreading to destroy much of nearby Altadena. The company said it plans to examine parts of the idle line in a laboratory, and that it plans to strengthen its safety practices involving other lines that are no longer in service.\nOTHER STORIES:\nAltaGas, Keyera Increase Export Capacity as Part of New Long-Term Agreements\nAltaGas and Keyera have entered into a long-term commercial agreements that will increase Keyera's export capacity to reach diversified markets for liquefied petroleum gas.\nThe two companies said Friday that one of the agreements is a 15-year tolling contract with AltaGas' Ridley Island Energy Export Facility, giving Keyera 12,500 barrels a day of LPG export capacity.\n--\nFood Prices Fell in January on Cheaper Sugar, Vegetable Oils, UN Says\nFood prices slipped in January, driven by significantly cheaper sugar and vegetable oils, data from the Food and Agriculture Organization of the United Nations showed on Friday.\nThe FAO's food price index--which tracks global prices for a basket of staple foods--averaged 124.9 points in January, a 1.6% fall from December's level. It remains up 6.2% on year, but 22% below its all-time high in March 2022, shortly after the Russian invasion of Ukraine began.\n--\nMalaysia Opens Antidumping Probe Into Galvanized Steel Imports From China, Others\nMalaysia has launched an antidumping investigation into galvanized steel imports from China, South Korea and Vietnam.\nThe probe follows a petition from Malaysian producer CSC Steel in January. CSC alleged that imports of flat-rolled iron and steel products coated with zinc were being sold at prices much lower than in their home markets, hurting the country's domestic industry, the Ministry of Investment, Trade and Industry said in a statement released Friday.\nMARKET TALKS:\nBase Metal Prices Rise; Copper at Three-Month High as Chinese Buyers R...",
+  "full_json": {
+    "url": "https://www.marketscreener.com/news/latest/Utility-Probes-Connection-Between-L-A-s-Deadly-Eaton-Fire-Inactive-Power-Line-Commodities-Round-48995883/",
+    "domain": "marketscreener.com",
+    "source_country": "",
+    "language": "English",
+    "gdelt_seendate": "20250207T153000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

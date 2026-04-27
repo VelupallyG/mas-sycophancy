@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_1b2d166d4fb1",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / baystreet.ca",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-03-19",
+  "title": "Baystreet . ca - Goldman Sachs : Risk in Oil Markets Is Skewed to the Downside",
+  "text_content": "Baystreet . ca - Goldman Sachs : Risk in Oil Markets Is Skewed to the Downside\n\nGoldman Sachs: Risk in Oil Markets Is Skewed to the Downside\nThe tariff wars and high spare capacity, mostly from the OPEC+ producers, are skewing the oil price risk to the downside in the medium term, according to Goldman Sachs.\n\u201cWhile we reduced our Brent forecast range by $5/bbl to $65-80, we expect oil prices to edge up in coming months, and think that market pricing of volatility and of the upside risk from potentially lower sanctioned supply remains too low,\u201d Goldman Sachs analysts wrote in a Tuesday note carried by Reuters.\nRussia\u2019s President Vladimir Putin agreeing to a 30-day halt of attacks on energy infrastructure reduces the probability of near-term tightening of the sanctions against Russia, according to Goldman Sachs.\nEarlier this week, Goldman Sachs cut its year-end forecast for Brent Crude prices, citing expectations of slower U.S. economic growth and additional OPEC+ supply.\n\u201cWhile the $10 a barrel selloff since mid-January is larger than the change in our base case fundamentals, we reduce by $5 our December 2025 forecast for Brent to $71,\u201d the investment bank\u2019s research team said in a note, adding that \u201cThe medium-term risks to our forecast remain to the downside given potential further tariff escalation and potentially longer OPEC+ production increases.\u201d\nOPEC+ is set to start adding supply to the market in April, initially at a rate of 138,000 barrels per day (bpd). However, officials within the group have repeatedly said that the production increase could be halted or reversed at any time, depending on market conditions.\nHSBC analysts also see risks in oil skewed to the downside amid expectations of a surplus this year and next. Stronger supply growth compared to more sluggish demand growth would leave the oil market in a 200,000-bpd surplus this year, the bank said in a note. In the previous market view, HSBC expected a relatively balanced oil market in 2025.\nBy Tsvetana Paraskova for Oilprice.com",
+  "full_json": {
+    "url": "http://baystreet.ca/articles/commodities/109663/031925",
+    "domain": "baystreet.ca",
+    "source_country": "Canada",
+    "language": "English",
+    "gdelt_seendate": "20250319T124500Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

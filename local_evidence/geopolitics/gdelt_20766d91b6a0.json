@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_20766d91b6a0",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / foreignaffairs.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-03-06",
+  "title": "The Paradox of Trump Economic Weapon | Foreign Affairs",
+  "text_content": "The Paradox of Trump Economic Weapon | Foreign Affairs\n\nSince returning to the White House, U.S. President Donald Trump has unleashed a whirlwind of policy shifts, territorial claims, and economic threats. In his first few weeks in office, Trump has expressed a desire to bring Canada, Greenland, the Panama Canal, and the Gaza Strip under direct American control. He has also expanded his trade offensive against China to include Canada and Mexico, the United States\u2019 two largest trading partners. In the case of Canada, Trump tied his commercial pressure to the stunning demand that the nation itself go out of existence. \u201cCanada should become our Cherished 51st State. Much lower taxes, and far better military protection for the people of Canada\u2014AND NO TARIFFS!\u201d he wrote on Truth Social. On top of all this, Trump made a dramatic turn against Ukraine, suspending all U.S. aid.\nMany commentators have been at once disturbed and baffled by these moves. In January, The Wall Street Journal derided Trump\u2019s threat to impose 25 percent tariffs on Canada and Mexico as the opening salvo of the \u201cThe Dumbest Trade War in History.\u201d Yet Trump\u2019s economic coercing and cajoling is not as inexplicable as it seems. Historically, directing economic coercion against allies\u2014rather than adversaries\u2014has been a remarkably successful policy: since the world\u2019s economy integrated during the nineteenth century, tools of economic coercion have frequently become more effective when deployed against diplomatic and economic partners than against hostile states.\nDuring the Cold War, Washington regularly used economic coercion against allies. Previous administrations differed from Trump in tone, but the substance of the threats was often similar: follow U.S. policy priorities or face serious economic damage. Trump is attempting to exploit this underappreciated power in his bid to break up multilateral alliances and craft a new U.S.-led sphere of influence in which Washington enjoys unfettered primacy in its dealings with individual states. Trump has a crude diplomatic manner and deficient strategic foresight. But he has an intuitive grasp of how to use leverage in bilateral negotiations in which his opponent holds a weaker hand. In Trump\u2019s first term, his team learned that the commercial bullying of rival countries is often ineffective but that it can quickly force U.S. allies to submit. Now, he appears to be doubling down on attempts to shore up American power by pushing friendly countries into deeper dependence on the U.S. market and the dollar.\nThis strategy, however, is likely to work only in bilateral relationships in which the United States is unquestionably economically dominant. As the global economic order moves in a more protectionist, mercantilist, and multipolar direction, it is increasingly uncertain how many countries will fall into this category. The calculus looks different for the United States\u2019 neighbors in North America and countries deeply dependent on U.S. assistance for their survival, such as Ukraine, than it does for ot...",
+  "full_json": {
+    "url": "https://www.foreignaffairs.com/united-states/paradox-trumps-economic-weapon",
+    "domain": "foreignaffairs.com",
+    "source_country": "United States",
+    "language": "English",
+    "gdelt_seendate": "20250306T061500Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

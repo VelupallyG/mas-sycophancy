@@ -1,0 +1,14 @@
+{
+  "id": "context_opec_spare_capacity",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "research_note",
+  "source_name": "Compiled from public sources (OPEC Monthly Report, EIA STEO)",
+  "entity": "OPEC+ Spare Capacity",
+  "ticker": null,
+  "document_date": "2025-03-12",
+  "title": "OPEC+ Spare Capacity and Production Policy (March 2025)",
+  "text_content": "OPEC+ Spare Capacity and Production Policy \u2014 March 2025 Context\n\nAs of early March 2025, OPEC+ maintained voluntary production cuts totaling approximately 5.85 million bpd below stated capacity. Saudi Arabia held the largest share of spare capacity, estimated at 2-3 million bpd.\n\nIn early March 2025, OPEC+ announced plans to begin unwinding some voluntary cuts starting April 2025, with a gradual increase of approximately 138,000 bpd per month. This decision was partly driven by Kazakhstan's persistent overproduction and partly by a desire to recapture market share.\n\nKey bearish factors (limiting oil price upside from sanctions):\n- OPEC+ has ample spare capacity to offset lost Iranian barrels if needed\n- The planned April production increase signals willingness to add supply\n- Saudi Arabia could unilaterally increase output to cap prices\n\nKey bullish factors (supporting price increase from sanctions):\n- OPEC+ unwinding is gradual and would not immediately offset a sudden Iranian supply disruption\n- Saudi Arabia has historically been reluctant to fully compensate for Iranian losses, preferring tighter markets\n- The spare capacity provides a ceiling but not an immediate response mechanism\n- Physical crude markets may tighten locally (especially for medium-sour grades that compete with Iranian crude) even if global spare capacity exists\n\nNet assessment: OPEC+ spare capacity limits the upside from Iran sanctions to a moderate price increase rather than a spike. Markets are unlikely to price in a sustained supply crisis because alternative barrels are available, but they will price in short-term disruption risk and a geopolitical risk premium.",
+  "full_json": {
+    "notes": "Compiled from OPEC Monthly Oil Market Report (March 2025) and EIA Short-Term Energy Outlook. Pre-dates March 20, 2025."
+  }
+}

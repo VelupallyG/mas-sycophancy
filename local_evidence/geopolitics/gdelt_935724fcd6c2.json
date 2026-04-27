@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_935724fcd6c2",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / rigzone.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-01-15",
+  "title": "Ceasefire News Cools Oil Rally",
+  "text_content": "Ceasefire News Cools Oil Rally\n\nCeasefire News Cools Oil Rally\nOil slipped from a five-month high as Hamas and Israel tentatively agreed to a cease-fire, cooling a rally fueled by risks to Russian and Iranian supplies.\nWest Texas Intermediate retreated 1.7% to settle at $77.50 a barrel after CBS reported Israel and Hamas agreed in principle to a draft deal for a cease-fire and hostage release. Such a deal would mark a potential end to a conflict that has buffeted global oil markets for more than 15 months.\nThe relative strength index shows crude futures have been mostly overbought since the start of the year, a reading that signals prices are due for a pullback. Algorithmic-driven investors known as commodity trading advisers, or CTAs, are flashing signs of buying exhaustion, said Daniel Ghali, a commodity strategist at TD Securities.\n\u201cOur simulations of future prices already suggest that in no scenario will CTAs add to their WTI crude length, suggesting a continued rise in supply risk premia associated with Biden\u2019s farewell sanctions on Russia will now be needed to support prices further,\u201d Ghali said.\nThe US benchmark had climbed 6.6% over the previous two sessions, while oil shipping rates surged the most in months on Monday in response to the measures from Washington that target about 160 tankers involved in the Russian oil trade.\nWhile the full impact of the latest US sanctions package remains unclear, it may drive a rerouting of global flows as users across Asia, including refiners in India and China, are forced to reach far and wide for replacement barrels.\nSome early signs of disruption are already apparent. Among them, a senior Indian bureaucrat told reporters that sanctioned vessels won\u2019t be allowed to discharge, although the country\u2019s state-owned refiners expect Moscow to find workarounds.\nThe potential for Russian oil to continue reaching its intended destinations is easing some concerns about supply disruptions, and \u201ccrude traders are pausing to evaluate the evolving information before deciding whether to chase the rally further,\u201d said Rebecca Babin, senior energy trader at CIBC Private Wealth Group.\nMeanwhile, Alberta Premier Danielle Smith warned that Trump\u2019s tariffs won\u2019t have exemptions for oil after meeting the president-elect in Florida. More than half of US crude imports come from Canada, most of it from Alberta.\nOil Prices:\n- WTI for February delivery fell 1.7% to settle at $77.50 a barrel in New York.\n- Brent for March delivery slid 1.3% to settle at $79.92 a barrel.\nWhat do you think? We\u2019d love to hear from you, join the conversation on the\nRigzone Energy Network.\nThe Rigzone Energy Network is a new social experience created for you and all energy professionals to Speak Up about our industry, share knowledge, connect with peers and industry insiders and engage in a professional community that will empower your career in energy.",
+  "full_json": {
+    "url": "https://www.rigzone.com/news/wire/ceasefire_news_cools_oil_rally-14-jan-2025-179314-article/",
+    "domain": "rigzone.com",
+    "source_country": "United States",
+    "language": "English",
+    "gdelt_seendate": "20250115T003000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

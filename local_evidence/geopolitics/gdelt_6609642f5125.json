@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_6609642f5125",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / globalsecurity.org",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-01-16",
+  "title": "Treasury Disrupts Russia Sanctions Evasion Schemes",
+  "text_content": "Treasury Disrupts Russia Sanctions Evasion Schemes\n\nTreasury Disrupts Russia's Sanctions Evasion Schemes\nU.S. Department of the Treasury\nJanuary 15, 2025\nActions expose a secret payment channel for sensitive exports and target a Kyrgyzstani financial institution for supporting Russia's military-industrial base\nWASHINGTON -- Today, the U.S. Department of the Treasury is moving against Russian efforts to evade U.S. sanctions. This action targets a sanctions evasion scheme established between actors in Russia and the People's Republic of China (PRC) to facilitate cross-border payments for sensitive goods. In addition, Treasury is designating a Kyrgyz Republic-based financial institution that coordinated with Russian officials and a U.S.-designated bank to implement a sanctions evasion scheme.\nTreasury is also reinforcing the grave risks foreign persons face in continuing to work with Russia's military-industrial complex by re-designating pursuant to Executive Order (E.O.) 13662 almost 100 entities already designated pursuant to E.O. 14024. As a result of these entities' designation pursuant to E.O. 13662, foreign persons, including foreign financial institutions, that knowingly facilitate significant transactions for or on behalf of any of these entities could be subject to mandatory secondary sanctions under the Ukraine-/Russia-related sanctions program.\n\"Today's actions frustrate the Kremlin's ability to circumvent our sanctions and get access to the goods they need to build weapons for their war of choice in Ukraine,\" said Deputy Secretary of the Treasury Wally Adeyemo. \"Today's expansion of mandatory secondary sanctions will reduce Russia's access to revenue and goods.\"\nThe U.S. Department of State is sanctioning more than 150 entities and individuals pursuant to E.O. 14024, including a wide range of companies in Russia's defense industry and those supporting its military industrial base. Today's sanctions also include dozens of companies across multiple countries that continue to support Russia's efforts to evade U.S. sanctions, particularly in the PRC, which remains the largest supplier of dual use items and enabler of sanctions evasion in support of Russia's war effort.\nREGIONAL CLEARING PLATFORM SANCTIONS EVASION SCHEME\nWith the guidance and awareness of Russian officials and their PRC counterparts, Russia and China have been working to set up regional clearing platforms (RCPs) in both Russia and China to act as counterparties to allow for cross-border payments for sensitive goods. The RCPs facilitate non-cash mutual settlement for payments for so-called sanctioned goods.\nU.S.-designated Russian financial institutions Public Joint Stock Company Sberbank of Russia, Joint Stock Company Alfa-Bank, Open Joint Stock Company Sovcombank, T-Bank, and Limited Liability Company Bank Tochka are reportedly participants in the scheme.\nThe following entities are Russia-based RCPs involved in this scheme: Herbarium Office Management LLC (Herbarium), Aktsionernoe Obshchestvo Atlant Torg, Limited Liability Co...",
+  "full_json": {
+    "url": "https://www.globalsecurity.org/wmd/library/news/russia/2025/01/russia-250115-treasury01.htm",
+    "domain": "globalsecurity.org",
+    "source_country": "Syria",
+    "language": "English",
+    "gdelt_seendate": "20250116T120000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

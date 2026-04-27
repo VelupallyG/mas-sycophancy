@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_ed9c011a34d1",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / bellona.org",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-01-07",
+  "title": "Monthly Highlights from the Russian Arctic , November 2024",
+  "text_content": "Monthly Highlights from the Russian Arctic , November 2024\n\nMonthly Highlights from the Russian Arctic, November 2024\nPublish date: January 7, 2025\nShortcuts on this page\nNews\nMonthly Highlights from the Russian Arctic, November 2024\nIn this news digest, we monitor events that impact the environment in the Russian Arctic. Our focus lies in identifying the factors that contribute to pollution and climate change.\nEnsuring complete and reliable access to environmental information in Russia has never been fully guaranteed. Following the Russian invasion of Ukraine on February 24, 2022, it became even more difficult. Some information ceased to be published altogether, such as daily oil production data and annual reports from certain industrial companies. Independent environmental organizations have been banned or closed.\nThe Arctic region plays a crucial role in comprehending the process of global climate change. Russia owns approximately one-third of its territory, including the exclusive economic zone of the Arctic Ocean. To understand and examine trends, we monitor new legislation, the plans of industry, the Northern Sea Route, international economic sanctions, accidents, and emergencies in the Russian Arctic, as well as provide commentary on the news. Subscribe to our mailing list to make sure you don\u2019t miss the next digest.\nOur previous monthly highlights for October can be found here.\nOn November 13, Vladimir Panov, Rosatom\u2019s Arctic representative, presented the preliminary results of navigation along the Northern Sea Route (NSR) for 2024. According to his report, cargo traffic on the NSR reached 37.6 million tons, slightly exceeding the 2023 figure of 36.25 million tons. Transit cargo volume along the route saw a 43% increase, rising to 3.08 million tons compared to 2.1 million tons in 2023.\nPanov attributed this growth to increased shipments by PAO NOVATEK and the redirection of cargo from St. Petersburg and Murmansk away from the Suez Canal to the NSR. This redirection added approximately 900,000 tons of cargo during the summer and autumn seasons.\nSvyatoslav Stepchenkov, Deputy Director General of GlavSevmorput, reported issuing 1,223 navigation permits for the NSR in 2024. As of November 15, 87 vessels were operating in Arctic waters. Sergey Zybko, General Director of GlavSevmorput, highlighted the steady increase in vessel traffic: 368 ships used the route in 2022, 453 in 2023, and 469 in 2024. Despite more challenging ice conditions in the summer of 2024, the average vessel speed along the route improved from 9.8 knots in 2023 to 10.6 knots in 2024.\nAt the port of Pevek, navigation concluded later than usual due to a storm that disrupted operations in late October. Consequently, the Arc7-class vessel Talnakhdeparted on November 27, becoming the last vessel of the navigation season.\nOn November 2, at the \u201cArctic \u2013 the Territory of Digitalization\u201d conference, Anton Lutsyk, a representative of Atomflot, announced plans to implement a digital ecosystem for the NSR by 2025. Development of the system has...",
+  "full_json": {
+    "url": "https://bellona.org/news/arctic/2025-01-monthly-highlights-from-the-russian-arctic-november-2024",
+    "domain": "bellona.org",
+    "source_country": "Russia",
+    "language": "English",
+    "gdelt_seendate": "20250107T190000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

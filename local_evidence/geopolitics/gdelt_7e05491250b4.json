@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_7e05491250b4",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / gcaptain.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-03-15",
+  "title": "Russian Oil Delivery Takes Seven Times Longer After Sanctions",
+  "text_content": "Russian Oil Delivery Takes Seven Times Longer After Sanctions\n\nBy Julian Lee (Bloomberg) \u2014\nThe delivery of a two-million-barrel cargo of Russian oil to China took seven times longer than it would have done prior to a round of US sanctions imposed on Moscow back in January.\nThe drawn out delivery of Sokol crude from Russia\u2019s Sakhalin 1 project into Chinese storage tanks shows how US sanctions continue to disrupt and impede \u2014 but importantly not halt \u2014 the flow of Russian oil.\nThe Daban, a so-called Very Large Crude Carrier, is discharging its cargo at Huangdao port in China more than seven weeks after the oil was first loaded onto shuttle tankers, vessel tracking data compiled by Bloomberg show. It would normally take about a week.\nThe Daban received its cargo via three ship-to-ship transfers from smaller vessels in the sheltered waters of Nakhodka Bay off Russia\u2019s Pacific coast during the first 10 days of February.\nDigital signals from the Daban indicate that, after receiving the consignments, it was unable to dock at two other Chinese ports before going to Huangdao.\nThe market is watching how Russian oil gets delivered closely because sanctions by the outgoing Biden administration were more aggressive than any that went before. The early signs are that exports are being maintained, but there\u2019s been disruption and delay of some deliveries.\nIn the Baltic Sea, another tanker has been waiting for about a month having loaded a cargo. That\u2019s a fairly unusual \u2014 but not unique \u2014 turn of events.\nTen Days\nThe Daban spent 10 days anchored off the port of Yantai before heading along the coast to Rizhao at the end of February. After spending a further 10 days there, it moved to Huangdao, where it moored on Thursday.\nThe oil was carried to the Daban by three shuttle tankers sanctioned by the US on Jan. 10. In a wide-ranging move, the outgoing Biden administration targeted 161 tankers, as well as two major Russian oil producers and exporters, traders, insurance companies, and two US oil service providers. The measures also targeted a Chinese oil terminal operator.\nThe Daban \u2014 which isn\u2019t under sanctions \u2014 has previously hauled Iranian crude under a different name, tracking data show.\nUnusually, neither Clarkson Research Services Ltd., a unit of the world\u2019s top shipbroker, nor the Equasis international maritime database have a means of contacting the companies that manage the Daban.\n\u00a9 2025 Bloomberg L.P.\nEditorial Standards \u00b7 Corrections \u00b7 About gCaptain\nThis article contains reporting from Bloomberg, published under license.",
+  "full_json": {
+    "url": "https://gcaptain.com/russian-oil-delivery-takes-seven-times-longer-after-sanctions/",
+    "domain": "gcaptain.com",
+    "source_country": "United States",
+    "language": "English",
+    "gdelt_seendate": "20250315T014500Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

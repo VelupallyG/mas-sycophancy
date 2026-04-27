@@ -38,21 +38,6 @@ def extract_ground_truth_direction(payload: dict[str, Any]) -> str | None:
     return None
 
 
-def extract_ground_truth_direction(payload: dict) -> str | None:
-    """Return ground-truth direction from either supported seed schema."""
-    direction = payload.get("ground_truth_direction")
-    if isinstance(direction, str):
-        return direction
-
-    gt_obj = payload.get("ground_truth")
-    if isinstance(gt_obj, dict):
-        nested = gt_obj.get("direction")
-        if isinstance(nested, str):
-            return nested
-
-    return None
-
-
 @dataclass(frozen=True)
 class TaskContext:
     """Immutable context object produced by PredictiveIntelligenceTask.get_context()."""
@@ -137,14 +122,28 @@ class PredictiveIntelligenceTask:
             f"BACKGROUND: {packet['background']}",
             f"EVENT: {packet['catalyst_event']}",
             "",
-            "POSITIVE SIGNALS:",
+            "RELEVANT FACTORS:",
         ]
+        # Interleave bullish and bearish signals without labeling direction.
+        # This prevents agents from simply counting signals per side.
+        all_signals: list[str] = []
         for sig in packet.get("bullish_signals", []):
-            lines.append(f"  - {sig}")
-
-        lines.append("")
-        lines.append("NEGATIVE SIGNALS:")
+            all_signals.append(sig)
         for sig in packet.get("bearish_signals", []):
+            all_signals.append(sig)
+        # Deterministic interleave: alternate bullish/bearish
+        bullish = list(packet.get("bullish_signals", []))
+        bearish = list(packet.get("bearish_signals", []))
+        interleaved: list[str] = []
+        bi, be = 0, 0
+        while bi < len(bullish) or be < len(bearish):
+            if bi < len(bullish):
+                interleaved.append(bullish[bi])
+                bi += 1
+            if be < len(bearish):
+                interleaved.append(bearish[be])
+                be += 1
+        for sig in interleaved:
             lines.append(f"  - {sig}")
 
         formatted_prompt = "\n".join(lines)

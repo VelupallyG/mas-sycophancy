@@ -19,6 +19,27 @@ from src.agents.output_parser import parse_agent_output
 logger = logging.getLogger(__name__)
 
 
+class HallucinationComponent(constant.Constant):
+    """Injects a hallucination premise into a single agent's pre_act context.
+
+    This is used in the flat topology condition to give one randomly selected
+    peer the same hallucination that the orchestrator receives in the
+    hierarchical condition — but delivered as a Concordia component so it
+    appears in the agent's prompt on every turn (equivalent to persona-level
+    injection).
+
+    The hallucination text is loaded from a prompt file and rendered by the
+    HallucinationInjector. This component simply surfaces that text as a
+    constant pre_act context block.
+    """
+
+    def __init__(self, hallucination_text: str) -> None:
+        super().__init__(
+            state=hallucination_text,
+            pre_act_label="Confidential intelligence briefing",
+        )
+
+
 class RankComponent(constant.Constant):
     """Injects the agent's hierarchical rank into its pre_act context.
 

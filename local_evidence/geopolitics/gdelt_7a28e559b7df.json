@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_7a28e559b7df",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / infotel.ca",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-01-01",
+  "title": "Year in review : A look at news events in April 2024 | iNFOnews | Thompson - Okanagan News Source",
+  "text_content": "Year in review : A look at news events in April 2024 | iNFOnews | Thompson - Okanagan News Source\n\nNunavut Premier P.J. Akeeagok speaks during a celebration in Iqaluit marking the 25th anniversary of the creation of Nunavut on Monday, April 1, 2024. THE CANADIAN PRESS/Dustin Patar\nJanuary 01, 2025 - 12:15 AM\nA look at news events in April 2024:\n1 - Nunavut is 25 years old today. Premier P.J. Akeeagok says the anniversary reminds him that his job is both a privilege and an immense responsibility. The creation of Canada's newest territory on April 1, 1999, was part of a historic land claim settlement. It was also the first major change to the country's map since Newfoundland and Labrador joined Confederation.\n1 - The national price on pollution rises by $15 per tonne. The federal government's consumer carbon levy is added to the price of more than 20 different fuel sources that produce greenhouse-gas emissions when burned for energy, including gasoline, propane, diesel and natural gas. The price change means filling a 50-litre tank with gas will cost an extra $1.65. It also means a boost to the Canada Carbon Rebate the government sends to eligible Canadians every three months to help mitigate the cost.\n1 - Trillions of red-eye cicadas are about to emerge across several U.S. states in numbers not seen in decades and possibly centuries. The Southern and Midwestern U.S. are bracing for the emergence this spring of two separate broods not seen together since 1803. The bizarre insects crawl out from underground every 13 or 17 years and can produce a sound as loud as jet engines. They have pumps in their heads that pull moisture from the roots of trees, allowing them to feed for more than a decade underground.\n1 - Prime Minister Justin Trudeau says a planned national school food program will feed 400,000 more kids each year. Ottawa plans to spend $1 billion over the next five years on the program. Trudeau mad the announcement in Toronto with Finance Minister Chrystia Freeland and Families Minister Jenna Sudds as part of the Liberal government's pre-budget tour.\n1 - Politicians from all sides of the political aisle are paying tribute to former Quebec Liberal cabinet minister Benoit Pelletier. The well-known constitutional expert has died at age 64. His family did not release his cause of death, but note he survived a severe bout of COVID-19 in 2021. Pelletier was a University of Ottawa law professor and later served as a cabinet minister in former premier Jean Charest's government, where he held numerous portfolios between 2003 and 2008. Charest describes Pelletier as a \"colleague, adviser and a friend\" who leaves a strong intellectual and political legacy.\n1 - Canada's evacuation from Haiti is being expanded to include relatives and Canadian permanent residents. The federal government says it has also arranged a charter flight for Canadians to pay a market rate, flying between the Dominican Republic and Montreal. Global Affairs Canada says there has been an uptick in the number of Canadians seeking help to escape the island, as hopes for a lull in wid...",
+  "full_json": {
+    "url": "https://infotel.ca/newsitem/year-diary-april-2024/cp1978416855",
+    "domain": "infotel.ca",
+    "source_country": "Canada",
+    "language": "English",
+    "gdelt_seendate": "20250101T090000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

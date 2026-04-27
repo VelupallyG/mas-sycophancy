@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_e9ce0dbfa40b",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / economictimes.indiatimes.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-01-13",
+  "title": "Fresh US sanctions on Russian oil to disrupt Indian imports , may end price discounts : official",
+  "text_content": "Fresh US sanctions on Russian oil to disrupt Indian imports , may end price discounts : official\n\nOn Friday, the outgoing Biden administration imposed new sanctions on Russian oil producers Gazprom Neft and Surgutneftegaz and about 180 tankers ferrying Russian oil. The latest measures by the US government mean anyone buying oil from Gazprom Neft or Surgutneftegaz or getting oil delivered by sanctioned tankers will attract secondary sanctions.\nSo far, US sanctions on the Russian energy sector have been milder and did not trigger secondary sanctions on India or other buyers of Russian oil. Sanctioned buyers of Russian oil will find it hard to make dollar payments for anything, raise funds in the US, and do business with American companies.Gazprom is a significant Russian supplier to India though Rosneft is the largest. Supplies from Surgutneftegaz are negligible.Indian refiners depend a lot on traders for Russian supplies; therefore, sanctions on tankers are more consequential than those on Gazprom. The new sanctions provide buyers a wind-down period until March 12 for completing the deals already struck.\n\u201cDefinitely, there will be disruption. That disruption will not be visible today or tomorrow,\u201d said the official, asking not to be named, referring to the wind-down period.\nA plausible scenario can be that Russian oil, which is not affected by the latest sanctions will start getting sold at below the G7 price cap of $60 per barrel and get access to Western shipping and insurance, the official said, adding that the market may \u201cfind a way to get the oil to us.\u201d\n\u201cThe market is still digesting what it actually means,\u201d said the official, adding that the full impact will hinge on many factors including the return of Donald Trump to the White House next week, Moscow\u2019s response, and the market reaction to the sanctions.\nIndian refiners buy Russian crude from the spot market. Reliance Industries is learnt to have recently struck an annual deal to source Russian crude from this year.\nThe official said spot buyers will quickly switch to alternatives while term deal purchasers will have the option to modify volumes or enforce force majeure.\nHe noted that crude prices, which have gained about $5 to cross $81 per barrel in a week, are not sustainable as there is ample spare capacity available globally. Additional supplies from the US, Canada, Brazil and Guyana can help mitigate any supply disruption from Russia even if members of the Saudi-led grouping OPEC do not utilise their 3 million barrels per day of spare capacity, the official said.\n(Catch all the Business News, Breaking News and Latest News Updates on The Economic Times.)\nSubscribe to The Economic Times Prime and read the ET ePaper online.\n(Catch all the Business News, Breaking News and Latest News Updates on The Economic Times.)\nSubscribe to The Economic Times Prime and read the ET ePaper online.",
+  "full_json": {
+    "url": "https://economictimes.indiatimes.com/industry/energy/oil-gas/fresh-us-sanctions-on-russian-oil-to-disrupt-indian-imports-may-end-price-discounts-official/articleshow/117209748.cms",
+    "domain": "economictimes.indiatimes.com",
+    "source_country": "India",
+    "language": "English",
+    "gdelt_seendate": "20250113T153000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

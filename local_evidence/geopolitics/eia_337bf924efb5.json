@@ -1,0 +1,96 @@
+{
+  "id": "eia_337bf924efb5",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "market_data",
+  "source_name": "U.S. Energy Information Administration (EIA)",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2024-12",
+  "title": "WTI Crude Spot Price (2024-07 to 2024-12)",
+  "text_content": "WTI Crude Spot Price \u2014 Monthly WTI crude oil spot price ($/barrel)\nPeriod: 2024-07 to 2024-12\nData (price_usd_per_barrel):\n  2024-07: 81.8\n  2024-08: 76.68\n  2024-09: 70.24\n  2024-10: 71.99\n  2024-11: 69.95\n  2024-12: 70.12",
+  "full_json": {
+    "eia_route": "petroleum/pri/spt/data",
+    "frequency": "monthly",
+    "raw_data": [
+      {
+        "period": "2024-07",
+        "duoarea": "YCUOK",
+        "area-name": "NA",
+        "product": "EPCWTI",
+        "product-name": "WTI Crude Oil",
+        "process": "PF4",
+        "process-name": "Spot Price FOB",
+        "series": "RWTC",
+        "series-description": "Cushing, OK WTI Spot Price FOB (Dollars per Barrel)",
+        "value": "81.8",
+        "units": "$/BBL"
+      },
+      {
+        "period": "2024-08",
+        "duoarea": "YCUOK",
+        "area-name": "NA",
+        "product": "EPCWTI",
+        "product-name": "WTI Crude Oil",
+        "process": "PF4",
+        "process-name": "Spot Price FOB",
+        "series": "RWTC",
+        "series-description": "Cushing, OK WTI Spot Price FOB (Dollars per Barrel)",
+        "value": "76.68",
+        "units": "$/BBL"
+      },
+      {
+        "period": "2024-09",
+        "duoarea": "YCUOK",
+        "area-name": "NA",
+        "product": "EPCWTI",
+        "product-name": "WTI Crude Oil",
+        "process": "PF4",
+        "process-name": "Spot Price FOB",
+        "series": "RWTC",
+        "series-description": "Cushing, OK WTI Spot Price FOB (Dollars per Barrel)",
+        "value": "70.24",
+        "units": "$/BBL"
+      },
+      {
+        "period": "2024-10",
+        "duoarea": "YCUOK",
+        "area-name": "NA",
+        "product": "EPCWTI",
+        "product-name": "WTI Crude Oil",
+        "process": "PF4",
+        "process-name": "Spot Price FOB",
+        "series": "RWTC",
+        "series-description": "Cushing, OK WTI Spot Price FOB (Dollars per Barrel)",
+        "value": "71.99",
+        "units": "$/BBL"
+      },
+      {
+        "period": "2024-11",
+        "duoarea": "YCUOK",
+        "area-name": "NA",
+        "product": "EPCWTI",
+        "product-name": "WTI Crude Oil",
+        "process": "PF4",
+        "process-name": "Spot Price FOB",
+        "series": "RWTC",
+        "series-description": "Cushing, OK WTI Spot Price FOB (Dollars per Barrel)",
+        "value": "69.95",
+        "units": "$/BBL"
+      },
+      {
+        "period": "2024-12",
+        "duoarea": "YCUOK",
+        "area-name": "NA",
+        "product": "EPCWTI",
+        "product-name": "WTI Crude Oil",
+        "process": "PF4",
+        "process-name": "Spot Price FOB",
+        "series": "RWTC",
+        "series-description": "Cushing, OK WTI Spot Price FOB (Dollars per Barrel)",
+        "value": "70.12",
+        "units": "$/BBL"
+      }
+    ],
+    "notes": "Auto-collected from EIA Open Data API v2."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_f29c8c8d38d6",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / finanznachrichten.de",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-03-06",
+  "title": "Torm plc : TORM plc Long Term Incentive Program",
+  "text_content": "Torm plc : TORM plc Long Term Incentive Program\n\nIn accordance with TORM plc's (\"TORM\") Remuneration Policy adopted by the Annual General Meeting of TORM plc on 14 April 2021, the Board of Directors has as part of a long-term incentive program decided to grant certain employees (the \"Participants\") Restricted Share Units (\"RSUs\") in the form of restricted stock options. The RSUs aim at incentivizing the Participants to seek to improve the performance of TORM and thereby the TORM share price for the mutual benefit of themselves and the shareholders of TORM.\nFor 2025, the Participants will be granted a total of 1,326,087 RSUs and, subject to vesting, each RSU will entitle the holder to acquire one TORM A-share. The RSUs will vest over a three-year period, with one third of the grant amount vesting at each anniversary during the three-year period starting on 01 January 2025. The exercise price for each TORM A-share is DKK 162.38, corresponding to the average of 90 calendar days preceding the publication of TORM plc's 2024 Annual Report plus a 15% premium. Vested RSUs may be exercised for a period of 360 days from each vesting date.\nIn addition to the RSUs granted to the Participants, Executive Director Jacob Meldgaard will be granted a total of 255,200 RSUs on similar terms as outlined above.\nHolders of the RSUs will have no rights as a shareholder with respect to such RSUs until such time as the RSUs vest, are exercised and TORM A-shares are issued. The RSUs include certain adjustment and acceleration provisions, exercise conditions and other terms customary for restricted stock option programs of this nature.\nThe theoretical market value of the RSU allocation is calculated at USD 4.1m based on the Black-Scholes model. The key assumptions for the calculation of the market value are:\n\u2022 The strike price is adjusted for future TORM dividends\n\u2022 The volatility of the TORM share is estimated at 42.5%\n\u2022 The risk-free interest rate based upon expiry of the RSUs is based on Danish government bonds with maturity corresponding to the maturity of the individual RSUs. The interest rate is between 1.96% - 2.12% depending on maturity\n\u2022 A share price of DKK 120.40 per A-share at the time of allocation\nThe RSU allocation is expected to affect the P&L statement as follows:\nContacts\nMikael Bo Larsen, Head of Investor Relations\nTel.: +45 5143 8002\nAbout TORM\nTORM is one of the world's leading carriers of refined oil products. TORM operates a fleet of product tanker vessels with a strong commitment to safety. environmental responsibility and customer service. TORM was founded in 1889 and conducts business worldwide. TORM's shares are listed on Nasdaq in Copenhagen and on Nasdaq in New York (ticker: TRMD A and TRMD. ISIN: GB00BZ3CNK81). For further information, please visit www.torm.com.\nSafe Harbor Statement as to the Future\nMatters discussed in this release may constitute forward-looking statements. The Private Securities Litigation Reform Act of 1995 provides safe harbor protections for forward-looking statements i...",
+  "full_json": {
+    "url": "https://www.finanznachrichten.de/nachrichten-2025-03/64751894-torm-plc-torm-plc-long-term-incentive-program-399.htm",
+    "domain": "finanznachrichten.de",
+    "source_country": "Germany",
+    "language": "English",
+    "gdelt_seendate": "20250306T163000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_39815803f4fe",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / economictimes.indiatimes.com",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-02-12",
+  "title": "India is building a sanctions - proof supply chain for Russian oil",
+  "text_content": "India is building a sanctions - proof supply chain for Russian oil\n\nSpeaking on the sidelines of India\u2019s flagship energy gathering in Delhi, executives said the existing networks were being reconfigured with selling entities, tankers and insurance providers that are not on Washington\u2019s blacklist. Some are existing outfits that have not been impacted by the punitive measures, while others are newly created, replacing those that are now off-limits, they said.\nThe executives, all directly involved in the trade, asked not to be named as they are not allowed to speak publicly.\nSince restrictions were first imposed, India\u2019s heavyweight buyers, including Indian Oil Corp Ltd, Bharat Petroleum Corp Ltd, Mangalore Refinery & Petrochemicals Ltd and Reliance Industries Ltd., have splurged on discounted Russian crude. Purchases went from a negligible portion of total imports to roughly a third. All that changed in January, however, when Washington rolled out a fresh salvo against vessels and entities assisting Moscow.\nClose to 160 tankers were sanctioned in that round, leaving Indian and Chinese buyers scrambling. The wind-down period offered some relief at the time, as arrivals for February were mostly spared \u2014 but not March.\nState refiners and Reliance are missing a total of 18 to 20 cargoes of Russian crude for March loading, some of the people estimated \u2014 the equivalent of 20 million barrels or 14% of India\u2019s monthly imports. The companies are still hoping to fill those gaps with Russian supplies, to avoid having to seek more expensive replacements. Indian officials have said any disruption would be temporary, but time is running short.\n\u201cImports need ships which are not sanctioned, insurance which takes time to reconfigure, and imports will need payments to go through. So each one of these has problems that need to be solved,\u201d Oil Secretary Pankaj Jain said at the Delhi conference this week. \u201cWe are working on solving these problems.\u201d\nExecutives from state refiners said this week that brand new Dubai-based trading entities including L-Oil and Sccton have emerged in the spot market to offer Russian cargoes to Indian buyers. While the names were new, the executives said individuals and traders behind them were not.\nThese new iterations have come to replace firms such as Black Pearl, Guron Trading, Demex Trading, all targeted by the US sanctions in January.\nDubai and, to a lesser extent, Hong Kong, have seen dozens of shell trading and shipping companies emerge since the Russian invasion of Ukraine. These conduits for Russian and Iranian oil are easy to incorporate and to shut down, creating a game of whack-a-mole with US authorities. New firms are created faster than Washington can identify and shutter then.\nIt\u2019s still unclear how the Trump administration will balance the eagerness to take a tough on stance on Russia and Iran and the desire to limit oil price increases and global disruption. Prime Minister Narendra Modi is due to meet the US President in Washington this week.\nShell Games\nThere are other options, however, fo...",
+  "full_json": {
+    "url": "https://economictimes.indiatimes.com/industry/energy/oil-gas/india-is-building-a-sanctions-proof-supply-chain-for-russian-oil/articleshow/118174571.cms",
+    "domain": "economictimes.indiatimes.com",
+    "source_country": "India",
+    "language": "English",
+    "gdelt_seendate": "20250212T110000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}

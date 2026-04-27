@@ -54,7 +54,7 @@ mas-sycophancy/
 │   │   ├── predictive_intel.py  # MiroFish-style predictive intelligence task
 │   │   └── seed_documents/
 │   │       ├── finance_earnings_alphabet_ai_capex_2026_v1.json
-│   │       └── geopolitics_sanctions_oil_supplyshock_2025_v1.json
+│   │       └── iran_oil_sanctions_tightening_march_2025.json
 │   │
 │   ├── hallucination/
 │   │   ├── __init__.py

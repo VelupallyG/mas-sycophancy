@@ -1,0 +1,19 @@
+{
+  "id": "gdelt_1209f1d4d72f",
+  "seed_id": "iran_oil_sanctions_tightening_march_2025",
+  "source_type": "news_article",
+  "source_name": "GDELT / skynews.com.au",
+  "entity": "Brent Crude Oil Futures",
+  "ticker": "BZ",
+  "document_date": "2025-03-04",
+  "title": "Federal Election 2025 : Albanese government indirectly funnelling potentially billions to Russia through third - party oil imports while also supporting Ukraine",
+  "text_content": "Federal Election 2025 : Albanese government indirectly funnelling potentially billions to Russia through third - party oil imports while also supporting Ukraine\n\nNo Cookies\nPlease note that by blocking any or all cookies you may not have access to certain features, content or personalization. For more information see our Cookie Policy.\nTo enable cookies, follow the instructions for your browser below.\nFacebook App: Open links in External Browser\nThere is a specific issue with the Facebook in-app browser intermittently making requests to websites without cookies that had previously been set. This appears to be a defect in the browser which should be addressed soon. The simplest approach to avoid this problem is to continue to use the Facebook app but not use the in-app browser. This can be done through the following steps:\n- Open the settings menu by clicking the hamburger menu in the top right\n- Choose \u201cApp Settings\u201d from the menu\n- Turn on the option \u201cLinks Open Externally\u201d (This will use the device\u2019s default browser)\nEnabling Cookies in Firefox\n- Open the Firefox browser\n- Click Tools > Options > Privacy > Use custom settings for history\n- Check Accept cookies from sites\n- Check Accept third party cookies\n- Select Keep until: they expire\n- Click OK\nEnabling Cookies in Google Chrome\n- Open the Google Chrome browser\n- Click Tools > Options > Privacy Options > Under the Hood > Content Settings\n- Check Allow local data to be set\n- Uncheck Block third-party cookies from being set\n- Uncheck Clear cookies\n- Close all\nEnabling Cookies in Mobile Safari (iPhone, iPad)\n- Go to the Home screen by pressing the Home button or by unlocking your phone/iPad\n- Select the Settings icon\n- Select Safari from the settings menu\n- Select \u2018accept cookies\u2019 from the safari menu\n- Select \u2018from visited\u2019 from the accept cookies menu\n- Press the home button to return the the iPhone home screen\n- Select the Safari icon to return to Safari\n- Before the cookie settings change will take effect, Safari must restart. To restart Safari press and hold the Home button (for around five seconds) until the iPhone/iPad display goes blank and the home screen appears\n- Select the Safari icon to return to Safari",
+  "full_json": {
+    "url": "https://www.skynews.com.au/australia-news/politics/watch-live-prime-minister-anthony-albanese-announces-48-billion-funding-boost-for-nsw-schools/news-story/8238f65ff3857c519499471cd8be641d?nk=1a34b051fbfade466e60cbf11ff0543e-1741074427",
+    "domain": "skynews.com.au",
+    "source_country": "Australia",
+    "language": "English",
+    "gdelt_seendate": "20250304T080000Z",
+    "notes": "Auto-collected via GDELT DOC API with article text extracted by trafilatura."
+  }
+}
