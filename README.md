@@ -1,8 +1,6 @@
 # MAS Sycophancy
 
-**If the CEO Is Wrong, Is Everyone Wrong?**
-
-Measuring authority-gradient sycophancy propagation in hierarchical multi-agent systems.
+Sycophancy in Hierarchical versus Flat Multi-Agent Systems
 
 ## What This Is
 
@@ -45,17 +43,16 @@ src/
 
 experiments/         # Entry points for each condition
 data/real_v2/        # Experiment outputs, traces, figures
-paper/               # Final report (ACL format LaTeX)
 ```
 
 ## Key Metrics
 
-| Metric | Definition |
-|--------|-----------|
-| Δ² (Sycophancy Effect) | Accuracy drop attributable to topology |
-| ToF (Turn of Flip) | First turn an agent adopts the hallucination |
-| NoF (Number of Flips) | Total stance reversals across turns |
-| TRAIL | Error categorization (planning / reasoning / system) |
+| Metric                 | Definition                                           |
+| ---------------------- | ---------------------------------------------------- |
+| Δ² (Sycophancy Effect) | Accuracy drop attributable to topology               |
+| ToF (Turn of Flip)     | First turn an agent adopts the hallucination         |
+| NoF (Number of Flips)  | Total stance reversals across turns                  |
+| TRAIL                  | Error categorization (planning / reasoning / system) |
 
 ## Authors
 
