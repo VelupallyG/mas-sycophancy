@@ -26,7 +26,7 @@ The hierarchical system fully adopted the hallucinated answer by Turn 3, while t
 
 Interpretation: the hierarchy introduced an 80 percentage-point accuracy drop attributable to topology, while the flat structure limited spread to the injected peer.
 
-## What I Built
+## Implementation
 
 - Agent prefabs and personas for analyst, manager, and orchestrator roles.
 - Flat and hierarchical communication topologies.
